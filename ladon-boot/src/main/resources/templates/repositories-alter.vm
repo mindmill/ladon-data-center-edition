@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Alter Bucket
+            </div>
+            <div class="panel-body">
+                <form role="form" id="alterrepoform">
+                    <div class="form-group">
+                        <label>Bucket ID</label>
+                        <input class="form-control" type="text" name="repoId" value="$repo.repoId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Created By</label>
+                        <input class="form-control" type="text" name="createdby" value="$repo.createdby"
+                               readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Creation Date</label>
+                        <input class="form-control" type="text" name="createddate" value="$repo.creationdate"
+                               readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Versioned</label>
+                        <select class="form-control" name="versioned">
+                            <option value="true" #if($repo.versioned) selected="selected" #end>Enabled
+                            </option>
+                            <option value="false"#if(!$repo.versioned) selected="selected" #end>Disabled</option>
+                        </select>
+                    </div>
+                    <button form="alterrepoform" class="btn btn-primary" type="submit"
+                            formaction="./alterrepo"
+                            formmethod="post">Apply
+                    </button>
+                    <a class="btn btn-primary" type="reset" name="cancel"
+                       href="./repositories?repoid=$repoid">Cancel</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Delete Bucket
+            </div>
+            <div class="panel-body">
+                <form>
+                    <input type="hidden" name="repoid" value="$repo.repoId">
+                    <button class="btn btn-danger" type="submit"
+                            formaction="./deleterepo"
+                            formmethod="post">Delete
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

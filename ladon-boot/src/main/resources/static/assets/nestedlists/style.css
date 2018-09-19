@@ -1,0 +1,158 @@
+/* all levels */
+.sitemap a {
+    color: #000;
+    text-decoration: none;
+}
+
+.sitemap a.active {
+    background-color: #bce8f1;
+    text-decoration: none;
+}
+
+.sitemap a:hover {
+    background-color: #bce8f1;
+}
+
+/* first level */
+.sitemap {
+    margin: 2em 0;
+    list-style-type: none;
+    background: url(dots1.png) repeat-y 0 0;
+    padding: 0;
+}
+
+.sitemap li {
+    display: inline;
+}
+
+.sitemap li a {
+    display: block;
+    padding: 0 0 0 15px;
+    margin: 0;
+    line-height: 24px;
+    background: url(bullet1.png) no-repeat 0 0;
+}
+
+.sitemap li a.open {
+    background: url(bullet1-open.png) no-repeat 0 0;
+}
+
+/* second level */
+.sitemap ul {
+    margin: 0;
+    padding: 0;
+    background: url(dots2.png) repeat-y 30px 0;
+}
+
+.sitemap li li a {
+    padding: 0 0 0 45px;
+    background: url(bullet2.png) no-repeat 0 0;
+}
+
+.sitemap li li a.open {
+    background: url(bullet2-open.png) no-repeat 0 0;
+}
+
+/* third level */
+.sitemap ul ul {
+    padding: 0;
+    background: url(dots3.png) repeat-y 60px 0;
+}
+
+.sitemap li li li a {
+    padding: 0 0 0 75px;
+    background: url(bullet3.png) no-repeat 0 0;
+}
+
+.sitemap li li li a.open {
+    background: url(bullet3-open.png) no-repeat 0 0;
+}
+
+/* fourth level */
+.sitemap ul ul ul {
+    padding: 0;
+    background: url(dots4.png) repeat-y 90px 0;
+}
+
+.sitemap li li li li a {
+    padding: 0 0 0 105px;
+    background: url(bullet4.png) no-repeat 0 0;
+}
+
+.sitemap li li li li a.open {
+    background: url(bullet4-open.png) no-repeat 0 0;
+}
+
+/* fifth level */
+.sitemap ul ul ul ul {
+    padding: 0;
+    background: url(dots2.png) repeat-y 120px 0;
+}
+
+.sitemap li li li li li a {
+    padding: 0 0 0 135px;
+    background: url(bullet2.png) no-repeat 90px 0;
+}
+
+.sitemap li li li li li a.open {
+    background: url(bullet2-open.png) no-repeat 90px 0;
+}
+
+/* sixth level */
+.sitemap ul ul ul ul ul {
+    padding: 0;
+    background: url(dots3.png) repeat-y 150px 0;
+}
+
+.sitemap li li li li li li a {
+    padding: 0 0 0 165px;
+    background: url(bullet3.png) no-repeat 90px 0;
+}
+
+.sitemap li li li li li li a.open {
+    background: url(bullet3-open.png) no-repeat 90px 0;
+}
+/* seventh level */
+.sitemap ul ul ul ul ul ul {
+    padding: 0;
+    background: url(dots4.png) repeat-y 180px 0;
+}
+
+.sitemap li li li li li li li a {
+    padding: 0 0 0 195px;
+    background: url(bullet4.png) no-repeat 90px 0;
+}
+
+.sitemap li li li li li li li a.open {
+    background: url(bullet4-open.png) no-repeat 90px 0;
+}
+
+/* eighth level */
+.sitemap ul ul ul ul ul ul ul {
+    padding: 0;
+    background: url(dots2.png) repeat-y 210px 0;
+}
+
+.sitemap li li li li li li li li a {
+    padding: 0 0 0 225px;
+    background: url(bullet2.png) no-repeat 180px 0;
+}
+
+.sitemap li li li li li li li li a.open {
+    background: url(bullet2-open.png) no-repeat 180px 0;
+}
+
+/* eighth level */
+.sitemap ul ul ul ul ul ul ul ul {
+    padding: 0;
+    background: url(dots3.png) repeat-y 240px 0;
+}
+
+.sitemap li li li li li li li li li a {
+    padding: 0 0 0 255px;
+    background: url(bullet3.png) no-repeat 180px 0;
+}
+
+.sitemap li li li li li li li li li a.open {
+    background: url(bullet3-open.png) no-repeat 180px 0;
+}

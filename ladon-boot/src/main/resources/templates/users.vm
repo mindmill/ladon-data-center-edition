@@ -1,0 +1,110 @@
+<!--
+ ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+ -->
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-user"></i>
+            Users
+            <small>Summary</small>
+        </h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Users and Roles
+                    </div>
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#users" data-toggle="tab">Users</a>
+                            </li>
+                            <li class=""><a href="#newusertab" data-toggle="tab">Add User</a>
+                            </li>
+                            <li class=""><a href="#roles" data-toggle="tab">Roles</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content types">
+                            <div class="tab-pane fade active in" id="users">
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div>
+                                            <form role="form" action="users" method="get">
+                                                <label for="usersearch">Search</label>
+                                                <div class="form-group input-group">
+                                                    <input type="hidden" name="repoid" value="$!repoid">
+                                                    <input type="text" name="userfilter" value="$!userfilter"
+                                                           class="form-control"
+                                                           id="usersearch">
+                                                    <span class="input-group-btn">
+                                                <button class="btn btn-default" type="submit"><i
+                                                        class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    #tableObjects($users)
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="roles">
+                                <br>
+                                <div class="table-responsive table-scrollable">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <th>Role ID</th>
+                                        </thead>
+                                        #foreach($role in $roles)
+
+                                            <tr>
+                                                <td>$role</td>
+                                            </tr>
+                                        #end
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="newusertab">
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div>
+                                            <form id="userform" role="form" action="newuser" method="post">
+                                                <label for="newuser">User ID</label>
+                                                <div class="form-group ">
+                                                    <input type="hidden" name="repoid" value="$!repoid">
+                                                    <input type="text" name="userid" value="" class="form-control"
+                                                           id="newuser">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="pw">Password</label>
+                                                    <input type="password" name="pw" value="" class="form-control"
+                                                           id="pw">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="pw">Password wiederholen</label>
+                                                    <input type="password" name="pw2" value="" class="form-control"
+                                                           id="pw2">
+                                                </div>
+                                            </form>
+                                            <button form="userform" class="btn btn-primary" type="submit"
+                                                    name="createuser"
+                                                    formaction="./createuser"
+                                                    formmethod="post">Create
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

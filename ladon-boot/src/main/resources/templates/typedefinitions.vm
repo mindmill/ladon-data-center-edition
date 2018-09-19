@@ -1,0 +1,204 @@
+<!--
+ ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+ -->
+
+#macro(typechildren $typedef )
+    #set($id = $typedef.getTypeDefinition().getId())
+    #set($name = $typedef.getTypeDefinition().getDisplayName())
+    #set($versionable = $typedef.getTypeDefinition().isVersionable() == true)
+    #if($id == $selected.id)
+    <li><a class="active" href="typedefinitions?repoid=$repoid&tid=$id">$id  ( $name ) #if($versionable) v #end </a>
+    #else
+    <li><a href="typedefinitions?repoid=$repoid&tid=$id">$id  ( $name ) #if($versionable) v #end</a>
+    #end
+    #if(!$typedef.getChildren().empty)
+        <ul>
+            #foreach($child in $typedef.getChildren())
+            #typechildren($child )
+            #end
+        </ul>
+    #end
+</li>
+#end
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-gears"></i>
+            Type Definitions
+            <small>$repoid</small>
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Type Hierarchy
+            </div>
+            <div class="panel-body">
+                <ul class="sitemap">
+                    #foreach($type in $roottypes)
+                    #typechildren($type )
+                #end
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Actions
+            </div>
+            <div class="panel-body">
+                <p>#if($selected)
+                    <a href="newtype?repoid=$repoid&temp=$selected.getId()" class="btn btn-info">
+                        new $selected.id child</a>
+                #else
+                    <a href="newtype?repoid=$repoid" class="btn btn-info">new type</a>
+                #end
+                </p>
+            </div>
+        </div>
+    </div>
+    <a href="repositories?repoid=$repoid">
+        <div class="col-md-3 col-sm-12 col-xs-12">
+            <div class="panel panel-primary text-center no-boder bg-color-green">
+                <div class="panel-body">
+                    <i class="fa fa-cloud fa-5x"></i>
+                </div>
+                <div class="panel-footer back-footer-green">
+                    Repositories
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+#if($selected)
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                $selected.getId()
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#props" data-toggle="tab">Properties</a>
+                    </li>
+                    <li class=""><a href="#inherited" data-toggle="tab">Inherited</a>
+                    </li>
+                    <li class=""><a href="#source" data-toggle="tab">XML</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content types">
+                    <div class="tab-pane fade active in" id="props">
+                        <br>
+                        <div class="table-responsive table-scrollable">
+                            <table class="table table-hover" id="dataTables-props">
+                                <thead>
+                                <th>Id</th>
+                                <th>DisplayName</th>
+                                <th>QueryName</th>
+                                <th>PropertyType</th>
+                                <th>Cardinality</th>
+                                <th>Updatability</th>
+                                <th>Required</th>
+                                <th>Queryable</th>
+                                <th>Orderable</th>
+                                <th>DefaultValue</th>
+                                </thead>
+                                #foreach($prop in $selected.getPropertyDefinitions().values())
+                                    #if(!$prop.Inherited)
+                                        <tr title="$prop.Description">
+                                            <td>$prop.Id</td>
+                                            <td>$prop.DisplayName</td>
+                                            <td>$prop.QueryName</td>
+                                            <td>$prop.PropertyType</td>
+                                            <td>$prop.Cardinality</td>
+                                            <td>$prop.Updatability</td>
+                                            #if($prop.Required)
+                                                <td class="bg-color-green">true</td>
+                                            #else
+                                                <td class="bg-color-red">false</td>
+                                            #end
+                                            #if($prop.Queryable)
+                                                <td class="bg-color-green">true</td>
+                                            #else
+                                                <td class="bg-color-red">false</td>
+                                            #end
+                                            #if($prop.Orderable)
+                                                <td class="bg-color-green">true</td>
+                                            #else
+                                                <td class="bg-color-red">false</td>
+                                            #end
+                                            <td>$prop.DefaultValue</td>
+                                        </tr>
+                                    #end
+                                #end
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="inherited">
+                        <br>
+                        <div class="table-responsive table-scrollable">
+                            <table class="table  table-hover" id="dataTables-props2">
+                                <thead>
+                                <th>Id</th>
+                                <th>DisplayName</th>
+                                <th>QueryName</th>
+                                <th>PropertyType</th>
+                                <th>Cardinality</th>
+                                <th>Updatability</th>
+                                <th>Required</th>
+                                <th>Queryable</th>
+                                <th>Orderable</th>
+                                <th>DefaultValue</th>
+                                </thead>
+                                #foreach($prop in $selected.getPropertyDefinitions().values())
+                                    #if($prop.Inherited)
+                                        <tr title="$prop.Description">
+                                            <td>$prop.Id</td>
+                                            <td>$prop.DisplayName</td>
+                                            <td>$prop.QueryName</td>
+                                            <td>$prop.PropertyType</td>
+                                            <td>$prop.Cardinality</td>
+                                            <td>$prop.Updatability</td>
+                                            #if($prop.Required)
+                                                <td class="bg-color-green">true</td>
+                                            #else
+                                                <td class="bg-color-red">false</td>
+                                            #end
+                                            #if($prop.Queryable)
+                                                <td class="bg-color-green">true</td>
+                                            #else
+                                                <td class="bg-color-red">false</td>
+                                            #end
+                                            #if($prop.Orderable)
+                                                <td class="bg-color-green">true</td>
+                                            #else
+                                                <td class="bg-color-red">false</td>
+                                            #end
+                                            <td>$prop.DefaultValue</td>
+                                        </tr>
+                                    #end
+                                #end
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="source">
+                        <br>
+                    <pre class="prettyprint ">
+                         <code class="language-xml">$selectedXML</code>
+                    </pre>
+                        <a href="newtype?repoid=$repoid&tid=$selected.getId()">create a new type using this as
+                            template</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+#end

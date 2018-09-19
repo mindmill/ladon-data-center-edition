@@ -1,0 +1,97 @@
+<!--
+ ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+ -->
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-bar-chart-o"></i>
+            Statistics
+            <small>Summary</small>
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <!--    Hover Rows  -->
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-dashboard"></i> Live Statistics
+            </div>
+            <div class="panel-body">
+                <div id="readGauge" class="col-md-3"></div>
+                <div id="readDataGauge" class="col-md-3"></div>
+                <div id="writeGauge" class="col-md-3"></div>
+                <div id="writeDataGauge" class="col-md-3"></div>
+            </div>
+        </div>
+        <!-- End  Hover Rows  -->
+    </div>
+
+
+</div>
+
+
+<div class="row" id="refreshRepoStats">
+    <div id="reload">
+        #foreach($repostat in $repostats)
+            <div class="col-md-6">
+                <!--    Hover Rows  -->
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o"></i> $repostat.repoid <span
+                            class="pull-right">#if($repostat.running)<i
+                            class="fa fa-refresh">updating</i> #else $repostat.date #end</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Object Type</th>
+                                    <th>Count</th>
+                                    <th>Size</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    #foreach($type in $repostat.getStats().entrySet())
+                                    <tr>
+                                        <td>$type.key</td>
+                                        <td>$type.value.first</td>
+                                        <td>$repostat.humanReadable($type.value.second)</td>
+                                    </tr>
+                                    #end
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End  Hover Rows  -->
+            </div>
+        #end
+        <div class="col-md-6">#if(!$running) $refresh   #end</div>
+        <script type="text/javascript">
+        #parse("statsload.vm")
+##            var ladon = ladon || {};
+##            ladon.statisticdata = {
+##                reads: $stats.getCurrentReadsPerMinute(),
+##                maxReads: $stats.getMaxReadsPerMinute(),
+##                writes: $stats.getCurrentWritesPerMinute(),
+##                maxWrites: $stats.getMaxWritesPerMinute(),
+##                chunkReads: $stats.getCurrentChunkReadsPerMinute(),
+##                maxChunkReads: $stats.getMaxChunkReadsPerMinute(),
+##                chunkWrites: $stats.getCurrentChunkWritesPerMinute(),
+##                maxChunkWrites: $stats.getMaxChunkWritesPerMinute(),
+##                refreshRepoStats: $running
+##            };
+
+        </script>
+    </div>
+</div>
+
+

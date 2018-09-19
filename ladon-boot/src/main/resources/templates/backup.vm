@@ -1,0 +1,62 @@
+<!--
+ ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+ -->
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-life-ring"></i>
+            Backup
+            <small>Summary</small>
+        </h1>
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Backup Configuration
+    </div>
+
+    <div class="panel-body">
+        <form role="form">
+            <div class="form-group">
+                <label>Repository Id</label>
+                <input class="form-control">
+                <label>Export Directory</label>
+                <input class="form-control" placeholder="/tmp/backup">
+            </div>
+            <div class="form-group">
+                <label>Start Token or Date</label>
+                <input class="form-control">
+                <label>End Token or Date</label>
+                <input class="form-control">
+
+                <p class="help-block">Leave Token empty for Full Backup.</p>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Backup Progress (0%)
+        <div class="pull-right">
+            <a href="#" class="btn btn-primary">Start Backup</a>
+
+        </div>
+
+    </div>
+
+    <div class="panel-body">
+        <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0"
+                 aria-valuemin="0" aria-valuemax="100" style="width: $task.getProgress()%">
+                <span class="sr-only">0% Complete (success)</span>
+            </div>
+        </div>
+    </div>
+</div>

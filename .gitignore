@@ -1,0 +1,17 @@
+# Created by .gitignore support plugin (hsz.mobi)
+### Java template
+*.class
+src/main/resources/static/swagger/*
+
+.idea/
+*.iml
+target/
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+

@@ -1,0 +1,42 @@
+#macro( tableObjects $ts )
+##<div class="panel panel-default">
+##    <div class="panel-heading">
+##        Meta
+##    </div>
+##    <div class="panel-body">
+        <table class="table  table-bordered table-hover">
+            <tbody>
+                #foreach($t in $ts)
+                <tr>
+                    <td>$t.title</td>
+                    <td>
+                        <table class="table  table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                #foreach( $head in $t.headers )
+                                    <th>$head</th>
+                                #end
+                            </tr>
+                            </thead>
+                            <tbody>
+                                #foreach( $row in $t.rows )
+                                <tr class="table-row-cell $row.color.css">
+                                    #foreach( $cell in $row.cells)
+                                        #if($cell.link)
+                                            <td><a class="btn-sm btn-primary" href="$cell.link">$cell.text</a></td>
+                                        #else
+                                            <td>$!cell.text</td>
+                                        #end
+                                    #end
+                                </tr>
+                                #end
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+ ##   </div>
+##</div>
+#end

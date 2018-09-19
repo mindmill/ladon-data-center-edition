@@ -1,0 +1,154 @@
+﻿﻿<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+  -->
+#parse("macros.vm")
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ladon Data Center Edition</title>
+    <!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- FontAwesome Styles-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/dataTables/dataTables.bootstrap.css" rel="stylesheet"/>
+    <link href="assets/morris/morris-0.4.3.min.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="/assets/favicon.ico"/>
+##    <link rel="stylesheet" href="../../assets/treegrid/jquery.treegrid.css"/>
+    <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/prettify.css">
+    <link rel="stylesheet" href="assets/codemirror/codemirror.css">
+    <link rel="stylesheet" href="assets/codemirror/fullscreen.css">
+    <link rel="stylesheet" href="assets/nestedlists/style.css">
+##    <!-- Google Fonts-->
+##    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="overview">LADON DE
+                <small></small>
+            </a>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>Bucket : $repoid
+                </a>
+                <ul class="dropdown-menu dropdown-tasks">
+                    #foreach($repo in $repositories)
+                        <li>
+                            <a href="?repoid=$repo.repoId">
+                                <div>
+                                    <p>
+                                        <strong>$repo.repoId</strong>
+                                    </p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                    #end
+                    <li>
+                        <a class="text-center" href="repositories?repoid=$repoid">
+                            <strong>Edit Buckets</strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-tasks -->
+            </li>
+            <li><a href="/admin/feed/$repoid/atom"><i class="fa fa-rss"></i> Feed</a>
+            <li><a href="/admin/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+    </nav>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+                #foreach($item in $menuitems)
+                    <li>
+                        $item
+                        #if($item.getChildren().size() > 0)
+                            <ul class="nav nav-second-level">
+                                #foreach($item2 in $item.children)
+                                    <li>
+                                        $item2
+                                    </li>
+                                #end
+                            </ul>
+                        #end
+                    </li>
+                #end
+            </ul>
+
+        </div>
+        <div class="navbar-fixed-bottom text-primary"><img src="assets/LADON_FINAL_WEB.png" height="70"
+                                                           alt="Ladon Logo"
+                                                           title="Ladon by Mind Consulting"/></div>
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper">
+
+        <div id="page-inner">
+            #if ($flash)
+                <div class="alert alert-$flash.getFirst()">
+                    <i class="fa fa-info"></i> $flash.getSecond()
+                </div>
+            #end
+            #parse($path)
+            <!-- /. ROW  -->
+            <footer><p>All rights reserved. <a href="http://mind-consulting.de">Mind Consulting</a></p></footer>
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script src="assets/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+
+<script src="assets/morris/raphael-2.1.0.min.js"></script>
+<script src="assets/morris/morris.js"></script>
+
+<!-- DATA TABLE SCRIPTS -->
+<script src="assets/dataTables/jquery.dataTables.js"></script>
+<script src="assets/dataTables/dataTables.bootstrap.js"></script>
+
+<!-- TREE TABLE-->
+
+##<script type="text/javascript" src="../assets/treegrid/jquery.treegrid.js"></script>
+##<script type="text/javascript" src="../assets/treegrid/jquery.treegrid.bootstrap3.js"></script>
+
+<!-- gauges -->
+<script type="text/javascript" src="assets/justgage/js/justgage.1.0.1.min.js"></script>
+
+<script src="assets/js/prettify/prettify.js"></script>
+<script src="assets/codemirror/codemirror.js"></script>
+<script src="assets/codemirror/xml.js"></script>
+<script src="assets/codemirror/fullscreen.js"></script>
+
+<!-- Custom Js -->
+<script src="assets/js/custom-scripts.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Remove Version
+            </div>
+            <div class="panel-body">
+                <form role="form" id="removeversionform">
+                    <div class="form-group">
+                        <label>Bucket</label>
+                        <input class="form-control" type="text" name="repositoryId" value="${key.repositoryId}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input class="form-control" type="text" name="versionSeriesId" value="${key.versionSeriesId}"
+                               readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Creation Date</label>
+                        <input class="form-control" type="text" name="changeDate" value="$changeDate"
+                               readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>ChangeToken</label>
+                        <input class="form-control" type="text" name="changeToken" value="${key.changeToken}"
+                               readonly>
+                    </div>
+                    <input  type="hidden" name="urlkey" value="$urlkey" readonly>
+                    <button form="removeversionform" class="btn btn-danger" type="submit"
+                            formaction="./remove-version"
+                            formmethod="post">Remove!
+                    </button>
+                    <a class="btn btn-primary" type="reset" name="cancel"
+                       href="./debug?key=${urlkey}">Cancel</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

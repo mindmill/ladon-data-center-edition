@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-area-chart"></i> System
+            <small>JVM Info</small>
+        </h1>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-server"></i> System Info
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <!--<thead>-->
+                        <!--<tr>-->
+                        <!--<th>Key</th>-->
+                        <!--<th>Value</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <tbody>
+                        <tr>
+                            <td>Operating System</td>
+                            <td>$osName</td>
+                        </tr>
+                        <tr>
+                            <td>OS Version</td>
+                            <td>$osVersion</td>
+                        </tr>
+                        <tr>
+                            <td>OS Architecture</td>
+                            <td>$osArch</td>
+                        </tr>
+                        <tr>
+                            <td>Processors</td>
+                            <td>$rtProcessors</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--    Hover Rows  -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="fa fa-server"></i> JVM Status
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <!--<thead>-->
+                        <!--<tr>-->
+                        <!--<th>Key</th>-->
+                        <!--<th>Value</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <tbody>
+                        <tr>
+                            <td>Max Memory</td>
+                            <td>$rtMaxRead</td>
+                        </tr>
+                        <tr>
+                            <td>Total Memory</td>
+                            <td id="totalMem">$rtTotalRead</td>
+                        </tr>
+                        <tr>
+                            <td>Free Memory</td>
+                            <td id="freeMem">$rtFreeRead</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End  Hover Rows  -->
+    </div>
+
+
+    <div class="col-md-8 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                CPU Live Chart
+            </div>
+            <div class="panel-body">
+                <div id="morris-area-chart"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div class="row">
+
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Filesystem (GB)
+            </div>
+            <div class="panel-body">
+                <div id="morris-fs-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Heap Live Chart
+            </div>
+            <div class="panel-body">
+                <div id="morris-heap-chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                License Info<span class="pull-right"></span>
+            </div>
+            <div class="panel-body">
+                <div>Ladon DE License</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ladon = ladon || {};
+    ladon.fsinfo = new Array($fsRoots.size());
+
+        #foreach($root in $fsRoots)
+            #set( $index = $velocityCount - 1)
+            #set($used = $root.getTotalSpace() - $root.getFreeSpace())
+        ladon.fsinfo[$index] = {
+            y: "$root.getAbsolutePath()",
+            b: ($root.getTotalSpace() / (1024 * 1024 * 1024)
+        ).toFixed(2),
+                a
+        :
+        ($used / (1024 * 1024 * 1024)
+        ).toFixed(2)
+        }
+        ;
+        #end
+    ladon.cpuinfo = ladon.cpuinfo || new Array(0);
+    ladon.meminfo = ladon.meminfo || new Array(0);
+    ladon.jvmtext = ladon.jvmtext || new Array(0);
+    ladon.jvmtext = new Array(0);
+    ladon.jvmtext.push('$rtTotalRead');
+    ladon.jvmtext.push('$rtFreeRead');
+
+
+</script>
+
+
+
+
+
+
+

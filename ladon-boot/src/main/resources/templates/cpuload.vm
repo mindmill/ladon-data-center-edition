@@ -1,0 +1,39 @@
+var ladon = ladon || {};
+ladon.jvmtext = new Array(0);
+ladon.jvmtext.push('$rtTotalRead');
+ladon.jvmtext.push('$rtFreeRead');
+
+ladon.fsinfo = new Array($fsRoots.size());
+
+#foreach($root in $fsRoots)
+    #set( $index = $velocityCount - 1)
+    #set($used = $root.getTotalSpace() - $root.getFreeSpace())
+ladon.fsinfo[$index] = {
+y: "$root.getAbsolutePath()",
+b: ($root.getTotalSpace() / (1024 * 1024 * 1024) ).toFixed(2),
+a:($used / (1024 * 1024 * 1024)).toFixed(2)
+};
+#end
+
+ladon.cpuinfo = ladon.cpuinfo || new Array(0);
+ladon.meminfo = ladon.meminfo || new Array(0);
+ladon.cpuinfo.push(
+{ time : $time ,
+jvm: ($jvmLoad).toFixed(2)  ,
+system : ($systemLoad).toFixed(2)
+});
+ladon.meminfo.push(
+{ time : $time ,
+max :  100 ,
+total : ( $rtTotal * 100 / $rtMax ).toFixed(2),
+free : ( ( $rtTotal - $rtFree ) * 100 / $rtMax ).toFixed(2)
+});
+
+if(ladon.cpuinfo.length > 60){
+ladon.cpuinfo = ladon.cpuinfo.slice(1);
+}
+if(ladon.meminfo.length > 60){
+ladon.meminfo = ladon.meminfo.slice(1);
+}
+
+

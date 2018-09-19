@@ -1,0 +1,85 @@
+<!--
+ ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+ -->
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-exclamation"></i>
+            Logs
+
+            <small><a class="btn btn-primary" href="log?repoid=$repoid"><i class="fa fa-refresh "></i> Reload</a>
+            </small>
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Advanced Tables -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Logging
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive ">
+                    <table data-order='[[ 0, "desc" ]]' data-page-length='50'
+                           class="table table-striped table-bordered table-hover small" id="dataTables-logs">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Level</th>
+                            <th>Class</th>
+                            <th>Message</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            #foreach($log in $logs)
+                            <tr  #if($log.level == "ERROR") class="bg-color-red" #elseif($log.level == "WARN")
+                                                            class="bg-color-brown"  #end>
+                                <td width="250">$log.getLogDate()</td>
+                                <td>$log.level</td>
+                                <td>$log.shortClassName:$log.line_number</td>
+                                <td>
+                                    <div class="log-message">#if($log.message)$log.escapedMessage#end</div>
+                                </td>
+                                <td>#if($log.throwable_str)
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#myModal$velocityCount">
+                                        trace
+                                    </button>
+                                    <div class="modal fade" id="myModal$velocityCount" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel$velocityCount" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel$velocityCount">
+                                                        Stacktrace</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    $log.getStackTrace()
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default btn-sm"
+                                                            data-dismiss="modal">Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                #end</td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Advanced Tables -->
+
+
+</div>

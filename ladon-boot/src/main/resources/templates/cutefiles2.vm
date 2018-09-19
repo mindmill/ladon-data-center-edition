@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>Ladon File Browser Demo</title>
+
+
+    <!-- Include our stylesheet -->
+    <link href="/assets/css/cutefiles.css" rel="stylesheet"/>
+    <link href="/assets/css/icono.min.css" rel="stylesheet"/>
+
+</head>
+<body>
+
+<div class="filemanager">
+
+    <div class="search">
+        <input type="search" placeholder="Find a file.."/>
+    </div>
+
+    <div class="breadcrumbs"></div>
+
+    <ul class="data"></ul>
+
+
+    <div class="nothingfound">
+        <div class="nofiles"></div>
+        <span>No files here.</span>
+    </div>
+
+    <div class="proptoggle" title="Details"><i class="icono-caretDownSquare"></i></div>
+    <div class="droptoggle" title="Upload File"><i class="icono-file"></i></div>
+##    <div class="timetoggle" title="Back in Time"><i class="icono-clock"></i></div>
+    <div class="propdetails"></div>
+
+    <form id="upload" method="post" action="upload" enctype="multipart/form-data">
+        <div id="drop">
+            Drop Here<br>
+
+            <a>Browse</a>
+            <input type="file" name="upl" multiple/>
+            <input type="hidden" name="folderid" id="folderid"/>
+        </div>
+
+        <ul>
+            <!-- The file uploads will be shown here -->
+        </ul>
+
+    </form>
+
+
+</div>
+
+<footer>
+    <a class="tz" href="http://ladon.org/"></a>
+</footer>
+
+<!-- Include our script files -->
+<script src="/assets/js/jquery-1.10.2.js"></script>
+<script src="/assets/js/jquery.knob.js"></script>
+<script src="/assets/js/jquery.ui.widget.js"></script>
+<script src="/assets/js/jquery.iframe-transport.js"></script>
+<script src="/assets/js/jquery.fileupload.js"></script>
+<script src="/assets/js/cutefiles2.js"></script>
+<script src="/assets/js/jquery.quicksand.js"></script>
+
+</body>
+</html>

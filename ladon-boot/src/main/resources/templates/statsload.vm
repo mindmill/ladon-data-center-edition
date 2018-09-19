@@ -1,0 +1,12 @@
+var ladon = ladon || {};
+ladon.statisticdata = {
+reads: $stats.getCurrentReadsPerMinute(),
+maxReads: $stats.getMaxReadsPerMinute(),
+writes: $stats.getCurrentWritesPerMinute(),
+maxWrites: $stats.getMaxWritesPerMinute(),
+chunkReads: $stats.getCurrentChunkReadsPerMinute(),
+maxChunkReads: $stats.getMaxChunkReadsPerMinute(),
+chunkWrites: $stats.getCurrentChunkWritesPerMinute(),
+maxChunkWrites: $stats.getMaxChunkWritesPerMinute(),
+refreshRepoStats: $running
+};

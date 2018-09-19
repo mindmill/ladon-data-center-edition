@@ -1,0 +1,54 @@
+<!--
+ ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+ -->
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-gears"></i>
+            Type Definitions
+            <small>$repoid</small>
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Create a new type
+                <span class="pull-right small">F11 toggle fullscreen</span>
+            </div>
+            <div class="panel-body">
+                <form role="form" id="typeform">
+                    <div class="form-group">
+                        <label>Type Definition XML</label>
+                        #if($selectedXML)
+                            <textarea class="form-control" rows="30" name="typexml"
+                                      id="newtypexml">$selectedXML</textarea>
+                        #else
+                            <textarea class="form-control" rows="30" name="typexml"></textarea>
+                        #end
+                        <input type="hidden" name="repoid" value="$repoid">
+
+                    </div>
+                    <button form="typeform" class="btn btn-info" type="submit" name="validatetype"
+                            formaction="./validatetype"
+                            formmethod="post">Validate
+                    </button>
+                    #if($allowsubmit)
+                        <button form="typeform" class="btn btn-primary" type="submit" name="createtype"
+                                formaction="./createtype"
+                                formmethod="post">Create
+                        </button>
+                    #else
+                        <div hidden id="errorline">$errorline</div>
+                    #end
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
