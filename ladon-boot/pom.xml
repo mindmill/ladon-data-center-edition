@@ -165,6 +165,6 @@
                 <targetPath>static</targetPath>
             </resource>
         </resources>
-        <finalName>ladon_se_${project.version}</finalName>
+        <finalName>ladon_de_${project.version}</finalName>
     </build>
 </project>

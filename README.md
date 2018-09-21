@@ -3,6 +3,8 @@
 Ladon with Apache Cassandra for complex multi data center deployments.
 Make sure to run the Ladon Config Server on first startup.
 
+If you just want to test it on localhost with one single node add -Dlocalsetup=true
+
 ### License
 Copyright (C) 2018 Mind Consulting
 

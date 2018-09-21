@@ -13,6 +13,7 @@ import java.util.*
 class LadonConfigClient {
 
     private val LOG = getLogger()
+    private val localSetup = System.getProperty("localsetup") != null
 
     fun getConfig(): LadonConfig {
         val buf = "LADON-DE-1".toByteArray()
@@ -24,8 +25,8 @@ class LadonConfigClient {
         LOG.info("Sending Config Server lookup packet...")
         socket.send(packet)
         LOG.info("Waiting for Config Server to respond...")
-        var port: Int
-        while (true) {
+        var port = 8888
+        while (!localSetup) {
             socket.receive(packet)
             val received = String(packet.data, 0, packet.length)
             try {
@@ -35,8 +36,14 @@ class LadonConfigClient {
                 LOG.info("skip multicast message : $received")
             }
         }
-        val received = String(packet.data, 0, packet.length)
-        val configServerAddress = packet.address.hostAddress
+        val configServerAddress = if (localSetup) {
+            return LadonConfig(Properties().apply {
+                put("self", "127.0.0.1")
+                put("127.0.0.1", "DC1:RC1")
+            })
+        } else {
+            packet.address.hostAddress
+        }
         LOG.info("Located Config Server at $configServerAddress:$port")
         try {
             val configText = URL("http://$configServerAddress:$port/").readText()
@@ -46,7 +53,7 @@ class LadonConfigClient {
             if (e.message?.contains("409") == true) {
                 LOG.error("Configuration not valid, the nodes address could not be found at the config server")
             } else {
-                LOG.error("Configuration could not be found, make sure the config server is running and no firewall active on port $received")
+                LOG.error("Configuration could not be found, make sure the config server is running and no firewall active on port $port")
             }
             throw e
         }
