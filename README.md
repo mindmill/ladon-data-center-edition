@@ -5,6 +5,8 @@ Make sure to run the Ladon Config Server on first startup.
 
 If you just want to test it on localhost with one single node add -Dlocalsetup=true
 
+<img href="https://github.com/mindmill/ladon-data-center-edition/blob/master/dist/ladon_dashboard.png" alt="Dashboard" width=100>
+
 ### License
 Copyright (C) 2018 Mind Consulting
 
