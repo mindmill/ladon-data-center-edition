@@ -6,6 +6,9 @@ Make sure to run the Ladon Config Server on first startup.
 If you just want to test it on localhost with one single node add -Dlocalsetup=true
 
 ![Dashboard](/dist/ladon_dashboard.png)
+![Buckets](/dist/ladon_buckets.png)
+![Cluster](/dist/ladon_cluster.png)
+![Metadata](/dist/ladon_files2.png)
 
 
 ### License
