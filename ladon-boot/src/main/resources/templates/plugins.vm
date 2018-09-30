@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            <i class="fa fa-plug"></i>
+            Plugins
+            <small>osgi</small>
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Bundles
+                </div>
+
+                <div class="panel-body">
+                    #tableObjects($bundles)
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Upload
+                </div>
+                <div class="panel-body">
+                    <form role="form" id="uploadplugin" enctype="multipart/form-data">
+                        <label class="btn btn-default">
+                            <input type="file" name="file" accept=".jar" hidden>
+                        </label>
+                        <button form="uploadplugin" class="btn btn-primary" type="submit"
+                                formaction="addplugin"
+                                formmethod="post">Upload
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HttpServletBean;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,9 +90,10 @@ public class ServletConfig {
     }
 
     @Bean
-    public ServletRegistrationBean dispatcherServletRegistration() {
+    public ServletRegistrationBean dispatcherServletRegistration(MultipartConfigElement multipartConfigElement) {
         ServletRegistrationBean registration = new ServletRegistrationBean(
                 dispatcherServlet(), "/admin/*", "/login");
+        registration.setMultipartConfig(multipartConfigElement);
         registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
         return registration;
     }

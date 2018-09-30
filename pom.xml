@@ -12,6 +12,7 @@
         <module>ladon-cassandra</module>
         <module>ladon-s3</module>
         <module>ladon-boot</module>
+        <module>ladon-plugin</module>
     </modules>
     <packaging>pom</packaging>
 

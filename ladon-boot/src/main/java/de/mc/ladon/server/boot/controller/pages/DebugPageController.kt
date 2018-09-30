@@ -56,13 +56,14 @@ class DebugPageController : FrameController() {
     lateinit var binaryDao: BinaryDataDAO
 
 
-    @RequestMapping(value = "debug")
+    @RequestMapping(value = ["debug"])
     fun showId(model: MutableMap<String, Any>, callContext: LadonCallContext, @RequestParam(required = false) key: String?, @RequestParam(required = false) repoid: String?, @RequestParam(required = false) objectid: String?): String {
 
-        val resource = key?.toResourceKey()?:dataDAO.getMetadataLatest(callContext, HistoryKey(repoid!!,objectid?:""))?.key()?: ResourceKey(repoid!!,objectid?:"",UUID.randomUUID())
-        model.put("objectid", resource.versionSeriesId)
+        val resource = key?.toResourceKey() ?: dataDAO.getMetadataLatest(callContext, HistoryKey(repoid!!, objectid
+                ?: ""))?.key() ?: ResourceKey(repoid!!, objectid ?: "", UUID.randomUUID())
+        model["objectid"] = resource.versionSeriesId
         //model.put("df", SimpleDateFormat(datePattern))
-        model.put("objects", listOf(toTableObject(dataDAO.getMetadataHistory(callContext, HistoryKey(resource.repositoryId, resource.versionSeriesId)), resource.changeToken.toString(), true)))
+        model["objects"] = listOf(toTableObject(dataDAO.getMetadataHistory(callContext, HistoryKey(resource.repositoryId, resource.versionSeriesId)), resource.changeToken.toString(), true))
 
         val obj = try {
             dataDAO.getMetadata(callContext, resource)
@@ -83,59 +84,60 @@ class DebugPageController : FrameController() {
                     obj.content().toTableObject(obj.key())
             ).filterNotNull()
 
-            model.put("tables", tables)
+            model["tables"] = tables
 
             val ct = obj.key().changeToken
 
-            model.put("objectid", resource.versionSeriesId)
-            model.put("token", ct)
+            model["objectid"] = resource.versionSeriesId
+            model["token"] = ct
         }
         return super.updateModel(model, "debug", resource.repositoryId)
     }
 
-    @RequestMapping(value = "remove-version", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = ["remove-version"], method = [RequestMethod.GET])
     fun getRemoveVersion(model: MutableMap<String, Any>, callContext: LadonCallContext, @RequestParam key: String): String {
         val resourceKey = key.toResourceKey()
-        model.put("key", resourceKey)
-        model.put("urlkey", key)
-        model.put("changeDate", fromDate(Date(UUIDs.unixTimestamp(resourceKey.changeToken))))
+        model["key"] = resourceKey
+        model["urlkey"] = key
+        model["changeDate"] = fromDate(Date(UUIDs.unixTimestamp(resourceKey.changeToken)))
         return super.updateModel(model, "remove-version", resourceKey.repositoryId)
     }
 
-    @RequestMapping(value = "remove-version", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = ["remove-version"], method = [RequestMethod.POST])
     fun postRemoveVersion(model: MutableMap<String, Any>, callContext: LadonCallContext, @RequestParam urlkey: String): String {
         val resourceKey = urlkey.toResourceKey()
         val meta = dataDAO.getMetadata(callContext, resourceKey)
         if (meta != null) {
             log.warn("User ${callContext.getUser().name} removed object $resourceKey")
             dataDAO.removeMetadata(callContext, resourceKey)
-            if(!meta.isDeleted()) binaryDao.deleteContentStream(callContext, resourceKey.repositoryId, meta.content().id)
+            if (!meta.isDeleted()) binaryDao.deleteContentStream(callContext, resourceKey.repositoryId, meta.content().id)
         }
-        model.put("repoid", resourceKey.repositoryId)
-        model.put("objectid", resourceKey.versionSeriesId)
-        return  "redirect:debug?key=${urlkey}"
+        model["repoid"] = resourceKey.repositoryId
+        model["objectid"] = resourceKey.versionSeriesId
+        model.flashInfo("Deleted $resourceKey")
+        return "redirect:searchid?repoid=${resourceKey.repositoryId}"
     }
 
 
-    @RequestMapping(value = "searchid")
+    @RequestMapping(value = ["searchid"])
     fun searchId(model: MutableMap<String, Any>, callContext: LadonCallContext,
                  @RequestParam repoid: String,
                  @RequestParam(required = false) time: String?,
                  @RequestParam(required = false) searchpath: String?): String {
         val datetime = toDate(time) ?: getDateMinus1()
-        model.put("time", fromDate(datetime))
-        model.put("searchpath", searchpath ?: "")
-        model.put("df", SimpleDateFormat(datePattern))
+        model["time"] = fromDate(datetime)
+        model["searchpath"] = searchpath ?: ""
+        model["df"] = SimpleDateFormat(datePattern)
 
         val limit = 1000L
-        if (searchpath != null) {
-            val objs = dataDAO.listAllMetadata(callContext, repoid, searchpath, "", limit.toInt(), true).first
+        if (searchpath != null || time ==null) {
+            val objs = dataDAO.listAllMetadata(callContext, repoid, searchpath?:"", "", limit.toInt(), true).first
             val latestVersion = ConcurrentHashMap<String, Metadata>()
             objs.forEach {
                 latestVersion.putIfAbsent(it.key().versionSeriesId, it)
             }
             if (objs.isNotEmpty()) {
-                model.put("objects", listOf(toTableObject(latestVersion.values.toList(), null)))
+                model["objects"] = listOf(toTableObject(latestVersion.values.toList(), null))
             } else {
                 model.flashInfo("not found")
             }
@@ -144,7 +146,7 @@ class DebugPageController : FrameController() {
         if (!time.isNullOrEmpty()) {
             val result = tokenDao.getAllChangesSince(callContext, repoid, UUIDs.startOf(datetime.time).toString(), BigInteger.valueOf(limit)).toTableObjectList()
             if (result.isNotEmpty()) {
-                model.put("objects", result)
+                model["objects"] = result
             } else {
                 model.flashInfo("not found")
             }
@@ -154,7 +156,7 @@ class DebugPageController : FrameController() {
         return super.updateModel(model, "searchid", repoid)
     }
 
-    @RequestMapping(value = "download")
+    @RequestMapping(value = ["download"])
     fun download(response: HttpServletResponse, @RequestParam key: String, callContext: LadonCallContext) {
         val resource = key.toResourceKey()
         val meta = dataDAO.getMetadata(callContext, resource) ?: throw LadonObjectNotFoundException(key)
@@ -211,7 +213,7 @@ class DebugPageController : FrameController() {
     data class Props(val id: String, val type: String, val value: String = "not set")
 
 
-    fun toTableObject(meta: List<Metadata>, selected: String?, deleteButton: Boolean = false): TableObject {
+    private fun toTableObject(meta: List<Metadata>, selected: String?, deleteButton: Boolean = false): TableObject {
         val headers = listOf("INDEX", "ID", "Change", "Time")
         return TableObject("Files", headers, meta.mapIndexed { i, e ->
             TableRow(listOf(
@@ -226,7 +228,7 @@ class DebugPageController : FrameController() {
         })
     }
 
-    fun List<ChangeToken>.toTableObjectList(): List<TableObject> {
+    private fun List<ChangeToken>.toTableObjectList(): List<TableObject> {
         val headers = listOf("INDEX", "ID", "Change", "Time")
         return listOf(TableObject("Files", headers, mapIndexed { i, e ->
             TableRow(listOf(
@@ -238,7 +240,7 @@ class DebugPageController : FrameController() {
         }))
     }
 
-    fun List<Props>.toTableObject(): TableObject {
+    private fun List<Props>.toTableObject(): TableObject {
         val headers = listOf("ID", "Type", "Value")
         return TableObject("Properties", headers, mapIndexed { _, e ->
             TableRow(listOf(
@@ -249,7 +251,7 @@ class DebugPageController : FrameController() {
         })
     }
 
-    fun Acl.toTableObject(): TableObject {
+    private fun Acl.toTableObject(): TableObject {
         val headers = listOf("Principal", "Permissions")
         return TableObject("Acl", headers, content.mapIndexed { _, ace ->
             TableRow(listOf(
@@ -260,7 +262,7 @@ class DebugPageController : FrameController() {
     }
 
 
-    fun ResourceKey.toTableObject(): TableObject {
+    private fun ResourceKey.toTableObject(): TableObject {
         val headers = listOf("Bucket", "Key", "Version")
         return TableObject("Key", headers, listOf(
                 TableRow(listOf(
@@ -271,7 +273,7 @@ class DebugPageController : FrameController() {
         )
     }
 
-    fun Content.toTableObject(key: ResourceKey): TableObject {
+    private fun Content.toTableObject(key: ResourceKey): TableObject {
         val headers = listOf("ContentId", "Size", "Hash")
         return TableObject("Content", headers, listOf(
                 TableRow(listOf(
@@ -285,8 +287,7 @@ class DebugPageController : FrameController() {
     }
 
 
-
-    fun String.toResourceKey(): ResourceKey {
+    private fun String.toResourceKey(): ResourceKey {
         return split(".").map { it.base64dec() }.let { ResourceKey(it[0], it[1], it[2].toUUID()) }
     }
 
@@ -295,6 +296,7 @@ class DebugPageController : FrameController() {
 fun ResourceKey.toUrlString(): String {
     return "${repositoryId.base64enc()}.${versionSeriesId.base64enc()}.${changeToken.toString().base64enc()}"
 }
+
 fun String.base64enc(): String {
     return BaseEncoding.base64().encode(this.toByteArray())
 }
