@@ -42,7 +42,7 @@ open class FrameController {
                        // .addChild(MenuItem("searchid", path, repoid, "fa fa-file", "Explorer", "green"))
                         //.addChild(MenuItem("debug", path, repoid, "fa fa-file", "Details", "green")),
                 MenuItem("users", path, repoid, "fa fa-user", "Users", "green"),
-                MenuItem("s3", path, repoid, "fa fa-plug", "Endpoints", "green"),
+                MenuItem("plugins", path, repoid, "fa fa-plug", "Plugins", "green"),
                 MenuItem("system", path, repoid, "fa fa-area-chart", "System", "green"),
                 MenuItem("cassandra", path, repoid, "fa fa-database", "Cassandra", "green")
         )

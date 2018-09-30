@@ -2,6 +2,7 @@ package de.mc.ladon.server.core.util
 
 import de.mc.ladon.server.core.exceptions.LadonIllegalArgumentException
 import org.slf4j.LoggerFactory
+import java.io.File
 import java.util.*
 
 
@@ -15,6 +16,8 @@ fun Long.humanReadable(): String {
     return ByteFormat.humanReadableByteCount(this, true)
 }
 
+fun getLadonHome() = System.getProperty("ladon.home") ?: "${System.getProperty("user.home")}${File.separator}ladon_data"
+fun getSystemDir() = getLadonHome() + File.separator + "system"
 
 fun <T> List<T>.second(): T {
     return this[1]

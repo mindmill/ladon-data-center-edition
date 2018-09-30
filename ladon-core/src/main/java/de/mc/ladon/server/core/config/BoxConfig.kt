@@ -22,7 +22,7 @@ class BoxConfig private constructor(private val parameters: Map<String, String>)
         val ROOT_NAME: String = "/"
         val PATH_SEPARATOR: String = "/"
 
-        val SYSTEM_REPO: String = "system"
+        val SYSTEM_REPO: String = "_system"
 
         val SYSTEM_PATH_REPOS: String = "repositories"
         val SYSTEM_PATH_TYPES: String = "typedefinitions"

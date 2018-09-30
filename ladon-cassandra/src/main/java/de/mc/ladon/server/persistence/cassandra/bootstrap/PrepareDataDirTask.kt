@@ -6,6 +6,7 @@ package de.mc.ladon.server.persistence.cassandra.bootstrap
 
 import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
 import de.mc.ladon.server.core.persistence.DatabaseConfig
+import de.mc.ladon.server.core.util.getLadonHome
 import de.mc.ladon.server.core.util.getLogger
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.Velocity
@@ -21,7 +22,7 @@ import java.util.*
 class PrepareDataDirTask(val config: DatabaseConfig) : BootstrapTask {
     private val LOG = getLogger()
 
-    val ladonHome = System.getProperty("ladon.home") ?: "${System.getProperty("user.home")}${File.separator}ladon_data"
+    val ladonHome = getLadonHome()
     val dataDir = ladonHome + File.separator + "cassandra"
     val configDir = ladonHome + File.separator + "conf"
     val cassandraConfig = configDir + File.separator + "cassandra.yaml"

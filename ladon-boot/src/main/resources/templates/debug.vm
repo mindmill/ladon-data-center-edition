@@ -42,7 +42,7 @@
                         </form>
                     </div>
 
-                    <div><a href="searchid?repoid=#if($repoid)$repoid#end#if($objectid)&searchpath=$objectid#end" class="btn btn-primary" >show Bucket Listing</a></div>
+                    <div><a href="searchid?repoid=#if($repoid)$repoid#end#if($objectid)&searchpath=$objectid#end" class="btn btn-primary" >&lt;- back</a></div>
                 </div>
                 <div class="col-md-8">
                     #tableObjects($objects)

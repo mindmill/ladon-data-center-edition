@@ -4,11 +4,16 @@ import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
 import de.mc.ladon.server.core.config.BoxConfig
 import de.mc.ladon.server.core.persistence.dao.api.RepositoryDAO
 import de.mc.ladon.server.core.request.SystemCallContext
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * CreateSystemRepositoryTask
  * Created by ralf on 26.04.15.
- */ open class CreateSystemRepoTask  constructor(val repoDao: RepositoryDAO) : BootstrapTask {
+ *
+ */
+@Named
+open class CreateSystemRepoTask @Inject constructor(val repoDao: RepositoryDAO) : BootstrapTask {
 
 
     override fun shouldRun(): Boolean {

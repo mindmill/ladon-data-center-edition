@@ -2,6 +2,7 @@ package de.mc.ladon.server.boot.config
 
 import de.mc.ladon.server.core.bootstrap.api.BootstrapRunner
 import de.mc.ladon.server.core.bootstrap.impl.CreateAdminUserTask
+import de.mc.ladon.server.core.bootstrap.impl.CreateSystemRepoTask
 import de.mc.ladon.server.core.bootstrap.impl.InitDatabaseTask
 import de.mc.ladon.server.core.persistence.Database
 import de.mc.ladon.server.core.persistence.DatabaseConfig
@@ -19,6 +20,7 @@ import javax.inject.Named
 open class BootstrapRunnerBean @Inject constructor(val runner: BootstrapRunner,
                                                    val database: Database,
                                                    val createAdminUserTask: CreateAdminUserTask,
+                                                   val createSystemRepoTask: CreateSystemRepoTask,
                                                    val config: DatabaseConfig) : SmartInitializingSingleton {
 
 
@@ -27,6 +29,7 @@ open class BootstrapRunnerBean @Inject constructor(val runner: BootstrapRunner,
         runner.run(StartCassandraTask(database))
         runner.run(InitDatabaseTask(database))
         runner.run(createAdminUserTask)
+        runner.run(createSystemRepoTask)
 
     }
 }
