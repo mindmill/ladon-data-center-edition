@@ -31,10 +31,10 @@ class UserRolePageController
               @RequestParam(required = false) userfilter: String?,
               @RequestParam(required = false) rolefilter: String?,
               @RequestParam(required = false) selectedrole: String?): String {
-        if (userfilter != null) {
-            model.put("userfilter", userfilter)
+
+            model.put("userfilter", userfilter.orEmpty())
             val result = mutableListOf<TableRow>()
-            userRoleDAO.getAllUsers { it.name?.contains(userfilter, true) ?: false }
+            userRoleDAO.getAllUsers { it.name?.contains(userfilter.orEmpty(), true) ?: false }
                     .forEach { user ->
                         val keys = userRoleDAO.getKeysForUser(user.name)
                         result.add(TableRow(listOf(
@@ -56,9 +56,7 @@ class UserRolePageController
                         })
                     }
             model.put("users", listOf(TableObject("User", listOf("UserId", "Roles", "AccessKey", "SecretKey"), result)))
-        } else {
-            model.put("users", listOf<TableObject>())
-        }
+
         model.put("roles", userRoleDAO.getAllRoleIds { rolefilter?.equals(it) ?: true })
         return super.updateModel(model, "users", repoid)
     }
