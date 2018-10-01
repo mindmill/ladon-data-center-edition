@@ -143,10 +143,11 @@ class DebugPageController : FrameController() {
             val tables = mutableListOf<TableObject>()
 
             if(result.second.isNotEmpty()){
-             tables.add(TableObject("Folders", listOf("Prefix"),result.second. map { e ->
+             tables.add(TableObject("Folders", listOf("Prefix"),result.second. mapIndexed {i, pref ->
                    TableRow(listOf(
-                           TableCell(e, "searchid?repoid=$repoid&searchpath=$e&delimiter=$delimiter")),
-                           Color.GREEN)
+                           TableCell("${i + 1}","searchid?repoid=$repoid&searchpath=$pref/&delimiter=$delimiter"),
+                           TableCell(pref)),
+                           Color.BLUE)
                }))
             }
             if (result.first.isNotEmpty()) {
