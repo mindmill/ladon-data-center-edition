@@ -123,24 +123,36 @@ class DebugPageController : FrameController() {
     fun searchId(model: MutableMap<String, Any>, callContext: LadonCallContext,
                  @RequestParam repoid: String,
                  @RequestParam(required = false) time: String?,
+                 @RequestParam(required = false) delimiter: Boolean? = true,
                  @RequestParam(required = false) searchpath: String?): String {
         val datetime = toDate(time) ?: getDateMinus1()
         model["time"] = fromDate(datetime)
+        model["delimiter"] = delimiter == true
         model["searchpath"] = searchpath ?: ""
         model["df"] = SimpleDateFormat(datePattern)
 
         val limit = 1000L
-        if (searchpath != null || time ==null) {
-            val objs = dataDAO.listAllMetadata(callContext, repoid, searchpath?:"", "",null, limit.toInt(), true).first.first
+        if (searchpath != null || time == null) {
+            val result = dataDAO.listAllMetadata(callContext, repoid, searchpath
+                    ?: "", "", delimiter?.let { if (it) "/" else null }, limit.toInt(), true).first
             val latestVersion = ConcurrentHashMap<String, Metadata>()
-            objs.forEach {
+            result.first.forEach {
                 latestVersion.putIfAbsent(it.key().versionSeriesId, it)
             }
-            if (objs.isNotEmpty()) {
-                model["objects"] = listOf(toTableObject(latestVersion.values.toList(), null))
-            } else {
-                model.flashInfo("not found")
+
+            val tables = mutableListOf<TableObject>()
+
+            if(result.second.isNotEmpty()){
+             tables.add(TableObject("Folders", listOf("Prefix"),result.second. map { e ->
+                   TableRow(listOf(
+                           TableCell(e, "searchid?repoid=$repoid&searchpath=$e&delimiter=$delimiter")),
+                           Color.GREEN)
+               }))
             }
+            if (result.first.isNotEmpty()) {
+               tables.add(toTableObject(latestVersion.values.toList(), null))
+            }
+            model["objects"] = tables
         }
 
         if (!time.isNullOrEmpty()) {
@@ -239,6 +251,7 @@ class DebugPageController : FrameController() {
                     Color.NONE)
         }))
     }
+
 
     private fun List<Props>.toTableObject(): TableObject {
         val headers = listOf("ID", "Type", "Value")
