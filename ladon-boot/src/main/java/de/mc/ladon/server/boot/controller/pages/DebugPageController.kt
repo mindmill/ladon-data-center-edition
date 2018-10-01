@@ -143,7 +143,7 @@ class DebugPageController : FrameController() {
             val tables = mutableListOf<TableObject>()
 
             if(result.second.isNotEmpty()){
-             tables.add(TableObject("Folders", listOf("Prefix"),result.second. mapIndexed {i, pref ->
+             tables.add(TableObject("Folders", listOf("ID","Prefix"),result.second. mapIndexed {i, pref ->
                    TableRow(listOf(
                            TableCell("${i + 1}","searchid?repoid=$repoid&searchpath=$pref/&delimiter=$delimiter"),
                            TableCell(pref)),
