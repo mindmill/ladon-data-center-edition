@@ -227,12 +227,13 @@ class DebugPageController : FrameController() {
 
 
     private fun toTableObject(meta: List<Metadata>, selected: String?, deleteButton: Boolean = false): TableObject {
-        val headers = listOf("INDEX", "ID", "Change", "Time")
+        val headers = listOf("INDEX", "ID", "Change", "Size","Time")
         return TableObject("Files", headers, meta.mapIndexed { i, e ->
             TableRow(listOf(
                     TableCell("${i + 1}", "debug?key=${e.key().toUrlString()}"),
                     TableCell(e.key().versionSeriesId),
                     TableCell(if (e.isDeleted()) "DELETE" else "PUT"),
+                    TableCell(e.content().length.humanReadable()),
                     TableCell(SimpleDateFormat(datePattern).format(if (e.isDeleted()) e.content().deleted else e.content().created))).let {
                 if (!deleteButton) it else it +
                         TableCell("Remove", "remove-version?key=${e.key().toUrlString()}")
