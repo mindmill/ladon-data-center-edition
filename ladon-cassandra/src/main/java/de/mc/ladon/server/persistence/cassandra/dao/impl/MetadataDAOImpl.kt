@@ -5,6 +5,7 @@
 package de.mc.ladon.server.persistence.cassandra.dao.impl
 
 import com.google.common.base.Strings
+import de.mc.ladon.server.core.exceptions.LadonIllegalArgumentException
 import de.mc.ladon.server.core.exceptions.LadonObjectNotFoundException
 import de.mc.ladon.server.core.hooks.api.LadonHookManager
 import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
@@ -125,6 +126,7 @@ open class MetadataDAOImpl
                                  includeVersions: Boolean): Pair<Pair<List<Metadata>, List<String>>, Boolean> {
         val uniqueKeys = hashSetOf<String>()
         val startPoint = Strings.emptyToNull(marker) ?: prefix
+        if(delimiter != null && delimiter != "/") throw LadonIllegalArgumentException("delimiter other than / are not supported")
 
         val rsIterator = accessor.value.getObjectsStartingAt(repoId, startPoint).iterator()
         // in case of marker start listing with the next entry
@@ -145,13 +147,16 @@ open class MetadataDAOImpl
                     counter++
                     // try one more
                     if (counter > limit) break
-                    val pref = getCommonPrefix(currentKey, prefix)
-                    if (pref == null) {
+                    if(delimiter != null){
+                        val pref = getCommonPrefix(currentKey, prefix)
+                        if (pref == null) {
+                            result.add(objectData.let(filingMapper))
+                        } else {
+                            commonPrefixes.add(pref)
+                        }
+                    } else{
                         result.add(objectData.let(filingMapper))
-                    } else {
-                        commonPrefixes.add(pref)
                     }
-
                 } else
                     break
             }
