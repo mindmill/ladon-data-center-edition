@@ -145,7 +145,7 @@ class DebugPageController : FrameController() {
             if(result.second.isNotEmpty()){
              tables.add(TableObject("Folders", listOf("ID","Prefix"),result.second. mapIndexed {i, pref ->
                    TableRow(listOf(
-                           TableCell("${i + 1}","searchid?repoid=$repoid&searchpath=$pref/&delimiter=$delimiter"),
+                           TableCell("${i + 1}","searchid?repoid=$repoid&searchpath=$searchpath$pref/&delimiter=$delimiter"),
                            TableCell(pref)),
                            Color.BLUE)
                }))
@@ -227,7 +227,7 @@ class DebugPageController : FrameController() {
 
 
     private fun toTableObject(meta: List<Metadata>, selected: String?, deleteButton: Boolean = false): TableObject {
-        val headers = listOf("INDEX", "ID", "Change", "Size","Time")
+        val headers = listOf("INDEX", "ID", "Operation", "Size","LastModified")
         return TableObject("Files", headers, meta.mapIndexed { i, e ->
             TableRow(listOf(
                     TableCell("${i + 1}", "debug?key=${e.key().toUrlString()}"),
