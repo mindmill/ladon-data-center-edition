@@ -192,7 +192,7 @@ open class LadonS3Storage @Inject constructor(
                     it.properties().get(S3Constants.CONTENT_TYPE),
                     content.hash, it.key().changeToken.toString(), it.isDeleted(), latest)
             //TODO
-        }, truncated, bucketName, null, null)
+        }, null,truncated, bucketName, null, null)
     }
 
     override fun deleteObject(callContext: S3CallContext, bucketName: String, objectKey: String) {
