@@ -35,7 +35,7 @@ class SystemRepoSync @Inject constructor(val changeTokenDAO: ChangeTokenDAO,
     }
 
     private fun downloadFile(path: Path, meta: Metadata) {
-        if (!Files.exists(path)) {
+        if (!Files.exists(path) && path.toFile().isFile) {
             Files.createDirectories(path.parent)
             Files.createFile(path)
         }
@@ -60,8 +60,8 @@ class SystemRepoSync @Inject constructor(val changeTokenDAO: ChangeTokenDAO,
         try {
             if (hasChanges()) {
                 log.info("running system repo sync")
-                val (list, hasMore) = metadataDAO.listAllMetadata(SystemCallContext(), BoxConfig.SYSTEM_REPO, "plugins/", null, Int.MAX_VALUE)
-                list.forEach {
+                val (list, hasMore) = metadataDAO.listAllMetadata(SystemCallContext(), BoxConfig.SYSTEM_REPO, "plugins/", null, null, Int.MAX_VALUE)
+                list.first.forEach {
                     val name = it.key().versionSeriesId
                     val path = Paths.get(getSystemDir(), name)
                     if (Files.exists(path)) {
@@ -73,7 +73,7 @@ class SystemRepoSync @Inject constructor(val changeTokenDAO: ChangeTokenDAO,
                     }
                 }
 
-                val allKeys = list.map { it.key().versionSeriesId }
+                val allKeys = list.first.map { it.key().versionSeriesId }
 
 
                 Files.newDirectoryStream(pluginDir).forEach {
