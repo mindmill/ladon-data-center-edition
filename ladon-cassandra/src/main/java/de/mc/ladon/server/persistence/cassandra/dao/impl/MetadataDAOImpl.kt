@@ -27,7 +27,7 @@ import javax.inject.Named
  */
 @Named
 open class MetadataDAOImpl
-@Inject constructor( mm: MappingManagerProvider,
+@Inject constructor(mm: MappingManagerProvider,
                     val hookManager: LadonHookManager) : MetadataDAO {
 
 
@@ -89,8 +89,8 @@ open class MetadataDAOImpl
 
 
     override fun deleteMetadata(cc: LadonCallContext, key: ResourceKey) {
-        val data = getDbObjectData(key) ?:
-                throw LadonObjectNotFoundException("couldn't delete object with key $key , not found")
+        val data = getDbObjectData(key)
+                ?: throw LadonObjectNotFoundException("couldn't delete object with key $key , not found")
         val newKey = key.updatedKey(cc)
         data.deleted = Date()
         data.deletedBy = cc.getUser().name
@@ -116,7 +116,13 @@ open class MetadataDAOImpl
         accessor.value.deleteObjectVersion(key.repositoryId, key.versionSeriesId, key.changeToken)
     }
 
-    override fun listAllMetadata(cc: LadonCallContext, repoId: String, prefix: String, marker: String?, limit: Int, includeVersions: Boolean): Pair<List<Metadata>, Boolean> {
+    override fun listAllMetadata(cc: LadonCallContext,
+                                 repoId: String,
+                                 prefix: String,
+                                 marker: String?,
+                                 delimiter: String?,
+                                 limit: Int,
+                                 includeVersions: Boolean): Pair<Pair<List<Metadata>, List<String>>, Boolean> {
         val uniqueKeys = hashSetOf<String>()
         val startPoint = Strings.emptyToNull(marker) ?: prefix
 
@@ -124,6 +130,7 @@ open class MetadataDAOImpl
         // in case of marker start listing with the next entry
         if (!Strings.isNullOrEmpty(marker) && rsIterator.hasNext()) rsIterator.next()
 
+        val commonPrefixes = hashSetOf<String>()
         val result = mutableListOf<Metadata>()
         var counter = 0
         for (objectData in rsIterator) {
@@ -138,13 +145,34 @@ open class MetadataDAOImpl
                     counter++
                     // try one more
                     if (counter > limit) break
-                    result.add(objectData.let(filingMapper))
+                    val pref = getCommonPrefix(currentKey, prefix)
+                    if (pref == null) {
+                        result.add(objectData.let(filingMapper))
+                    } else {
+                        commonPrefixes.add(pref)
+                    }
+
                 } else
                     break
             }
         }
         // found more than requested
         val hasMore = counter > limit
-        return Pair(result, hasMore)
+        return Pair(result to commonPrefixes.toList(), hasMore)
+    }
+
+    private fun getCommonPrefix(key: String, prefix: String, delimiter: String = "/"): String? {
+        val pos = prefix.length
+        if (!key.startsWith(prefix)) return null
+        val rest = key.substring(pos)
+        val right = rest.indexOf(delimiter)
+        if (right == -1) return null
+        val left = prefix.lastIndexOf(delimiter)
+        return if (left == -1) {
+            key.substring(0, right + pos)
+        } else {
+            key.substring(left + 1, right + pos)
+        }
+
     }
 }

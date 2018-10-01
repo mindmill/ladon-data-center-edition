@@ -56,7 +56,13 @@ interface MetadataDAO {
     /**
      * returns the list of the latest versions of all metadata
      */
-    fun listAllMetadata(cc: LadonCallContext, repoId: String, prefix: String = "", marker: String?, limit : Int,  includeVersions: Boolean = false): Pair<List<Metadata>, Boolean>
+    fun listAllMetadata(cc: LadonCallContext,
+                        repoId: String,
+                        prefix: String = "",
+                        marker: String?,
+                        delimiter: String?,
+                        limit : Int,
+                        includeVersions: Boolean = false): Pair<Pair<List<Metadata>,List<String>>, Boolean>
 
 
 

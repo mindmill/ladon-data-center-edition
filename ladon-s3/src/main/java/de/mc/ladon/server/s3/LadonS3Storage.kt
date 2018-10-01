@@ -56,7 +56,7 @@ open class LadonS3Storage @Inject constructor(
 
     override fun deleteBucket(callContext: S3CallContext, bucketName: String) {
         val lcc = callContext.toLadonCC()
-        if (metaDAO.listAllMetadata(lcc, bucketName, "", "", 1, true).first.isEmpty()) {
+        if (metaDAO.listAllMetadata(lcc, bucketName, "", "",null, 1, true).first.first.isEmpty()) {
             repoDAO.deleteRepository(lcc, bucketName)
         } else {
             throw BucketNotEmptyException(bucketName, callContext.requestId)
@@ -170,14 +170,15 @@ open class LadonS3Storage @Inject constructor(
         val maxKeys = callContext.params.maxKeys
         val marker = callContext.params.marker ?: ""
         val prefix = callContext.params.prefix ?: ""
+        val delimiter = callContext.params.delimiter
         val includeVersions = callContext.params.listVersions()
 
-        val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker, maxKeys, includeVersions)
-        val objectList = result.first
+        val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker,delimiter, maxKeys, includeVersions)
+        val (objectList, prefixes) = result.first
         val truncated = result.second
 
         // TODO fix latest version hack
-        var lastKey: String = ""
+        var lastKey = ""
         return S3ListBucketResultImpl(objectList.map {
             val latest = lastKey != it.key().versionSeriesId
             lastKey = it.key().versionSeriesId
@@ -192,7 +193,7 @@ open class LadonS3Storage @Inject constructor(
                     it.properties().get(S3Constants.CONTENT_TYPE),
                     content.hash, it.key().changeToken.toString(), it.isDeleted(), latest)
             //TODO
-        }, null,truncated, bucketName, null, null)
+        }, prefixes,truncated, bucketName, null, null)
     }
 
     override fun deleteObject(callContext: S3CallContext, bucketName: String, objectKey: String) {

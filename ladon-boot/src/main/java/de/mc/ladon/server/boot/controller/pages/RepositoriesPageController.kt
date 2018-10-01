@@ -66,7 +66,7 @@ class RepositoriesPageController : FrameController() {
     @RequestMapping("deleterepo", method = arrayOf(RequestMethod.POST))
     fun deleteRepo(model: MutableMap<String, Any>, callContext: LadonCallContext, @RequestParam(required = true) repoid: String): String {
 
-        var empty = metaDao.listAllMetadata(callContext, repoid, limit = 1, marker = null).first.isEmpty()
+        var empty = metaDao.listAllMetadata(callContext, repoid, limit = 1, marker = null, delimiter = null).first.first.isEmpty()
 
 
         try {

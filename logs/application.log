@@ -1,0 +1,296 @@
+00:12:01.022  582  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @747ms to org.eclipse.jetty.util.log.Slf4jLog
+00:12:01.083  643  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+00:12:01.148  708  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+00:12:01.148  708  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+00:12:01.150  710  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+00:12:01.164  724  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@4562e04d{/,null,AVAILABLE}
+00:12:01.164  724  [main] INFO  org.eclipse.jetty.server.Server - Started @891ms
+00:12:01.165  725  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+00:12:01.193  753  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@65d09a04{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:12:01.194  754  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.11.v20180605 at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+00:12:01.214  774  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+00:12:01.324  884  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+00:12:01.325  885  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+00:12:01.355  915  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+00:23:22.356  681916 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@65d09a04{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:23:22.356  681916 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+00:23:22.357  681917 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@4562e04d{/,null,UNAVAILABLE}
+00:23:22.359  681919 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+00:23:27.191  491  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @623ms to org.eclipse.jetty.util.log.Slf4jLog
+00:23:27.249  549  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+00:23:27.299  599  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+00:23:27.299  599  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+00:23:27.301  601  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+00:23:27.307  607  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@35d019a3{/,null,AVAILABLE}
+00:23:27.307  607  [main] INFO  org.eclipse.jetty.server.Server - Started @741ms
+00:23:27.307  607  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+00:23:27.336  636  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@4e50c791{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:23:27.338  638  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.11.v20180605 at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+00:23:27.363  663  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+00:23:27.470  770  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+00:23:27.470  770  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+00:23:27.490  790  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+00:25:23.657  116957 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@4e50c791{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:25:23.658  116958 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+00:25:23.660  116960 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@35d019a3{/,null,UNAVAILABLE}
+00:25:23.662  116962 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+00:25:28.420  723  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @1465ms to org.eclipse.jetty.util.log.Slf4jLog
+00:25:28.490  793  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+00:25:28.547  850  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+00:25:28.547  850  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+00:25:28.549  852  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+00:25:28.587  890  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@39655d3e{/,null,AVAILABLE}
+00:25:28.588  891  [main] INFO  org.eclipse.jetty.server.Server - Started @1636ms
+00:25:28.588  891  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+00:25:28.632  935  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@19648c40{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:25:28.636  939  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.11.v20180605 at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+00:25:28.661  964  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+00:25:28.788  1091 [main] INFO  d.m.l.p.runtime.HostApplication - 0
+00:25:28.789  1092 [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+00:25:28.811  1114 [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+00:35:29.643  601946 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@19648c40{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:35:29.644  601947 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+00:35:29.647  601950 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@39655d3e{/,null,UNAVAILABLE}
+00:35:29.649  601952 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+00:35:33.727  817  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @1031ms to org.eclipse.jetty.util.log.Slf4jLog
+00:35:33.795  885  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+00:35:33.847  937  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+00:35:33.847  937  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+00:35:33.849  939  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+00:35:33.883  973  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@34f22f9d{/,null,AVAILABLE}
+00:35:33.883  973  [main] INFO  org.eclipse.jetty.server.Server - Started @1190ms
+00:35:33.884  974  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+00:35:33.942  1032 [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@12bd8a64{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:35:33.944  1034 [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.11.v20180605 at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+00:35:33.982  1072 [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+00:35:34.147  1237 [main] INFO  d.m.l.p.runtime.HostApplication - 0
+00:35:34.148  1238 [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+00:35:34.196  1286 [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+00:51:40.423  967513 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@12bd8a64{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:51:40.423  967513 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+00:51:40.425  967515 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@34f22f9d{/,null,UNAVAILABLE}
+00:51:40.426  967516 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+00:51:42.619  582  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @763ms to org.eclipse.jetty.util.log.Slf4jLog
+00:51:42.682  645  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.11.v20180605; built: 2018-06-05T18:24:03.829Z; git: d5fc0523cfa96bfebfbda19606cad384d772f04c; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+00:51:42.734  697  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+00:51:42.734  697  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+00:51:42.737  700  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+00:51:42.765  728  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@34f22f9d{/,null,AVAILABLE}
+00:51:42.766  729  [main] INFO  org.eclipse.jetty.server.Server - Started @912ms
+00:51:42.766  729  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+00:51:42.793  756  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@12bd8a64{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+00:51:42.795  758  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.11.v20180605 at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+00:51:42.818  781  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+00:51:42.956  919  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+00:51:42.956  919  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+00:51:42.983  946  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+01:24:02.051  1940014 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@12bd8a64{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+01:24:02.052  1940015 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+01:24:02.053  1940016 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@34f22f9d{/,null,UNAVAILABLE}
+01:24:02.055  1940018 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+01:24:37.008  391  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @516ms to org.eclipse.jetty.util.log.Slf4jLog
+01:24:37.109  492  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+01:24:37.155  538  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+01:24:37.155  538  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+01:24:37.157  540  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+01:24:37.175  558  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@6aba2b86{/,null,AVAILABLE}
+01:24:37.176  559  [main] INFO  org.eclipse.jetty.server.Server - Started @685ms
+01:24:37.176  559  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+01:24:37.212  595  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@1f2586d6{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+01:24:37.213  596  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+01:24:37.236  619  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+01:24:37.356  739  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+01:24:37.356  739  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+01:24:37.377  760  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+01:25:15.448  38831 [pool-5-thread-1] WARN  d.m.l.s3server.servlet.S3Servlet - request failed
+de.mc.ladon.s3server.exceptions.MissingSecurityHeaderException: Your request is missing a required header.
+	at de.mc.ladon.s3server.auth.Authorization.checkAuthHeader(Authorization.java:34)
+	at de.mc.ladon.s3server.servlet.S3Servlet.lambda$dispatch$0(S3Servlet.java:119)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+09:07:40.948  27784331 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@1f2586d6{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:07:40.948  27784331 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:07:40.950  27784333 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@6aba2b86{/,null,UNAVAILABLE}
+09:07:40.951  27784334 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:07:53.264  370  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @499ms to org.eclipse.jetty.util.log.Slf4jLog
+09:07:53.359  465  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:07:53.405  511  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:07:53.405  511  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:07:53.407  513  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:07:53.413  519  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@68999068{/,null,AVAILABLE}
+09:07:53.414  520  [main] INFO  org.eclipse.jetty.server.Server - Started @651ms
+09:07:53.414  520  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:07:53.452  558  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@5fe94a96{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:07:53.454  560  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:07:53.475  581  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:07:53.580  686  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:07:53.581  687  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:07:53.602  708  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+09:08:11.314  18420 [pool-3-thread-1] WARN  d.m.l.s3server.servlet.S3Servlet - request failed
+de.mc.ladon.s3server.exceptions.MissingSecurityHeaderException: Your request is missing a required header.
+	at de.mc.ladon.s3server.auth.Authorization.checkAuthHeader(Authorization.java:34)
+	at de.mc.ladon.s3server.servlet.S3Servlet.lambda$dispatch$0(S3Servlet.java:119)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+09:19:11.640  678746 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@5fe94a96{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:19:11.640  678746 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:19:11.642  678748 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@68999068{/,null,UNAVAILABLE}
+09:19:11.645  678751 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:19:15.793  378  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @483ms to org.eclipse.jetty.util.log.Slf4jLog
+09:19:15.900  485  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:19:15.946  531  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:19:15.946  531  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:19:15.949  534  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:19:15.954  539  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@291ae{/,null,AVAILABLE}
+09:19:15.954  539  [main] INFO  org.eclipse.jetty.server.Server - Started @646ms
+09:19:15.955  540  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:19:15.991  576  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@618b19ad{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:19:15.993  578  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:19:16.016  601  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:19:16.029  614  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:19:16.029  614  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:19:16.048  633  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+09:19:43.806  28391 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@618b19ad{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:19:43.807  28392 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:19:43.810  28395 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@291ae{/,null,UNAVAILABLE}
+09:19:43.812  28397 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:19:48.464  591  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @819ms to org.eclipse.jetty.util.log.Slf4jLog
+09:19:48.601  728  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:19:48.656  783  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:19:48.657  784  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:19:48.659  786  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:19:48.665  792  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@291ae{/,null,AVAILABLE}
+09:19:48.666  793  [main] INFO  org.eclipse.jetty.server.Server - Started @1023ms
+09:19:48.666  793  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:19:48.701  828  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@618b19ad{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:19:48.702  829  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:19:48.727  854  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:19:48.745  872  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:19:48.745  872  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:19:48.773  900  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0]
+09:29:07.635  559762 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@618b19ad{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:29:07.636  559763 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:29:07.637  559764 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@291ae{/,null,UNAVAILABLE}
+09:29:07.639  559766 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:29:10.150  394  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @515ms to org.eclipse.jetty.util.log.Slf4jLog
+09:29:10.248  492  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:29:10.295  539  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:29:10.295  539  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:29:10.297  541  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:29:10.307  551  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@498d318c{/,null,AVAILABLE}
+09:29:10.308  552  [main] INFO  org.eclipse.jetty.server.Server - Started @674ms
+09:29:10.308  552  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:29:10.347  591  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@22555ebf{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:29:10.348  592  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:29:10.369  613  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:29:10.392  636  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:29:10.392  636  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:29:10.420  664  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0], de.mindconsulting.ladon-s3-server [2]
+09:29:10.421  665  [main] INFO  d.m.l.p.runtime.HostApplication - 2
+09:29:10.421  665  [main] INFO  d.m.l.p.runtime.HostApplication - 1.1.1
+09:32:09.161  179405 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@22555ebf{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:32:09.162  179406 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:32:09.163  179407 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@498d318c{/,null,UNAVAILABLE}
+09:32:09.165  179409 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:32:10.641  406  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @529ms to org.eclipse.jetty.util.log.Slf4jLog
+09:32:10.756  521  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:32:10.810  575  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:32:10.811  576  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:32:10.813  578  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:32:10.818  583  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@dbf57b3{/,null,AVAILABLE}
+09:32:10.819  584  [main] INFO  org.eclipse.jetty.server.Server - Started @710ms
+09:32:10.819  584  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:32:10.859  624  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@43bc63a3{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:32:10.861  626  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:32:10.881  646  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:32:10.903  668  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:32:10.903  668  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:32:10.928  693  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0], de.mindconsulting.ladon-s3-server [2], de.mindconsulting.ladon-s3-server-fs [3]
+09:32:10.928  693  [main] INFO  d.m.l.p.runtime.HostApplication - 2
+09:32:10.929  694  [main] INFO  d.m.l.p.runtime.HostApplication - 1.1.1
+09:34:04.068  113833 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@43bc63a3{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:34:04.069  113834 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:34:04.070  113835 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@dbf57b3{/,null,UNAVAILABLE}
+09:34:04.072  113837 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:34:08.224  391  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @505ms to org.eclipse.jetty.util.log.Slf4jLog
+09:34:08.317  484  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:34:08.360  527  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:34:08.361  528  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:34:08.364  531  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:34:08.370  537  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@14dd9eb7{/,null,AVAILABLE}
+09:34:08.370  537  [main] INFO  org.eclipse.jetty.server.Server - Started @653ms
+09:34:08.371  538  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:34:08.414  581  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@327514f{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:34:08.416  583  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:34:08.437  604  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:34:08.459  626  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:34:08.459  626  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:34:08.483  650  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0], de.mindconsulting.ladon-s3-server [2], de.mindconsulting.ladon-s3-server-fs [3]
+09:34:08.483  650  [main] INFO  d.m.l.p.runtime.HostApplication - 2
+09:34:08.483  650  [main] INFO  d.m.l.p.runtime.HostApplication - 1.1.1
+09:36:05.628  117795 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@327514f{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:36:05.628  117795 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:36:05.629  117796 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@14dd9eb7{/,null,UNAVAILABLE}
+09:36:05.631  117798 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:36:10.410  400  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @518ms to org.eclipse.jetty.util.log.Slf4jLog
+09:36:10.518  508  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:36:10.567  557  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:36:10.567  557  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:36:10.570  560  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:36:10.579  569  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@dbf57b3{/,null,AVAILABLE}
+09:36:10.580  570  [main] INFO  org.eclipse.jetty.server.Server - Started @690ms
+09:36:10.580  570  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 660000ms
+09:36:10.623  613  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@43bc63a3{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:36:10.624  614  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:36:10.650  640  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:36:10.677  667  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:36:10.677  667  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:36:10.707  697  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0], de.mindconsulting.ladon-s3-server [2], de.mindconsulting.ladon-s3-server-fs [3]
+09:36:10.708  698  [main] INFO  d.m.l.p.runtime.HostApplication - 2
+09:36:10.708  698  [main] INFO  d.m.l.p.runtime.HostApplication - 1.1.1
+09:37:18.723  68713 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@43bc63a3{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:37:18.724  68714 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:37:18.725  68715 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@dbf57b3{/,null,UNAVAILABLE}
+09:37:18.726  68716 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:37:22.831  381  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @493ms to org.eclipse.jetty.util.log.Slf4jLog
+09:37:22.925  475  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:37:22.968  518  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:37:22.969  519  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:37:22.971  521  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:37:22.977  527  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@3ce1e309{/,null,AVAILABLE}
+09:37:22.977  527  [main] INFO  org.eclipse.jetty.server.Server - Started @642ms
+09:37:22.977  527  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:37:23.014  564  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@2f4948e4{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:37:23.016  566  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:37:23.037  587  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:37:23.075  625  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:37:23.076  626  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:37:23.098  648  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0], de.mindconsulting.ladon-s3-server [2], de.mindconsulting.ladon-s3-server-fs [3], com.google.guava [4]
+09:37:23.099  649  [main] INFO  d.m.l.p.runtime.HostApplication - 2
+09:37:23.099  649  [main] INFO  d.m.l.p.runtime.HostApplication - 1.1.1
+09:38:49.351  86901 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@2f4948e4{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:38:49.351  86901 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:38:49.353  86903 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@3ce1e309{/,null,UNAVAILABLE}
+09:38:49.355  86905 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.
+09:38:51.791  396  [main] INFO  org.eclipse.jetty.util.log - Logging initialized @509ms to org.eclipse.jetty.util.log.Slf4jLog
+09:38:51.885  490  [main] INFO  org.eclipse.jetty.server.Server - jetty-9.4.z-SNAPSHOT; built: 2018-08-30T13:59:14.071Z; git: 27208684755d94a92186989f695db2d7b21ebc51; jvm 1.8.0_181-8u181-b13-0ubuntu0.18.04.1-b13
+09:38:51.932  537  [main] INFO  org.eclipse.jetty.server.session - DefaultSessionIdManager workerName=node0
+09:38:51.932  537  [main] INFO  org.eclipse.jetty.server.session - No SessionScavenger set, using defaults
+09:38:51.934  539  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:38:51.941  546  [main] INFO  o.e.j.server.handler.ContextHandler - Started o.e.j.s.ServletContextHandler@71809907{/,null,AVAILABLE}
+09:38:51.941  546  [main] INFO  org.eclipse.jetty.server.Server - Started @661ms
+09:38:51.941  546  [main] INFO  org.eclipse.jetty.server.session - node0 Scavenging every 600000ms
+09:38:51.983  588  [main] INFO  o.e.jetty.server.AbstractConnector - Started ServerConnector@6a78afa0{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:38:51.984  589  [main] INFO  org.apache.felix.framework.6.0.1 - Started Jetty 9.4.z-SNAPSHOT at port(s) HTTP:8080 on context path / [minThreads=8,maxThreads=200,acceptors=2,selectors=8]
+09:38:52.002  607  [main] INFO  org.apache.felix.framework.6.0.1 - Apachde Felix Http Whiteboard Service started
+09:38:52.037  642  [main] INFO  d.m.l.p.runtime.HostApplication - 0
+09:38:52.038  643  [main] INFO  d.m.l.p.runtime.HostApplication - 6.0.1
+09:38:52.064  669  [main] INFO  d.m.l.p.runtime.HostApplication - org.apache.felix.framework [0], de.mindconsulting.ladon-s3-server-fs [3], de.mindconsulting.ladon-s3-server [5], com.google.guava [6]
+09:38:52.065  670  [main] INFO  d.m.l.p.runtime.HostApplication - 3
+09:38:52.065  670  [main] INFO  d.m.l.p.runtime.HostApplication - 1.1.1
+09:57:13.388  1101993 [FelixShutdown] INFO  o.e.jetty.server.AbstractConnector - Stopped ServerConnector@6a78afa0{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+09:57:13.389  1101994 [FelixShutdown] INFO  org.eclipse.jetty.server.session - node0 Stopped scavenging
+09:57:13.391  1101996 [FelixShutdown] INFO  o.e.j.server.handler.ContextHandler - Stopped o.e.j.s.ServletContextHandler@71809907{/,null,UNAVAILABLE}
+09:57:13.392  1101997 [FelixShutdown] INFO  org.apache.felix.framework.6.0.1 - Stopped Jetty.

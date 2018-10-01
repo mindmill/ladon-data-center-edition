@@ -25,10 +25,10 @@ class CleanupOldVersionsTask(
     override fun run(callContext: LadonCallContext): Boolean {
         log.info("Start cleaning old versions for repository $repoId")
 
-        val (list, _) = metadataDAO.listAllMetadata(callContext, repoId, "", null, Int.MAX_VALUE, true)
+        val (list, _) = metadataDAO.listAllMetadata(callContext, repoId, "", null, null,Int.MAX_VALUE, true)
         val uniqueIds = mutableMapOf<String, String>()
         // first reduce all to the last version only, delete all others
-        list.forEach {
+        list.first.forEach {
             try {
                 val versionSeriesId = it.key().versionSeriesId
                 val contentId = it.content().id
