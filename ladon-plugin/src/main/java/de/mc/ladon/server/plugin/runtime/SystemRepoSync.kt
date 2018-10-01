@@ -39,12 +39,14 @@ class SystemRepoSync @Inject constructor(val changeTokenDAO: ChangeTokenDAO,
             Files.createDirectories(path.parent)
             Files.createFile(path)
         }
-        binaryDataDAO.getContentStream(SystemCallContext(), meta.key().repositoryId, meta.content().id, null, null)
-                .use { input ->
-                    path.toFile().outputStream().use {
-                        input?.copyTo(it)
+        if (path.toFile().isFile) {
+            binaryDataDAO.getContentStream(SystemCallContext(), meta.key().repositoryId, meta.content().id, null, null)
+                    .use { input ->
+                        path.toFile().outputStream().use {
+                            input?.copyTo(it)
+                        }
                     }
-                }
+        }
     }
 
 
