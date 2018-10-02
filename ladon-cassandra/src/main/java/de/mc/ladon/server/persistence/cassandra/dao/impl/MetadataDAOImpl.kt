@@ -126,7 +126,7 @@ open class MetadataDAOImpl
                                  includeVersions: Boolean): Pair<Pair<List<Metadata>, List<String>>, Boolean> {
         val uniqueKeys = hashSetOf<String>()
         val startPoint = Strings.emptyToNull(marker) ?: prefix
-        if(delimiter != null && delimiter != "/") throw LadonIllegalArgumentException("delimiter other than / are not supported")
+        if (delimiter != null && delimiter != "/") throw LadonIllegalArgumentException("delimiter other than / are not supported")
 
         val rsIterator = accessor.value.getObjectsStartingAt(repoId, startPoint).iterator()
         // in case of marker start listing with the next entry
@@ -147,14 +147,16 @@ open class MetadataDAOImpl
                     counter++
                     // try one more
                     if (counter > limit) break
-                    if(delimiter != null){
+                    if (delimiter != null) {
                         val pref = getCommonPrefix(currentKey, prefix)
                         if (pref == null) {
-                            result.add(objectData.let(filingMapper))
+                            if (!currentKey.endsWith(prefix)) {
+                                result.add(objectData.let(filingMapper))
+                            }
                         } else {
                             commonPrefixes.add(pref)
                         }
-                    } else{
+                    } else {
                         result.add(objectData.let(filingMapper))
                     }
                 } else
