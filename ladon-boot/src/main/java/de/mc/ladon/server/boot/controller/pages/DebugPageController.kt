@@ -124,17 +124,19 @@ class DebugPageController : FrameController() {
                  @RequestParam repoid: String,
                  @RequestParam(required = false) time: String?,
                  @RequestParam(required = false) delimiter: Boolean? = true,
+                 @RequestParam(required = false) deleted: Boolean? = true,
                  @RequestParam(required = false) searchpath: String?): String {
         val datetime = toDate(time) ?: getDateMinus1()
         model["time"] = fromDate(datetime)
         model["delimiter"] = delimiter == true
+        model["deleted"] = deleted == true
         model["searchpath"] = searchpath ?: ""
         model["df"] = SimpleDateFormat(datePattern)
 
         val limit = 1000L
         if (searchpath != null || time == null) {
             val result = dataDAO.listAllMetadata(callContext, repoid, searchpath
-                    ?: "", "", delimiter?.let { if (it) "/" else null }, limit.toInt(), true).first
+                    ?: "", "", delimiter?.let { if (it) "/" else null }, limit.toInt(), deleted?:true).first
             val latestVersion = ConcurrentHashMap<String, Metadata>()
             result.first.forEach {
                 latestVersion.putIfAbsent(it.key().versionSeriesId, it)

@@ -23,11 +23,15 @@
                 <div class="col-md-4">
                     <div>
                         <form role="form" action="searchid" method="get">
-                            <label for="pathInput">Path</label>
+                            <label for="pathInput">[ <i class="fa fa-folder"></i> --/-- <i class="fa fa-trash"></i> ]</label>
                             <div class="form-group input-group">
                                   <span class="input-group-addon beautiful">
-                                        <input type="checkbox" #if($!delimiter == true)
+                                        <input id="delimiter" type="checkbox" #if($!delimiter == true)
                                                checked="checked" #end name="delimiter">
+                                 </span>
+                                <span class="input-group-addon beautiful">
+                                        <input id="deleted" type="checkbox" #if($!deleted == true)
+                                               checked="checked" #end name="deleted">
                                  </span>
                                 <input type="hidden" name="repoid" value="$!repoid">
                                 <input type="text" name="searchpath" value="$!searchpath" class="form-control"
