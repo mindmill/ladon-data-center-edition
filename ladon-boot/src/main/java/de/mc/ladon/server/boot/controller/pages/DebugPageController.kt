@@ -136,7 +136,7 @@ class DebugPageController : FrameController() {
         val limit = 1000L
         if (searchpath != null || time == null) {
             val result = dataDAO.listAllMetadata(callContext, repoid, searchpath
-                    ?: "", "", delimiter?.let { if (it) "/" else null }, limit.toInt(), deleted?:true).first
+                    ?: "", "", delimiter?.let { if (it) "/" else null }, limit.toInt(), deleted == true).first
             val latestVersion = ConcurrentHashMap<String, Metadata>()
             result.first.forEach {
                 latestVersion.putIfAbsent(it.key().versionSeriesId, it)
