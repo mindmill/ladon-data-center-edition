@@ -23,7 +23,7 @@
                 <div class="col-md-4">
                     <div>
                         <form role="form" action="searchid" method="get">
-                            <label for="pathInput">[ <i class="fa fa-folder"></i> --/-- <i class="fa fa-trash"></i> ]</label>
+                            <label for="pathInput"> <i class="fa fa-folder"></i> --/-- <i class="fa fa-trash"></i> </label>
                             <div class="form-group input-group">
                                   <span class="input-group-addon beautiful">
                                         <input id="delimiter" type="checkbox" #if($!delimiter == true)
