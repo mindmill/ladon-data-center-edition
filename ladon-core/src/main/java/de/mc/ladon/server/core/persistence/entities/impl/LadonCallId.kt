@@ -4,7 +4,7 @@
 
 package de.mc.ladon.server.core.persistence.entities.impl
 
-import de.mc.ladon.server.core.persistence.entities.api.CallId
+import de.mc.ladon.server.core.api.persistence.entities.CallId
 import java.util.*
 
 /**

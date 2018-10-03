@@ -1,6 +1,6 @@
 package de.mc.ladon.server.persistence.cassandra.entities.impl
 
-import de.mc.ladon.server.core.persistence.entities.api.ChangeToken
+import de.mc.ladon.server.core.api.persistence.entities.ChangeToken
 import java.util.*
 
 /**

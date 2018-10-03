@@ -1,6 +1,6 @@
 package de.mc.ladon.server.boot.config
 
-import de.mc.ladon.server.core.persistence.DatabaseConfig
+import de.mc.ladon.server.core.api.persistence.DatabaseConfig
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**

@@ -5,10 +5,10 @@
 package de.mc.ladon.server.persistence.cassandra.dao.impl
 
 import com.datastax.driver.core.ResultSet
-import de.mc.ladon.server.core.exceptions.LadonStorageException
-import de.mc.ladon.server.core.persistence.dao.api.ChangeTokenDAO
-import de.mc.ladon.server.core.persistence.entities.api.ChangeToken
-import de.mc.ladon.server.core.request.LadonCallContext
+import de.mc.ladon.server.core.api.exceptions.LadonStorageException
+import de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO
+import de.mc.ladon.server.core.api.persistence.entities.ChangeToken
+import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.persistence.cassandra.dao.api.StatementCache
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbChangeToken
 import java.math.BigInteger

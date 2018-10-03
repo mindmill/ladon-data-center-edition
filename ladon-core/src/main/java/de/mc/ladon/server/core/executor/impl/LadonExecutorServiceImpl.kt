@@ -1,7 +1,7 @@
 package de.mc.ladon.server.core.executor.impl
 
-import de.mc.ladon.server.core.executor.api.LadonExecutorConfig
-import de.mc.ladon.server.core.executor.api.LadonExecutorService
+import de.mc.ladon.server.core.api.executor.LadonExecutorConfig
+import de.mc.ladon.server.core.api.executor.LadonExecutorService
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future

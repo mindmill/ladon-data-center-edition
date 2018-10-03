@@ -5,8 +5,8 @@
 package de.mc.ladon.server.persistence.cassandra.tasks
 
 import com.datastax.driver.core.utils.UUIDs
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
-import de.mc.ladon.server.core.persistence.entities.api.ChangeType
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
+import de.mc.ladon.server.core.api.persistence.entities.ChangeType
 import de.mc.ladon.server.persistence.cassandra.dao.api.ObjectDataAccessor
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbObjectData

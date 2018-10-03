@@ -2753,7 +2753,7 @@
                         // HANDLE: $(html, props)
                         if (rsingleTag.test(match[1]) && jQuery.isPlainObject(context)) {
                             for (match in context) {
-                                // Properties of context are called as methods if possible
+                                // LadonPropertyMeta of context are called as methods if possible
                                 if (jQuery.isFunction(this[match])) {
                                     this[match](context[match]);
 
@@ -8693,7 +8693,7 @@
         while (dataTypes[0] === "*") {
             dataTypes.shift();
             if (ct === undefined) {
-                ct = s.mimeType || jqXHR.getResponseHeader("Content-Type");
+                ct = s.mimeType || jqXHR.getResponseHeader("LadonContentMeta-Type");
             }
         }
 
@@ -9136,7 +9136,7 @@
 
             // Set the correct header, if data is being sent
             if (s.data && s.hasContent && s.contentType !== false || options.contentType) {
-                jqXHR.setRequestHeader("Content-Type", s.contentType);
+                jqXHR.setRequestHeader("LadonContentMeta-Type", s.contentType);
             }
 
             // Set the Accepts header for the server, depending on the dataType

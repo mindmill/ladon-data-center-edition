@@ -4,9 +4,9 @@
 
 package de.mc.ladon.server.core.hooks.impl
 
-import de.mc.ladon.server.core.hooks.api.MetadataChangeHook
-import de.mc.ladon.server.core.persistence.entities.api.Metadata
-import de.mc.ladon.server.core.persistence.entities.impl.ResourceKey
+import de.mc.ladon.server.core.api.hooks.MetadataChangeHook
+import de.mc.ladon.server.core.api.persistence.entities.Metadata
+import de.mc.ladon.server.core.api.persistence.entities.ResourceKey
 import org.slf4j.LoggerFactory
 
 /**

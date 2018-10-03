@@ -5,23 +5,24 @@ import com.google.common.base.Strings
 import com.google.common.io.BaseEncoding
 import de.mc.ladon.s3server.common.S3Constants
 import de.mc.ladon.server.boot.controller.FrameController
+import de.mc.ladon.server.boot.controller.humanReadable
 import de.mc.ladon.server.boot.tables.Color
 import de.mc.ladon.server.boot.tables.TableCell
 import de.mc.ladon.server.boot.tables.TableObject
 import de.mc.ladon.server.boot.tables.TableRow
-import de.mc.ladon.server.core.exceptions.LadonObjectNotFoundException
-import de.mc.ladon.server.core.persistence.dao.api.BinaryDataDAO
-import de.mc.ladon.server.core.persistence.dao.api.ChangeTokenDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.persistence.entities.api.ChangeToken
-import de.mc.ladon.server.core.persistence.entities.api.Metadata
+import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
+import de.mc.ladon.server.core.api.exceptions.LadonObjectNotFoundException
+import de.mc.ladon.server.core.api.persistence.dao.BinaryDataDAO
+import de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.persistence.entities.ChangeToken
+import de.mc.ladon.server.core.api.persistence.entities.ContentMetadata
+import de.mc.ladon.server.core.api.persistence.entities.Metadata
+import de.mc.ladon.server.core.api.persistence.entities.ResourceKey
+import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.core.persistence.entities.impl.Acl
-import de.mc.ladon.server.core.persistence.entities.impl.Content
-import de.mc.ladon.server.core.persistence.entities.impl.HistoryKey
-import de.mc.ladon.server.core.persistence.entities.impl.ResourceKey
-import de.mc.ladon.server.core.request.LadonCallContext
-import de.mc.ladon.server.core.util.humanReadable
-import de.mc.ladon.server.core.util.toUUID
+import de.mc.ladon.server.core.persistence.entities.impl.LadonHistoryKey
+import de.mc.ladon.server.core.persistence.entities.impl.LadonResourceKey
 import org.apache.tomcat.util.http.fileupload.IOUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -59,11 +60,12 @@ class DebugPageController : FrameController() {
     @RequestMapping(value = ["debug"])
     fun showId(model: MutableMap<String, Any>, callContext: LadonCallContext, @RequestParam(required = false) key: String?, @RequestParam(required = false) repoid: String?, @RequestParam(required = false) objectid: String?): String {
 
-        val resource = key?.toResourceKey() ?: dataDAO.getMetadataLatest(callContext, HistoryKey(repoid!!, objectid
-                ?: ""))?.key() ?: ResourceKey(repoid!!, objectid ?: "", UUID.randomUUID())
+        val resource = key?.toResourceKey() ?: dataDAO.getMetadataLatest(callContext, LadonHistoryKey(repoid!!, objectid
+                ?: ""))?.key() ?: LadonResourceKey(repoid!!, objectid
+                ?: "", UUID.randomUUID())
         model["objectid"] = resource.versionSeriesId
         //model.put("df", SimpleDateFormat(datePattern))
-        model["objects"] = listOf(toTableObject(dataDAO.getMetadataHistory(callContext, HistoryKey(resource.repositoryId, resource.versionSeriesId)), resource.changeToken.toString(), true))
+        model["objects"] = listOf(toTableObject(dataDAO.getMetadataHistory(callContext, LadonHistoryKey(resource.repositoryId, resource.versionSeriesId)), resource.changeToken.toString(), true))
 
         val obj = try {
             dataDAO.getMetadata(callContext, resource)
@@ -95,7 +97,7 @@ class DebugPageController : FrameController() {
     }
 
     @RequestMapping(value = ["remove-version"], method = [RequestMethod.GET])
-    fun getRemoveVersion(model: MutableMap<String, Any>, callContext: LadonCallContext, @RequestParam key: String): String {
+    fun getRemoveVersion(model: MutableMap<String, Any>, @RequestParam key: String): String {
         val resourceKey = key.toResourceKey()
         model["key"] = resourceKey
         model["urlkey"] = key
@@ -144,16 +146,16 @@ class DebugPageController : FrameController() {
 
             val tables = mutableListOf<TableObject>()
 
-            if(result.second.isNotEmpty()){
-             tables.add(TableObject("Folders", listOf("ID","Prefix"),result.second. mapIndexed {i, pref ->
-                   TableRow(listOf(
-                           TableCell("${i + 1}","searchid?repoid=$repoid&searchpath=$searchpath$pref/&delimiter=$delimiter&deleted=$deleted"),
-                           TableCell(pref)),
-                           Color.BLUE)
-               }))
+            if (result.second.isNotEmpty()) {
+                tables.add(TableObject("Folders", listOf("ID", "Prefix"), result.second.mapIndexed { i, pref ->
+                    TableRow(listOf(
+                            TableCell("${i + 1}", "searchid?repoid=$repoid&searchpath=$searchpath$pref/&delimiter=$delimiter&deleted=$deleted"),
+                            TableCell(pref)),
+                            Color.BLUE)
+                }))
             }
             if (result.first.isNotEmpty()) {
-               tables.add(toTableObject(latestVersion.values.toList(), null))
+                tables.add(toTableObject(latestVersion.values.toList(), null))
             }
             model["objects"] = tables
         }
@@ -229,7 +231,7 @@ class DebugPageController : FrameController() {
 
 
     private fun toTableObject(meta: List<Metadata>, selected: String?, deleteButton: Boolean = false): TableObject {
-        val headers = listOf("INDEX", "ID", "Operation", "Size","LastModified")
+        val headers = listOf("INDEX", "ID", "Operation", "Size", "LastModified")
         return TableObject("Files", headers, meta.mapIndexed { i, e ->
             TableRow(listOf(
                     TableCell("${i + 1}", "debug?key=${e.key().toUrlString()}"),
@@ -248,7 +250,7 @@ class DebugPageController : FrameController() {
         val headers = listOf("INDEX", "ID", "Change", "Time")
         return listOf(TableObject("Files", headers, mapIndexed { i, e ->
             TableRow(listOf(
-                    TableCell("${i + 1}", "debug?key=${ResourceKey(e.repoId!!, e.versionseriesId!!, e.changeToken!!).toUrlString()}"),
+                    TableCell("${i + 1}", "debug?key=${LadonResourceKey(e.repoId!!, e.versionseriesId!!, e.changeToken!!).toUrlString()}"),
                     TableCell(e.versionseriesId),
                     TableCell(e.operation),
                     TableCell(SimpleDateFormat(datePattern).format(Date(UUIDs.unixTimestamp(e.changeToken))))),
@@ -259,7 +261,7 @@ class DebugPageController : FrameController() {
 
     private fun List<Props>.toTableObject(): TableObject {
         val headers = listOf("ID", "Type", "Value")
-        return TableObject("Properties", headers, mapIndexed { _, e ->
+        return TableObject("LadonPropertyMeta", headers, mapIndexed { _, e ->
             TableRow(listOf(
                     TableCell(e.id),
                     TableCell(e.type),
@@ -290,12 +292,12 @@ class DebugPageController : FrameController() {
         )
     }
 
-    private fun Content.toTableObject(key: ResourceKey): TableObject {
+    private fun ContentMetadata.toTableObject(key: ResourceKey): TableObject {
         val headers = listOf("ContentId", "Size", "Hash")
-        return TableObject("Content", headers, listOf(
+        return TableObject("LadonContentMeta", headers, listOf(
                 TableRow(listOf(
                         TableCell(id),
-                        TableCell(length.toLong().humanReadable()),
+                        TableCell(length.humanReadable()),
                         TableCell(hash),
                         TableCell("Download", "download?key=${key.toUrlString()}")
                 ),
@@ -304,10 +306,14 @@ class DebugPageController : FrameController() {
     }
 
 
-    private fun String.toResourceKey(): ResourceKey {
-        return split(".").map { it.base64dec() }.let { ResourceKey(it[0], it[1], it[2].toUUID()) }
+    private fun String.toResourceKey(): LadonResourceKey {
+        return split(".").map { it.base64dec() }.let { LadonResourceKey(it[0], it[1], it[2].toUUID()) }
     }
 
+    private fun String?.toUUID(): UUID {
+        if (this == null) throw LadonIllegalArgumentException("Wrong UUID format")
+        return UUID.fromString(this)
+    }
 }
 
 fun ResourceKey.toUrlString(): String {

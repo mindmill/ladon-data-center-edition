@@ -4,10 +4,10 @@
 
 package de.mc.ladon.server.persistence.cassandra.tasks
 
-import de.mc.ladon.server.core.persistence.dao.api.BinaryDataDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.request.LadonCallContext
-import de.mc.ladon.server.core.tasks.api.RepositoryTask
+import de.mc.ladon.server.core.api.persistence.dao.BinaryDataDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.request.LadonCallContext
+import de.mc.ladon.server.core.api.tasks.RepositoryTask
 import org.slf4j.LoggerFactory
 
 /**
@@ -25,7 +25,7 @@ class CleanupOldVersionsTask(
     override fun run(callContext: LadonCallContext): Boolean {
         log.info("Start cleaning old versions for repository $repoId")
 
-        val (list, _) = metadataDAO.listAllMetadata(callContext, repoId, "", null, null,Int.MAX_VALUE, true)
+        val (list, _) = metadataDAO.listAllMetadata(callContext, repoId, "", null, null, Int.MAX_VALUE, true)
         val uniqueIds = mutableMapOf<String, String>()
         // first reduce all to the last version only, delete all others
         list.first.forEach {

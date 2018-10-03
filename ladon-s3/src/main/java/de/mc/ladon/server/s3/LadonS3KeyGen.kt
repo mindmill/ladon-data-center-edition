@@ -1,8 +1,8 @@
 package de.mc.ladon.server.s3
 
 import de.mc.ladon.s3server.auth.AuthKeyGen
-import de.mc.ladon.server.core.persistence.services.api.KeyPair
-import de.mc.ladon.server.core.persistence.services.api.S3KeyGen
+import de.mc.ladon.server.core.api.persistence.services.KeyPair
+import de.mc.ladon.server.core.api.persistence.services.S3KeyGen
 import javax.inject.Named
 
 /**

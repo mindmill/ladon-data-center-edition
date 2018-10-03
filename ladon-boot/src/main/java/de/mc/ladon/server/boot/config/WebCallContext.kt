@@ -5,10 +5,10 @@
 package de.mc.ladon.server.boot.config
 
 import com.datastax.driver.core.utils.UUIDs
-import de.mc.ladon.server.core.persistence.entities.api.CallId
-import de.mc.ladon.server.core.persistence.entities.api.User
+import de.mc.ladon.server.core.api.persistence.entities.CallId
+import de.mc.ladon.server.core.api.persistence.entities.User
+import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.core.persistence.entities.impl.LadonCallId
-import de.mc.ladon.server.core.request.LadonCallContext
 
 /**
  * @author Ralf Ulrich
@@ -16,19 +16,19 @@ import de.mc.ladon.server.core.request.LadonCallContext
  */
 class WebCallContext(val webuser: User) : LadonCallContext {
     override fun getObjectId(): String? {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        throw UnsupportedOperationException("not implemented")
     }
 
     override fun setObjectId(objId: String) {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        throw UnsupportedOperationException("not implemented")
     }
 
     override fun getPath(): String? {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        throw UnsupportedOperationException("not implemented")
     }
 
     override fun getRepositoryId(): String? {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        throw UnsupportedOperationException("not implemented")
     }
 
     val id = LadonCallId(UUIDs.timeBased())

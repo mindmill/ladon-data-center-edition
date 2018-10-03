@@ -4,8 +4,8 @@
 
 package de.mc.ladon.server.core.hooks.impl
 
-import de.mc.ladon.server.core.hooks.api.LadonHookManager
-import de.mc.ladon.server.core.hooks.api.MetadataChangeHook
+import de.mc.ladon.server.core.api.hooks.LadonHookManager
+import de.mc.ladon.server.core.api.hooks.MetadataChangeHook
 import javax.inject.Named
 
 /**

@@ -6,16 +6,11 @@ package de.mc.ladon.server.persistence.cassandra.dao.impl
 
 import com.datastax.driver.core.utils.Bytes
 import com.datastax.driver.core.utils.UUIDs
-import de.mc.ladon.server.core.exceptions.LadonIllegalArgumentException
-import de.mc.ladon.server.core.exceptions.LadonUnsupportedOperationException
-import de.mc.ladon.server.core.persistence.DatabaseConstants
-import de.mc.ladon.server.core.persistence.dao.api.BinaryDataDAO
-import de.mc.ladon.server.core.persistence.dao.api.ChunkDAO
-import de.mc.ladon.server.core.request.LadonCallContext
-import de.mc.ladon.server.core.util.ChunkInputStream
-import de.mc.ladon.server.core.util.ClosureChunkLoader
-import de.mc.ladon.server.core.util.StreamInfo
-import de.mc.ladon.server.core.util.readFullChunk
+import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
+import de.mc.ladon.server.core.api.exceptions.LadonUnsupportedOperationException
+import de.mc.ladon.server.core.api.persistence.dao.*
+import de.mc.ladon.server.core.api.persistence.dao.DatabaseConstants.CHUNK_SIZE
+import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.persistence.cassandra.dao.api.StatementCache
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbContent
@@ -46,14 +41,14 @@ open class BinaryDataDAOImpl @Inject constructor(val mm: MappingManagerProvider,
     override fun getContentStream(cc: LadonCallContext, repoId: String, streamId: String, offset: BigInteger?, length: BigInteger?): InputStream? {
         if (offset ?: BigInteger.ZERO > BigInteger.ZERO) throw LadonIllegalArgumentException("offset and length is currently not supported")
 
-        val hashList = getChunkList(cc, repoId, streamId)
+        val hashList = getChunkList(repoId, streamId)
         val iter = hashList.iterator()
-        return ChunkInputStream(ClosureChunkLoader({ if (iter.hasNext()) chunkDao.getChunk(iter.next(), streamId) else null }))
+        return ChunkInputStream(ClosureChunkLoader { if (iter.hasNext()) chunkDao.getChunk(iter.next(), streamId) else null })
 
     }
 
 
-    private fun getChunkList(cc: LadonCallContext, repoId: String, streamId: String): MutableList<String> {
+    private fun getChunkList(repoId: String, streamId: String): MutableList<String> {
         val hashList = dbQuery.executePrepared("SELECT CHUNKID FROM LADON.CONTENT WHERE REPOID = :repoid and STREAMID = :streamId ",
                 { rs -> rs.all().map { r -> r.getString(0) }.toMutableList() }, repoId, streamId)
         return hashList
@@ -69,7 +64,7 @@ open class BinaryDataDAOImpl @Inject constructor(val mm: MappingManagerProvider,
         // we can use a hashset to eliminate duplicate entries
         val hashSet = hashSetOf<String>()
         return try {
-            val buffer = ByteArray(DatabaseConstants.CHUNK_SIZE)
+            val buffer = ByteArray(CHUNK_SIZE)
             val md = MessageDigest.getInstance("MD5")
             val stream = DigestInputStream(contentStream, md)
             var r = 0
@@ -88,19 +83,19 @@ open class BinaryDataDAOImpl @Inject constructor(val mm: MappingManagerProvider,
             val md5 = Bytes.toHexString(stream.messageDigest.digest())
             StreamInfo(newStreamId, md5, BigInteger.valueOf(length))
 
-        } catch(e: Exception) {
+        } catch (e: Exception) {
             //cleanup on error
             dbQuery.executePrepared("DELETE FROM LADON.CONTENT WHERE REPOID = :repoId AND STREAMID = :streamId", {}, repoId, newStreamId)
-            hashSet.forEach({ hash -> chunkDao.deleteChunk(hash, newStreamId) })
+            hashSet.forEach { hash -> chunkDao.deleteChunk(hash, newStreamId) }
             throw e
         }
     }
 
-    override fun copyContentStream(cc: LadonCallContext, repoId: String, streamId: String, destRepo : String): String {
+    override fun copyContentStream(cc: LadonCallContext, repoId: String, streamId: String, destRepo: String): String {
         val newStreamId = UUIDs.timeBased().toString()
-        var chunkList = getChunkList(cc, repoId, streamId)
+        val chunkList = getChunkList(repoId, streamId)
         var count = 0L
-        chunkList.forEach {  hash ->
+        chunkList.forEach { hash ->
             mapper.value.save(DbContent(destRepo, newStreamId, count++, hash))
             chunkDao.saveChunkRef(hash, newStreamId)
         }
@@ -119,9 +114,22 @@ open class BinaryDataDAOImpl @Inject constructor(val mm: MappingManagerProvider,
      *
      */
     override fun deleteContentStream(cc: LadonCallContext, repoId: String, streamId: String) {
-        val hashList = getChunkList(cc, repoId, streamId)
+        val hashList = getChunkList(repoId, streamId)
         dbQuery.executePrepared("DELETE FROM LADON.CONTENT WHERE REPOID = :repoId AND STREAMID = :streamId", {}, repoId, streamId)
-        hashList.forEach({ hash -> chunkDao.deleteChunk(hash, streamId) })
+        hashList.forEach { hash -> chunkDao.deleteChunk(hash, streamId) }
 
+    }
+
+
+    fun InputStream.readFullChunk(buffer: ByteArray): Int {
+        var read = 0
+        var pos = 0
+        var rest = CHUNK_SIZE
+        while (read != -1 && rest > 0) {
+            rest -= read
+            pos += read
+            read = this.read(buffer, pos, rest)
+        }
+        return pos
     }
 }

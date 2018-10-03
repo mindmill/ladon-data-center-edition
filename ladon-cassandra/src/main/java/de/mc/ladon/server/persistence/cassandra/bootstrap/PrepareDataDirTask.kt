@@ -4,12 +4,12 @@
 
 package de.mc.ladon.server.persistence.cassandra.bootstrap
 
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
-import de.mc.ladon.server.core.persistence.DatabaseConfig
-import de.mc.ladon.server.core.util.getLadonHome
-import de.mc.ladon.server.core.util.getLogger
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
+import de.mc.ladon.server.core.api.persistence.DatabaseConfig
+import de.mc.ladon.server.core.util.PathUtils.getLadonHome
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.Velocity
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileWriter
 import java.nio.file.Files
@@ -20,7 +20,7 @@ import java.util.*
  * Creates the directories for the embedded cassandra instance.
  */
 class PrepareDataDirTask(val config: DatabaseConfig) : BootstrapTask {
-    private val LOG = getLogger()
+    private val LOG = LoggerFactory.getLogger(javaClass)
 
     val ladonHome = getLadonHome()
     val dataDir = ladonHome + File.separator + "cassandra"

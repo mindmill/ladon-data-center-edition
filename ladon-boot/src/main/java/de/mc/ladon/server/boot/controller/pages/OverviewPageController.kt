@@ -5,12 +5,12 @@ import de.mc.ladon.server.boot.tables.Color
 import de.mc.ladon.server.boot.tables.TableCell
 import de.mc.ladon.server.boot.tables.TableObject
 import de.mc.ladon.server.boot.tables.TableRow
-import de.mc.ladon.server.core.persistence.dao.api.ChangeTokenDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.persistence.dao.api.RepositoryDAO
-import de.mc.ladon.server.core.persistence.entities.api.Metadata
-import de.mc.ladon.server.core.persistence.entities.impl.ResourceKey
-import de.mc.ladon.server.core.request.SystemCallContext
+import de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.persistence.dao.RepositoryDAO
+import de.mc.ladon.server.core.api.persistence.entities.Metadata
+import de.mc.ladon.server.core.persistence.entities.impl.LadonResourceKey
+import de.mc.ladon.server.core.request.impl.SystemCallContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
@@ -40,7 +40,7 @@ open class OverviewPageController @Autowired constructor(
     val repositoryId = repoid?:  repositoryDAO.getRepositories(SystemCallContext()).firstOrNull()?.repoId?:"default"
 
         val changes = changeTokenDAO.getLatestChangeToken(SystemCallContext(),repositoryId,10L).map {
-            metadataDAO.getMetadata(SystemCallContext(), ResourceKey(it.repoId!!,it.versionseriesId!!,it.changeToken!!)) }
+            metadataDAO.getMetadata(SystemCallContext(), LadonResourceKey(it.repoId!!, it.versionseriesId!!, it.changeToken!!)) }
         model.put("objects", listOf(toTableObject(changes.filterNotNull())))
         return super.updateModel(model, "overview", repositoryId)
     }

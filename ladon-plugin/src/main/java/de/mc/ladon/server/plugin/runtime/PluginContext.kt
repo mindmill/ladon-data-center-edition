@@ -1,8 +1,8 @@
 package de.mc.ladon.server.plugin.runtime
 
 
-import de.mc.ladon.server.core.persistence.Database
-import de.mc.ladon.server.core.persistence.dao.api.*
+import de.mc.ladon.server.core.api.persistence.Database
+import de.mc.ladon.server.core.api.persistence.dao.*
 
 import javax.inject.Inject
 import javax.inject.Named

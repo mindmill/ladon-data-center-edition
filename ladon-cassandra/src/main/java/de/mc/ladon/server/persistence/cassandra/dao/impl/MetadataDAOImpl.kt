@@ -5,15 +5,19 @@
 package de.mc.ladon.server.persistence.cassandra.dao.impl
 
 import com.google.common.base.Strings
-import de.mc.ladon.server.core.exceptions.LadonIllegalArgumentException
-import de.mc.ladon.server.core.exceptions.LadonObjectNotFoundException
-import de.mc.ladon.server.core.hooks.api.LadonHookManager
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.persistence.entities.api.ChangeType
-import de.mc.ladon.server.core.persistence.entities.api.Metadata
-import de.mc.ladon.server.core.persistence.entities.impl.*
-import de.mc.ladon.server.core.persistence.entities.impl.Properties
-import de.mc.ladon.server.core.request.LadonCallContext
+import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
+import de.mc.ladon.server.core.api.exceptions.LadonObjectNotFoundException
+import de.mc.ladon.server.core.api.hooks.LadonHookManager
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.persistence.entities.ChangeType
+import de.mc.ladon.server.core.api.persistence.entities.HistoryKey
+import de.mc.ladon.server.core.api.persistence.entities.Metadata
+import de.mc.ladon.server.core.api.persistence.entities.ResourceKey
+import de.mc.ladon.server.core.api.request.LadonCallContext
+import de.mc.ladon.server.core.persistence.entities.impl.LadonContentMeta
+import de.mc.ladon.server.core.persistence.entities.impl.LadonMetadata
+import de.mc.ladon.server.core.persistence.entities.impl.LadonPropertyMeta
+import de.mc.ladon.server.core.persistence.entities.impl.LadonResourceKey
 import de.mc.ladon.server.persistence.cassandra.dao.api.ObjectDataAccessor
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbObjectData
@@ -36,9 +40,9 @@ open class MetadataDAOImpl
 
     private val filingMapper: (DbObjectData) -> Metadata = { fe ->
         LadonMetadata().apply {
-            set(Content(fe.streamid!!, fe.md5!!, fe.length!!, fe.created!!, fe.createdBy!!, fe.deleted, fe.deletedBy))
-            set(ResourceKey(fe.repoId!!, fe.versionseriesId!!, fe.changeToken!!))
-            set(Properties(fe.meta ?: hashMapOf()))
+            set(LadonContentMeta(fe.streamid!!, fe.md5!!, fe.length!!, fe.created!!, fe.createdBy!!, fe.deleted, fe.deletedBy))
+            set(LadonResourceKey(fe.repoId!!, fe.versionseriesId!!, fe.changeToken!!))
+            set(LadonPropertyMeta(fe.meta ?: hashMapOf()))
         }
     }
 

@@ -2,7 +2,7 @@ package de.mc.ladon.server.persistence.cassandra.entities.impl;
 
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
-import de.mc.ladon.server.core.persistence.entities.api.User;
+import de.mc.ladon.server.core.api.persistence.entities.User;
 
 import java.util.HashSet;
 import java.util.Set;

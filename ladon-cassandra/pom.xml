@@ -5,7 +5,7 @@
     <parent>
         <artifactId>mc-ladon-server</artifactId>
         <groupId>de.mc.ladon</groupId>
-        <version>2.0.0</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>cassandra</artifactId>
 
@@ -61,13 +61,8 @@
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
-            <version>RELEASE</version>
+            <version>1.7</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.fressian</groupId>-->
-            <!--<artifactId>fressian</artifactId>-->
-            <!--<version>0.6.6</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.xerial.snappy</groupId>
             <artifactId>snappy-java</artifactId>
@@ -75,4 +70,25 @@
         </dependency>
     </dependencies>
 
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.felix</groupId>-->
+                <!--<artifactId>maven-bundle-plugin</artifactId>-->
+                <!--<extensions>true</extensions>-->
+                <!--<configuration>-->
+                    <!--<instructions>-->
+                        <!--<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>-->
+                        <!--<Export-Package>*</Export-Package>-->
+                        <!--&lt;!&ndash;<Private-Package>de.mc.ladon.s3server.*</Private-Package>&ndash;&gt;-->
+                        <!--<Bundle-Name>Mind Consulting :: Ladon Data Center Cassandra</Bundle-Name>-->
+                        <!--<Bundle-Description>${project.description}</Bundle-Description>-->
+                        <!--<Bundle-Version>${project.version}</Bundle-Version>-->
+                        <!--<Bundle-Vendor>Mind Consulting UG</Bundle-Vendor>-->
+                    <!--</instructions>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
+    <!--<packaging>bundle</packaging>-->
 </project>

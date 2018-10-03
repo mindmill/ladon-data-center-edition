@@ -1,6 +1,6 @@
 package de.mc.ladon.server.core.persistence.entities.impl
 
-import de.mc.ladon.server.core.persistence.entities.api.User
+import de.mc.ladon.server.core.api.persistence.entities.User
 
 /**
  * @author Ralf Ulrich

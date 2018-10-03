@@ -1,9 +1,9 @@
 package de.mc.ladon.server.core.bootstrap.impl
 
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
+import de.mc.ladon.server.core.api.persistence.dao.RepositoryDAO
 import de.mc.ladon.server.core.config.BoxConfig
-import de.mc.ladon.server.core.persistence.dao.api.RepositoryDAO
-import de.mc.ladon.server.core.request.SystemCallContext
+import de.mc.ladon.server.core.request.impl.SystemCallContext
 import javax.inject.Inject
 import javax.inject.Named
 

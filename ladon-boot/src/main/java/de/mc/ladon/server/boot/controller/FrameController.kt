@@ -1,8 +1,9 @@
 package de.mc.ladon.server.boot.controller
 
 import com.datastax.driver.core.exceptions.NoHostAvailableException
-import de.mc.ladon.server.core.persistence.dao.api.RepositoryDAO
-import de.mc.ladon.server.core.request.SystemCallContext
+import de.mc.ladon.server.core.api.persistence.dao.RepositoryDAO
+import de.mc.ladon.server.core.request.impl.SystemCallContext
+import de.mc.ladon.server.core.util.ByteFormat
 import org.springframework.beans.factory.annotation.Autowired
 
 /**
@@ -82,4 +83,7 @@ open class FrameController {
         this.put("flash", Pair(type, message))
     }
 
+}
+fun Long.humanReadable(): String {
+    return ByteFormat.humanReadableByteCount(this, true)
 }

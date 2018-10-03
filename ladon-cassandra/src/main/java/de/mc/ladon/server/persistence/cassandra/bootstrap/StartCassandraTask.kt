@@ -4,9 +4,9 @@
 
 package de.mc.ladon.server.persistence.cassandra.bootstrap
 
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
-import de.mc.ladon.server.core.exceptions.LadonIllegalArgumentException
-import de.mc.ladon.server.core.persistence.Database
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
+import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
+import de.mc.ladon.server.core.api.persistence.Database
 import org.apache.cassandra.config.DatabaseDescriptor
 import org.apache.cassandra.service.CassandraDaemon
 import java.net.Socket

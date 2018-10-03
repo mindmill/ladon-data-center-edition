@@ -4,9 +4,9 @@
 
 package de.mc.ladon.server.persistence.cassandra.dao.impl
 
-import de.mc.ladon.server.core.persistence.dao.api.RepositoryDAO
-import de.mc.ladon.server.core.persistence.entities.api.Repository
-import de.mc.ladon.server.core.request.LadonCallContext
+import de.mc.ladon.server.core.api.persistence.dao.RepositoryDAO
+import de.mc.ladon.server.core.api.persistence.entities.Repository
+import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.persistence.cassandra.dao.api.RepositoryAccessor
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbRepository
@@ -31,7 +31,7 @@ open class RepositoryDAOImpl @Inject constructor(mm: MappingManagerProvider, val
 
     override fun setVersioned(callContext: LadonCallContext, repoId: String, versioned: Boolean) {
         val repo = getRepository(callContext, repoId)
-        val cleanup = repo?.versioned != versioned  && !versioned
+        val cleanup = repo?.versioned != versioned && !versioned
         repo?.versioned = versioned
         if (repo != null && repo is DbRepository) mapper.value.save(repo)
         if (cleanup) deleteOldVersions.cleanupVersions(repoId)
@@ -42,7 +42,8 @@ open class RepositoryDAOImpl @Inject constructor(mm: MappingManagerProvider, val
     }
 
     override fun deleteRepository(callContext: LadonCallContext, repoId: String) {
-        val repo = mapper.value.get(repoId) ?: throw IllegalArgumentException("can't delete repository, no repo with id $repoId found ")
+        val repo = mapper.value.get(repoId)
+                ?: throw IllegalArgumentException("can't delete repository, no repo with id $repoId found ")
         mapper.value.delete(repo)
     }
 

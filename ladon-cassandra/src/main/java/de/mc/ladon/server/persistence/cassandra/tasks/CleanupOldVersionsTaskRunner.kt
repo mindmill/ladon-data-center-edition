@@ -1,9 +1,9 @@
 package de.mc.ladon.server.persistence.cassandra.tasks
 
-import de.mc.ladon.server.core.persistence.dao.api.BinaryDataDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.request.LadonCallContext
-import de.mc.ladon.server.core.tasks.api.RepositoryTaskRunner
+import de.mc.ladon.server.core.api.persistence.dao.BinaryDataDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.request.LadonCallContext
+import de.mc.ladon.server.core.api.tasks.RepositoryTaskRunner
 import javax.inject.Inject
 import javax.inject.Named
 

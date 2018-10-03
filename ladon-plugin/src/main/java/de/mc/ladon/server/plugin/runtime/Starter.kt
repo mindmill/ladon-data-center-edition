@@ -1,14 +1,14 @@
 package de.mc.ladon.server.plugin.runtime
 
-import de.mc.ladon.server.core.util.getLadonHome
-import de.mc.ladon.server.core.util.getLogger
-import de.mc.ladon.server.core.util.getSystemDir
+import de.mc.ladon.server.core.util.PathUtils.getLadonHome
+import de.mc.ladon.server.core.util.PathUtils.getSystemDir
 import org.apache.felix.framework.Felix
 import org.apache.felix.framework.cache.BundleCache
 import org.apache.felix.framework.util.FelixConstants
 import org.osgi.framework.Bundle
 import org.osgi.framework.BundleActivator
 import org.osgi.framework.BundleContext
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -17,7 +17,7 @@ import javax.inject.Named
 
 
 class LadonRuntimeActivator : BundleActivator {
-    val log = getLogger()
+    val log = LoggerFactory.getLogger(javaClass)
     private var context: BundleContext? = null
 
     fun getBundles(): Array<out Bundle> = context?.bundles.orEmpty()

@@ -1,6 +1,6 @@
 package de.mc.ladon.server.persistence.cassandra.bootstrap
 
-import de.mc.ladon.server.core.util.getLogger
+import org.slf4j.LoggerFactory
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.net.DatagramPacket
@@ -12,7 +12,7 @@ import java.util.*
 
 class LadonConfigClient {
 
-    private val LOG = getLogger()
+    private val LOG = LoggerFactory.getLogger(javaClass)
     private val localSetup = System.getProperty("localsetup") != null
 
     fun getConfig(): LadonConfig {
