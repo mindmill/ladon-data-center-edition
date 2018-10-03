@@ -4,8 +4,8 @@
 
 package de.mc.ladon.server.core.bootstrap.impl
 
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
-import de.mc.ladon.server.core.persistence.Database
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
+import de.mc.ladon.server.core.api.persistence.Database
 
 /**
  * CreateSystemRepositoryTask

@@ -1,7 +1,7 @@
 package de.mc.ladon.server.core.bootstrap.impl
 
-import de.mc.ladon.server.core.bootstrap.api.BootstrapRunner
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
+import de.mc.ladon.server.core.api.bootstrap.BootstrapRunner
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
 import org.slf4j.LoggerFactory
 import javax.inject.Named
 

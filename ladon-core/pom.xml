@@ -5,11 +5,39 @@
     <parent>
         <artifactId>mc-ladon-server</artifactId>
         <groupId>de.mc.ladon</groupId>
-        <version>2.0.0</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>core</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>de.mc.ladon</groupId>
+            <artifactId>plugin-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven-bundle-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>
+                            de.mc.ladon.server.core.*
+                        </Export-Package>
+                        <Private-Package>de.mc.ladon.server.*</Private-Package>
+                        <Bundle-Name>Mind Consulting :: Ladon Data Center Core</Bundle-Name>
+                        <Bundle-Description>${project.description}</Bundle-Description>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Vendor>Mind Consulting UG</Bundle-Vendor>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <packaging>bundle</packaging>
 </project>

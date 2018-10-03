@@ -1,6 +1,6 @@
 package de.mc.ladon.server.boot.config;
 
-import de.mc.ladon.server.core.executor.api.LadonExecutorConfig;
+import de.mc.ladon.server.core.api.executor.LadonExecutorConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

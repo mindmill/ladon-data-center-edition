@@ -5,14 +5,14 @@ import de.mc.ladon.server.boot.tables.Color
 import de.mc.ladon.server.boot.tables.TableCell
 import de.mc.ladon.server.boot.tables.TableObject
 import de.mc.ladon.server.boot.tables.TableRow
+import de.mc.ladon.server.core.api.persistence.dao.BinaryDataDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.core.config.BoxConfig
-import de.mc.ladon.server.core.persistence.dao.api.BinaryDataDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.persistence.entities.impl.Content
+import de.mc.ladon.server.core.persistence.entities.impl.LadonContentMeta
 import de.mc.ladon.server.core.persistence.entities.impl.LadonMetadata
-import de.mc.ladon.server.core.persistence.entities.impl.Properties
-import de.mc.ladon.server.core.persistence.entities.impl.ResourceKey
-import de.mc.ladon.server.core.request.LadonCallContext
+import de.mc.ladon.server.core.persistence.entities.impl.LadonPropertyMeta
+import de.mc.ladon.server.core.persistence.entities.impl.LadonResourceKey
 import de.mc.ladon.server.plugin.runtime.LadonPluginRuntime
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -57,10 +57,10 @@ class PluginsPageController : FrameController() {
         if (file?.isEmpty != false) model.flashWarn("Please select a file to upload") else {
             file.inputStream.use {
                 val (id, md5, length) = binaryDataDAO.saveContentStream(cc, BoxConfig.SYSTEM_REPO, it)
-                val key = ResourceKey(BoxConfig.SYSTEM_REPO, "plugins/" + file.originalFilename, cc.getCallId().id())
+                val key = LadonResourceKey(BoxConfig.SYSTEM_REPO, "plugins/" + file.originalFilename, cc.getCallId().id())
                 val meta = LadonMetadata()
-                meta.set(Properties(mutableMapOf("content-type" to file.contentType)))
-                meta.set(Content(id, md5, length.toLong(), Date(), cc.getUser().name))
+                meta.set(LadonPropertyMeta(mutableMapOf("content-type" to file.contentType)))
+                meta.set(LadonContentMeta(id, md5, length.toLong(), Date(), cc.getUser().name))
                 metadataDAO.saveMetadata(cc, key, meta)
                 model.flashSuccess("Upload ${file.originalFilename} success")
             }

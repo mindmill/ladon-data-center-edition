@@ -1,15 +1,15 @@
 package de.mc.ladon.server.persistence.cassandra.dao.impl
 
-import de.mc.ladon.server.core.persistence.dao.api.UserRoleDAO
-import de.mc.ladon.server.core.persistence.entities.api.AccessKey
-import de.mc.ladon.server.core.persistence.entities.api.Role
-import de.mc.ladon.server.core.persistence.entities.api.User
+import de.mc.ladon.server.core.api.persistence.dao.UserRoleDAO
+import de.mc.ladon.server.core.api.persistence.encryption.Encryptor
+import de.mc.ladon.server.core.api.persistence.entities.AccessKey
+import de.mc.ladon.server.core.api.persistence.entities.Role
+import de.mc.ladon.server.core.api.persistence.entities.User
+import de.mc.ladon.server.core.api.persistence.services.S3KeyGen
 import de.mc.ladon.server.core.persistence.entities.impl.LadonAccessKey
 import de.mc.ladon.server.core.persistence.entities.impl.LadonUser
-import de.mc.ladon.server.core.persistence.services.api.S3KeyGen
 import de.mc.ladon.server.persistence.cassandra.dao.api.UserRoleAccessor
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
-import de.mc.ladon.server.persistence.cassandra.encryption.api.Encryptor
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbAccessKey
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbRole
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbUser
@@ -23,7 +23,7 @@ import javax.inject.Named
 @Named
 open class UserRoleDAOImpl
 @Inject
-constructor( mm: MappingManagerProvider, val keygen: S3KeyGen, val crypto: Encryptor) : UserRoleDAO {
+constructor(mm: MappingManagerProvider, val keygen: S3KeyGen, val crypto: Encryptor) : UserRoleDAO {
 
     val userMapper = mm.getMapper(DbUser::class.java)
     val roleMapper = mm.getMapper(DbRole::class.java)

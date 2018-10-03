@@ -1,7 +1,7 @@
 package de.mc.ladon.server.boot.controller.pages
 
 import de.mc.ladon.server.boot.controller.FrameController
-import de.mc.ladon.server.core.util.humanReadable
+import de.mc.ladon.server.boot.controller.humanReadable
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -78,7 +78,7 @@ class SystemPageController : FrameController() {
             val osBean = ManagementFactory.getPlatformMXBean(com.sun.management.OperatingSystemMXBean::class.java)
             model.put("jvmLoad", osBean.processCpuLoad * 100)
             model.put("systemLoad", osBean.systemCpuLoad * 100)
-        } catch(e: Exception) {
+        } catch (e: Exception) {
 
             val osBean = ManagementFactory.getPlatformMXBean(java.lang.management.OperatingSystemMXBean::class.java)
             model.put("jvmLoad", 0)

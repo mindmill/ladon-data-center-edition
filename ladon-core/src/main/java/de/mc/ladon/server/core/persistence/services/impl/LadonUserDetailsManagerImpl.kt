@@ -1,10 +1,10 @@
 package de.mc.ladon.server.core.persistence.services.impl
 
-import de.mc.ladon.server.core.exceptions.LadonIllegalArgumentException
-import de.mc.ladon.server.core.exceptions.LadonObjectNotFoundException
-import de.mc.ladon.server.core.persistence.dao.api.UserRoleDAO
-import de.mc.ladon.server.core.persistence.entities.api.User
-import de.mc.ladon.server.core.persistence.services.api.LadonUserDetailsManager
+import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
+import de.mc.ladon.server.core.api.exceptions.LadonObjectNotFoundException
+import de.mc.ladon.server.core.api.persistence.dao.UserRoleDAO
+import de.mc.ladon.server.core.api.persistence.entities.User
+import de.mc.ladon.server.core.api.persistence.services.LadonUserDetailsManager
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -28,7 +28,8 @@ constructor(val userRoleDAO: UserRoleDAO) : LadonUserDetailsManager {
 
     override fun updateUser(user: User) {
         val userid = user.name
-        val dbUser = userRoleDAO.getUser(userid) ?: throw LadonObjectNotFoundException("no user with name ${user.name} found")
+        val dbUser = userRoleDAO.getUser(userid)
+                ?: throw LadonObjectNotFoundException("no user with name ${user.name} found")
         val oldRoles = dbUser.roles
 
         userRoleDAO.addUser(user.name, dbUser.password!!, user.isEnabled, user.roles)
@@ -47,10 +48,7 @@ constructor(val userRoleDAO: UserRoleDAO) : LadonUserDetailsManager {
         val userid = user.name
         // val dbUser = userRoleDAO.getUser(userid)
         // if (dbUser != null) throw IllegalArgumentException("user with name ${user.name} already exists")
-        if (user is User)
-            userRoleDAO.addUser(user.name!!, user.password!!, user.isEnabled, user.roles)
-        else throw IllegalArgumentException("user is no dbuser instance")
-
+        userRoleDAO.addUser(user.name!!, user.password!!, user.isEnabled, user.roles)
         user.roles.forEach {
             userRoleDAO.addRole(it, user.name!!)
         }

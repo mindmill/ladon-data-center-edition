@@ -4,10 +4,10 @@
 
 package de.mc.ladon.server.boot.config;
 
-import de.mc.ladon.server.core.exceptions.LadonIllegalArgumentException;
-import de.mc.ladon.server.core.persistence.entities.api.User;
+import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException;
+import de.mc.ladon.server.core.api.persistence.entities.User;
+import de.mc.ladon.server.core.api.persistence.services.LadonUserDetailsManager;
 import de.mc.ladon.server.core.persistence.entities.impl.LadonUser;
-import de.mc.ladon.server.core.persistence.services.api.LadonUserDetailsManager;
 import org.apache.commons.lang.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

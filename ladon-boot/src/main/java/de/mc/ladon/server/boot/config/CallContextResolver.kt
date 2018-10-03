@@ -1,8 +1,8 @@
 package de.mc.ladon.server.boot.config
 
 
+import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.core.persistence.entities.impl.LadonUser
-import de.mc.ladon.server.core.request.LadonCallContext
 import org.springframework.core.MethodParameter
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails

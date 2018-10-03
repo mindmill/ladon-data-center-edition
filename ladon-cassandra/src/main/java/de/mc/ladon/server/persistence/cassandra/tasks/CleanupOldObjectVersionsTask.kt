@@ -4,11 +4,11 @@
 
 package de.mc.ladon.server.persistence.cassandra.tasks
 
-import de.mc.ladon.server.core.persistence.dao.api.BinaryDataDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.persistence.entities.impl.HistoryKey
-import de.mc.ladon.server.core.request.LadonCallContext
-import de.mc.ladon.server.core.tasks.api.RepositoryTask
+import de.mc.ladon.server.core.api.persistence.dao.BinaryDataDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.request.LadonCallContext
+import de.mc.ladon.server.core.api.tasks.RepositoryTask
+import de.mc.ladon.server.core.persistence.entities.impl.LadonHistoryKey
 import org.slf4j.LoggerFactory
 
 /**
@@ -25,7 +25,7 @@ class CleanupOldObjectVersionsTask(
 
     override fun run(callContext: LadonCallContext): Boolean {
         log.info("Start cleaning old versions for object $repoId : $objectId")
-        val list = metadataDAO.getMetadataHistory(callContext, HistoryKey(repoId, objectId))
+        val list = metadataDAO.getMetadataHistory(callContext, LadonHistoryKey(repoId, objectId))
         val first = list.firstOrNull()
         val rest = list.drop(1)
 

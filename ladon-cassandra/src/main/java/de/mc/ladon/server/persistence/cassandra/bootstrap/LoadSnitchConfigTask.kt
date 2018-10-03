@@ -4,8 +4,8 @@
 
 package de.mc.ladon.server.persistence.cassandra.bootstrap
 
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
-import de.mc.ladon.server.core.persistence.DatabaseConfig
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
+import de.mc.ladon.server.core.api.persistence.DatabaseConfig
 import de.mc.ladon.server.persistence.cassandra.database.LadonEndpointSnitch
 import javax.inject.Inject
 

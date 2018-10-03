@@ -1,8 +1,8 @@
 package de.mc.ladon.server.core.bootstrap.impl
 
-import de.mc.ladon.server.core.bootstrap.api.BootstrapTask
+import de.mc.ladon.server.core.api.bootstrap.BootstrapTask
+import de.mc.ladon.server.core.api.persistence.services.LadonUserDetailsManager
 import de.mc.ladon.server.core.persistence.entities.impl.LadonUser
-import de.mc.ladon.server.core.persistence.services.api.LadonUserDetailsManager
 import javax.inject.Inject
 import javax.inject.Named
 

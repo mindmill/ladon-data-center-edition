@@ -5,14 +5,14 @@
 package de.mc.ladon.server.persistence.cassandra.dao.impl
 
 import com.datastax.driver.core.utils.Bytes
-import de.mc.ladon.server.core.exceptions.LadonStorageException
-import de.mc.ladon.server.core.persistence.dao.api.ChunkDAO
-import de.mc.ladon.server.core.util.hash.getSHA256Hash
+import de.mc.ladon.server.core.api.exceptions.LadonStorageException
+import de.mc.ladon.server.core.api.persistence.dao.ChunkDAO
+import de.mc.ladon.server.core.api.persistence.encryption.Encryptor
 import de.mc.ladon.server.persistence.cassandra.dao.api.StatementCache
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
-import de.mc.ladon.server.persistence.cassandra.encryption.api.Encryptor
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbChunk
 import java.nio.ByteBuffer
+import java.security.MessageDigest
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -56,5 +56,9 @@ open class ChunkDAOImpl @Inject constructor(mm: MappingManagerProvider, val dbQu
 
     }
 
+    fun ByteArray.getSHA256Hash(): ByteArray {
+        val md = MessageDigest.getInstance("SHA-256")
+        return md.digest(this)
+    }
 
 }

@@ -5,9 +5,9 @@ import de.mc.ladon.server.boot.tables.Color
 import de.mc.ladon.server.boot.tables.TableCell
 import de.mc.ladon.server.boot.tables.TableObject
 import de.mc.ladon.server.boot.tables.TableRow
-import de.mc.ladon.server.core.persistence.dao.api.UserRoleDAO
+import de.mc.ladon.server.core.api.persistence.dao.UserRoleDAO
+import de.mc.ladon.server.core.api.persistence.services.LadonUserDetailsManager
 import de.mc.ladon.server.core.persistence.entities.impl.LadonUser
-import de.mc.ladon.server.core.persistence.services.api.LadonUserDetailsManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
@@ -29,8 +29,9 @@ class UserRolePageController
     fun users(model: MutableMap<String, Any>,
               @RequestParam repoid: String,
               @RequestParam(required = false) userfilter: String?,
-              @RequestParam(required = false) rolefilter: String?,
-              @RequestParam(required = false) selectedrole: String?): String {
+              @RequestParam(required = false) rolefilter: String?
+//              @RequestParam(required = false) selectedrole: String?
+    ): String {
 
             model.put("userfilter", userfilter.orEmpty())
             val result = mutableListOf<TableRow>()

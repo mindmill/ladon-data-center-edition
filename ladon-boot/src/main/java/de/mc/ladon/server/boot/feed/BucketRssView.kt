@@ -4,12 +4,12 @@ import com.rometools.rome.feed.synd.SyndContentImpl
 import com.rometools.rome.feed.synd.SyndEntryImpl
 import com.rometools.rome.feed.synd.SyndFeedImpl
 import com.rometools.rome.io.SyndFeedOutput
+import de.mc.ladon.server.boot.controller.humanReadable
 import de.mc.ladon.server.boot.controller.pages.toUrlString
-import de.mc.ladon.server.core.persistence.dao.api.ChangeTokenDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.persistence.entities.impl.ResourceKey
-import de.mc.ladon.server.core.request.AnonymousCallContext
-import de.mc.ladon.server.core.util.humanReadable
+import de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.persistence.entities.impl.LadonResourceKey
+import de.mc.ladon.server.core.request.impl.AnonymousCallContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -26,7 +26,7 @@ class BucketRssView @Autowired constructor(
         val changeTokenDAO: ChangeTokenDAO
 ) {
 
-    @RequestMapping(value = "/feed/{repoid}/atom", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = ["/feed/{repoid}/atom"], method = [RequestMethod.GET])
     @ResponseBody
     fun repoFeed(@PathVariable("repoid") repoid: String, request: HttpServletRequest): String {
 
@@ -36,11 +36,11 @@ class BucketRssView @Autowired constructor(
 
 
         val lastUpdates = token
-                .map { metadataDAO.getMetadata(AnonymousCallContext(), ResourceKey(it.repoId!!, it.versionseriesId!!, it.changeToken!!)) }
+                .map { metadataDAO.getMetadata(AnonymousCallContext(), LadonResourceKey(it.repoId!!, it.versionseriesId!!, it.changeToken!!)) }
                 .map {
                     SyndEntryImpl()
                             .apply { title = it!!.key().versionSeriesId }
-                            .apply { contents = listOf(SyndContentImpl().apply { value = "ID: " + it!!.content().id + "  SIZE: " + (it!!.content().length.humanReadable()) }) }
+                            .apply { contents = listOf(SyndContentImpl().apply { value = "ID: " + it!!.content().id + "  SIZE: " + (it.content().length.humanReadable()) }) }
                             .apply { publishedDate = Date(it!!.key().changeToken.timestamp()) }
                             .apply { link = baseUrl + "debug?key=${it!!.key().toUrlString()}" }
                             .apply { author = it!!.content().deletedBy ?: it.content().createdBy }

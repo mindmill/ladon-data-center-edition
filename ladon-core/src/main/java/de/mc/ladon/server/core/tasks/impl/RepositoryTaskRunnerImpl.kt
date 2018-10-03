@@ -5,10 +5,10 @@
 package de.mc.ladon.server.core.tasks.impl
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder
-import de.mc.ladon.server.core.request.LadonCallContext
-import de.mc.ladon.server.core.request.SystemCallContext
-import de.mc.ladon.server.core.tasks.api.RepositoryTask
-import de.mc.ladon.server.core.tasks.api.RepositoryTaskRunner
+import de.mc.ladon.server.core.api.request.LadonCallContext
+import de.mc.ladon.server.core.api.tasks.RepositoryTask
+import de.mc.ladon.server.core.api.tasks.RepositoryTaskRunner
+import de.mc.ladon.server.core.request.impl.SystemCallContext
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Future

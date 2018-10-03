@@ -10,15 +10,15 @@ import de.mc.ladon.s3server.entities.api.*
 import de.mc.ladon.s3server.entities.impl.*
 import de.mc.ladon.s3server.exceptions.*
 import de.mc.ladon.s3server.repository.api.S3Repository
-import de.mc.ladon.server.core.persistence.dao.api.BinaryDataDAO
-import de.mc.ladon.server.core.persistence.dao.api.MetadataDAO
-import de.mc.ladon.server.core.persistence.dao.api.RepositoryDAO
-import de.mc.ladon.server.core.persistence.dao.api.UserRoleDAO
-import de.mc.ladon.server.core.persistence.entities.api.Repository
-import de.mc.ladon.server.core.persistence.entities.api.User
+import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
+import de.mc.ladon.server.core.api.persistence.dao.BinaryDataDAO
+import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.persistence.dao.RepositoryDAO
+import de.mc.ladon.server.core.api.persistence.dao.UserRoleDAO
+import de.mc.ladon.server.core.api.persistence.entities.PropertyMetadata
+import de.mc.ladon.server.core.api.persistence.entities.Repository
+import de.mc.ladon.server.core.api.persistence.entities.User
 import de.mc.ladon.server.core.persistence.entities.impl.*
-import de.mc.ladon.server.core.persistence.entities.impl.Properties
-import de.mc.ladon.server.core.util.toUUID
 import de.mc.ladon.server.persistence.cassandra.tasks.CleanupOldVersionsTaskRunner
 import java.util.*
 import javax.inject.Inject
@@ -40,7 +40,8 @@ open class LadonS3Storage @Inject constructor(
 
     override fun listAllBuckets(callContext: S3CallContext): List<S3Bucket> {
         return repoDAO.getRepositories(callContext.toLadonCC()).map {
-            val cuser = userRoleDAO.getUser(it.createdby!!) ?: throw InternalErrorException("User not found : ${it.createdby}", callContext.requestId)
+            val cuser = userRoleDAO.getUser(it.createdby!!)
+                    ?: throw InternalErrorException("User not found : ${it.createdby}", callContext.requestId)
             S3BucketImpl(it.repoId, it.creationdate, cuser.toS3User())
         }
     }
@@ -56,7 +57,7 @@ open class LadonS3Storage @Inject constructor(
 
     override fun deleteBucket(callContext: S3CallContext, bucketName: String) {
         val lcc = callContext.toLadonCC()
-        if (metaDAO.listAllMetadata(lcc, bucketName, "", "",null, 1, true).first.first.isEmpty()) {
+        if (metaDAO.listAllMetadata(lcc, bucketName, "", "", null, 1, true).first.first.isEmpty()) {
             repoDAO.deleteRepository(lcc, bucketName)
         } else {
             throw BucketNotEmptyException(bucketName, callContext.requestId)
@@ -66,7 +67,8 @@ open class LadonS3Storage @Inject constructor(
 
     override fun createObject(callContext: S3CallContext, bucketName: String, objectKey: String) {
         val lcc = callContext.toLadonCC()
-        val repo = repoDAO.getRepository(lcc, bucketName) ?: throw NoSuchBucketException(bucketName, callContext.requestId)
+        val repo = repoDAO.getRepository(lcc, bucketName)
+                ?: throw NoSuchBucketException(bucketName, callContext.requestId)
         val contentLength = callContext.header.contentLength
         val md5 = callContext.header.contentMD5
         if (callContext.params.acl()) {
@@ -83,11 +85,11 @@ open class LadonS3Storage @Inject constructor(
                     throw InvalidDigestException(objectKey, callContext.requestId)
                 }
             }
-            val key = ResourceKey(bucketName, objectKey, lcc.callId)
+            val key = LadonResourceKey(bucketName, objectKey, lcc.callId)
             val meta = LadonMetadata()
             meta.set(callContext.header.fullHeader.toProps())
             // val name = objectKey.split("/").filterNotNull().last()
-            meta.set(Content(info.id, hexMd5, info.length.toLong(), Date(), lcc.getUser().name))
+            meta.set(LadonContentMeta(info.id, hexMd5, info.length.toLong(), Date(), lcc.getUser().name))
             metaDAO.saveMetadata(lcc, key, meta)
             val modified = meta.content().created
             val header = S3ResponseHeaderImpl()
@@ -101,23 +103,29 @@ open class LadonS3Storage @Inject constructor(
         }
     }
 
+    private fun String?.toUUID(): UUID {
+        if (this == null) throw LadonIllegalArgumentException("Wrong UUID format")
+        return UUID.fromString(this)
+    }
+
     override fun copyObject(callContext: S3CallContext, srcBucket: String, srcObjectKey: String, destBucket: String, destObjectKey: String, copyMetadata: Boolean): S3Object {
         val lcc = callContext.toLadonCC()
         repoDAO.getRepository(lcc, srcBucket) ?: throw NoSuchBucketException(srcBucket, callContext.requestId)
-        val destRepo = repoDAO.getRepository(lcc, destBucket) ?: throw NoSuchBucketException(srcBucket, callContext.requestId)
+        val destRepo = repoDAO.getRepository(lcc, destBucket)
+                ?: throw NoSuchBucketException(srcBucket, callContext.requestId)
         var srcKeyAndVersion = srcObjectKey.split("?versionId=")
         val srcMeta = if (srcKeyAndVersion.size == 2) {
-            metaDAO.getMetadata(lcc, ResourceKey(srcBucket, srcKeyAndVersion[0], srcKeyAndVersion[1].toUUID()))
+            metaDAO.getMetadata(lcc, LadonResourceKey(srcBucket, srcKeyAndVersion[0], srcKeyAndVersion[1].toUUID()))
         } else {
-            metaDAO.getMetadataLatest(lcc, HistoryKey(srcBucket, srcKeyAndVersion[0]))
+            metaDAO.getMetadataLatest(lcc, LadonHistoryKey(srcBucket, srcKeyAndVersion[0]))
         } ?: throw NoSuchKeyException(srcObjectKey, callContext.requestId)
-        val content = srcMeta.content()
+        val content = srcMeta.content() as LadonContentMeta
         val props = srcMeta.properties()
 
         val newStreamId = binaryDataDAO.copyContentStream(lcc, srcBucket, content.id, destBucket)
         val newContent = content.copy(id = newStreamId, created = Date(), createdBy = lcc.getUser().name)
 
-        val key = ResourceKey(destBucket, destObjectKey, lcc.callId)
+        val key = LadonResourceKey(destBucket, destObjectKey, lcc.callId)
         val destMeta = LadonMetadata()
         destMeta.set(callContext.header.fullHeader.toProps())
         if (copyMetadata) {
@@ -149,9 +157,9 @@ open class LadonS3Storage @Inject constructor(
         val version = callContext.params.allParams.get(S3Constants.VERSION_ID)
         repoDAO.getRepository(lcc, bucketName) ?: throw NoSuchBucketException(bucketName, callContext.requestId)
         val meta = if (version == null) {
-            metaDAO.getMetadataLatest(lcc, HistoryKey(bucketName, objectKey))
+            metaDAO.getMetadataLatest(lcc, LadonHistoryKey(bucketName, objectKey))
         } else {
-            metaDAO.getMetadata(lcc, ResourceKey(bucketName, objectKey, UUID.fromString(version)))
+            metaDAO.getMetadata(lcc, LadonResourceKey(bucketName, objectKey, UUID.fromString(version)))
         } ?: throw NoSuchKeyException(objectKey, callContext.requestId)
 
         if (meta.isDeleted()) throw NoSuchKeyException(objectKey, callContext.requestId)
@@ -173,7 +181,7 @@ open class LadonS3Storage @Inject constructor(
         val delimiter = callContext.params.delimiter
         val includeVersions = callContext.params.listVersions()
 
-        val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker,delimiter, maxKeys, includeVersions)
+        val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker, delimiter, maxKeys, includeVersions)
         val (objectList, prefixes) = result.first
         val truncated = result.second
 
@@ -182,7 +190,7 @@ open class LadonS3Storage @Inject constructor(
         return S3ListBucketResultImpl(objectList.map {
             val latest = lastKey != it.key().versionSeriesId
             lastKey = it.key().versionSeriesId
-            val content = it[Content::class]!!
+            val content = it[LadonContentMeta::class]!!
             S3ObjectImpl(it.key().versionSeriesId,
                     it.content().created,
                     bucketName,
@@ -193,13 +201,14 @@ open class LadonS3Storage @Inject constructor(
                     it.properties().get(S3Constants.CONTENT_TYPE),
                     content.hash, it.key().changeToken.toString(), it.isDeleted(), latest)
             //TODO
-        }, prefixes,truncated, bucketName, null, null)
+        }, prefixes, truncated, bucketName, null, null)
     }
 
     override fun deleteObject(callContext: S3CallContext, bucketName: String, objectKey: String) {
         val lcc = callContext.toLadonCC()
         val repo = repoDAO.getRepository(lcc, bucketName)
-        val meta = metaDAO.getMetadataLatest(lcc, HistoryKey(bucketName, objectKey)) ?: throw NoSuchKeyException(objectKey, callContext.requestId)
+        val meta = metaDAO.getMetadataLatest(lcc, LadonHistoryKey(bucketName, objectKey))
+                ?: throw NoSuchKeyException(objectKey, callContext.requestId)
         metaDAO.deleteMetadata(lcc, meta.key())
         if (repo.isUnversioned()) {
             versionsCleaner.cleanupVersions(lcc, bucketName, objectKey)
@@ -207,14 +216,17 @@ open class LadonS3Storage @Inject constructor(
     }
 
     override fun getBucket(callContext: S3CallContext, bucketName: String) {
-        val repo = repoDAO.getRepository(callContext.toLadonCC(), bucketName) ?: throw NoSuchBucketException(bucketName, callContext.requestId)
-        val cuser = userRoleDAO.getUser(repo.createdby!!) ?: throw InternalErrorException("User not found : ${repo.createdby}", callContext.requestId)
+        val repo = repoDAO.getRepository(callContext.toLadonCC(), bucketName)
+                ?: throw NoSuchBucketException(bucketName, callContext.requestId)
+        val cuser = userRoleDAO.getUser(repo.createdby!!)
+                ?: throw InternalErrorException("User not found : ${repo.createdby}", callContext.requestId)
         S3BucketImpl(repo.repoId, repo.creationdate, cuser.toS3User())
 
     }
 
     override fun getUser(callContext: S3CallContext, accessKey: String): S3User {
-        val keydata = userRoleDAO.getKey(accessKey) ?: throw InvalidAccessKeyIdException("AccessKey not found", callContext.requestId)
+        val keydata = userRoleDAO.getKey(accessKey)
+                ?: throw InvalidAccessKeyIdException("AccessKey not found", callContext.requestId)
         val key = keydata.first
         val user = keydata.second
         return S3UserImpl(user.name, user.name, key.accessKeyId, key.secretKey, user.roles)
@@ -225,7 +237,7 @@ open class LadonS3Storage @Inject constructor(
         return LadonS3CallContext(this)
     }
 
-    private fun Properties.toS3Meta(): S3Metadata {
+    private fun PropertyMetadata.toS3Meta(): S3Metadata {
         val result = HashMap<String, String>(this.content.size)
         for ((k, v) in this.content) {
             if (k.startsWithAny(readFilter)) {
@@ -235,8 +247,8 @@ open class LadonS3Storage @Inject constructor(
         return S3MetadataImpl(result)
     }
 
-    private fun Map<String, String>.toProps(): Properties {
-        val props = Properties()
+    private fun Map<String, String>.toProps(): LadonPropertyMeta {
+        val props = LadonPropertyMeta()
         for ((k, v) in this) {
             if (k.startsWithAny(writeFilter))
                 props[k] = v
