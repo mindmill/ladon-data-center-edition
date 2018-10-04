@@ -12,7 +12,7 @@
         <module>ladon-plugin-api</module>
         <module>ladon-s3</module>
         <module>ladon-cassandra</module>
-        <!--<module>ladon-boot</module>-->
+        <module>ladon-boot</module>
         <module>ladon-plugin</module>
         <module>bundled-plugins</module>
     </modules>

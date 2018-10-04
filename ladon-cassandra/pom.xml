@@ -70,25 +70,4 @@
         </dependency>
     </dependencies>
 
-    <!--<build>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.felix</groupId>-->
-                <!--<artifactId>maven-bundle-plugin</artifactId>-->
-                <!--<extensions>true</extensions>-->
-                <!--<configuration>-->
-                    <!--<instructions>-->
-                        <!--<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>-->
-                        <!--<Export-Package>*</Export-Package>-->
-                        <!--&lt;!&ndash;<Private-Package>de.mc.ladon.s3server.*</Private-Package>&ndash;&gt;-->
-                        <!--<Bundle-Name>Mind Consulting :: Ladon Data Center Cassandra</Bundle-Name>-->
-                        <!--<Bundle-Description>${project.description}</Bundle-Description>-->
-                        <!--<Bundle-Version>${project.version}</Bundle-Version>-->
-                        <!--<Bundle-Vendor>Mind Consulting UG</Bundle-Vendor>-->
-                    <!--</instructions>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
-    <!--<packaging>bundle</packaging>-->
 </project>
