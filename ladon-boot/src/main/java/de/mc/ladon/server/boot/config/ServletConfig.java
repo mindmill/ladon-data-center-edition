@@ -35,12 +35,12 @@ public class ServletConfig {
     @Autowired
     private S3Repository s3r;
 
-    // @Bean
+    @Bean
     public ServletRegistrationBean redirectServlet() {
         ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                resp.sendRedirect("/admin/overview");
+                resp.sendRedirect("/services/s3");
             }
         });
         registration.setName("redirectServlet");
