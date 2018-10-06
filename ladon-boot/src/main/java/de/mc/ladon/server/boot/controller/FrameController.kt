@@ -23,7 +23,7 @@ open class FrameController {
     private fun updateMenu(model: MutableMap<String, Any>, path: String, repoid: String): String {
         model.put("repoid", repoid)
         try{
-        model.put("repositories", repoDao.getRepositories(SystemCallContext()))
+        model.put("repositories", repoDao.getRepositories(SystemCallContext()).sortedBy { it.creationdate }.take(20))
         } catch(e: NoHostAvailableException) {
             model.flashDanger("ALL CASSANDRA HOSTS ARE DOWN!")
         } catch(e: IllegalStateException) {
