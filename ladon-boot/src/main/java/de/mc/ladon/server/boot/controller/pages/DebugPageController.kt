@@ -132,6 +132,12 @@ class DebugPageController : FrameController() {
         model["time"] = fromDate(datetime)
         model["delimiter"] = delimiter == true
         model["deleted"] = deleted == true
+        model["parent"] = searchpath
+                ?.let {it.removeSuffix("/")
+                        .split("/")
+                        .dropLast(1)
+                        .joinToString("/",postfix = "/")
+                .let {if(it == "/") "" else it  }}.orEmpty()
         model["searchpath"] = searchpath ?: ""
         model["df"] = SimpleDateFormat(datePattern)
 
