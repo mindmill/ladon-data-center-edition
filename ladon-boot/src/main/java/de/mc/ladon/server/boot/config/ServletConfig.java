@@ -40,7 +40,7 @@ public class ServletConfig {
         ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                resp.sendRedirect("/services/s3");
+                resp.sendRedirect("/admin/overview");
             }
         });
         registration.setName("redirectServlet");
