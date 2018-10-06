@@ -149,7 +149,7 @@ class DebugPageController : FrameController() {
             if (result.second.isNotEmpty()) {
                 tables.add(TableObject("Folders", listOf("ID", "Prefix"), result.second.mapIndexed { i, pref ->
                     TableRow(listOf(
-                            TableCell("${i + 1}", "searchid?repoid=$repoid&searchpath=$searchpath$pref%2F&delimiter=$delimiter&deleted=$deleted"),
+                            TableCell("${i + 1}", "searchid?repoid=$repoid&searchpath=$searchpath$pref%2F&delimiter=$delimiter${deleted.let { if (it == true) "&deleted=on" else "" }}"),
                             TableCell(pref)),
                             Color.BLUE)
                 }))
