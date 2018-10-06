@@ -22,7 +22,36 @@
         <artifactId>org.apache.felix.framework</artifactId>
         <version>6.0.1</version>
     </dependency>
-
+    <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.shell</artifactId>
+        <version>1.4.3</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.shell.tui</artifactId>
+        <version>1.4.1</version>
+    </dependency>
+    <!--<dependency>-->
+        <!--<groupId>org.apache.felix</groupId>-->
+        <!--<artifactId>org.apache.felix.webconsole</artifactId>-->
+        <!--<version>4.3.8</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+        <!--<groupId>org.apache.cxf</groupId>-->
+        <!--<artifactId>cxf-rt-frontend-jaxrs</artifactId>-->
+        <!--<version>3.2.6</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+        <!--<groupId>org.apache.cxf</groupId>-->
+        <!--<artifactId>cxf-rt-transports-http-jetty</artifactId>-->
+        <!--<version>3.2.6</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+        <!--<groupId>org.apache.felix</groupId>-->
+        <!--<artifactId>org.apache.felix.http.jetty</artifactId>-->
+        <!--<version>4.0.6</version>-->
+    <!--</dependency>-->
     <dependency>
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.http.whiteboard</artifactId>
