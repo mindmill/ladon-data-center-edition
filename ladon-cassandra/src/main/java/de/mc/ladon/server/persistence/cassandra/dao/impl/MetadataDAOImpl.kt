@@ -21,6 +21,7 @@ import de.mc.ladon.server.core.persistence.entities.impl.LadonResourceKey
 import de.mc.ladon.server.persistence.cassandra.dao.api.ObjectDataAccessor
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbObjectData
+import org.slf4j.LoggerFactory
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -36,7 +37,7 @@ open class MetadataDAOImpl
                     val hookManager: LadonHookManager) : MetadataDAO {
 
 
-    // private val LOG = LoggerFactory.getLogger(javaClass)
+     private val LOG = LoggerFactory.getLogger(javaClass)
 
     private val filingMapper: (DbObjectData) -> Metadata = { fe ->
         LadonMetadata().apply {
@@ -171,9 +172,7 @@ open class MetadataDAOImpl
         }
         // found more than requested
         val hasMore = counter > limit && limit != 0
-        println(
-                "result : $result , commonprefs : $commonPrefixes , hasMore : $hasMore"
-        )
+        LOG.info("result : $result , commonprefs : $commonPrefixes , hasMore : $hasMore")
         return Pair(result to commonPrefixes.toList(), hasMore)
     }
 
