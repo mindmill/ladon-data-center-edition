@@ -158,7 +158,9 @@ open class MetadataDAOImpl
                             result.add(objectData.let(filingMapper))
                             //}
                         } else {
-                            commonPrefixes.add(pref)
+                            val added = commonPrefixes.add(pref)
+                            // common prefix counts as 1 for all keys
+                            if (!added) counter--
                         }
                     } else {
                         result.add(objectData.let(filingMapper))
