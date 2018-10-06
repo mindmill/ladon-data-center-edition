@@ -27,9 +27,10 @@ class RepositoriesPageController : FrameController() {
     lateinit var metaDao: MetadataDAO
 
 
-    @RequestMapping("repositories")
-    fun repos(model: MutableMap<String, Any>, @RequestParam(required = false) repoid: String?): String {
+    @RequestMapping("repositories", method = [RequestMethod.GET, RequestMethod.POST])
+    fun repos(model: MutableMap<String, Any>, @RequestParam(required = false) repoid: String?, @RequestParam(required = false) repoprefix: String?): String {
         val repo: String = repoid ?: BoxConfig.SYSTEM_REPO
+        model["repoprefix"] = repoprefix ?: ""
         return super.updateModel(model, "repositories", repo)
     }
 

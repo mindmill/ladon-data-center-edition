@@ -22,11 +22,13 @@ open class FrameController {
 
     private fun updateMenu(model: MutableMap<String, Any>, path: String, repoid: String): String {
         model.put("repoid", repoid)
-        try{
-        model.put("repositories", repoDao.getRepositories(SystemCallContext()).sortedBy { it.creationdate }.take(20))
-        } catch(e: NoHostAvailableException) {
+        try {
+            model.put("repositories", repoDao.getRepositories(SystemCallContext()).filter {
+                it.repoId!!.contains(model["repoprefix"] as String? ?: "")
+            }.sortedBy { it.creationdate }.take(20))
+        } catch (e: NoHostAvailableException) {
             model.flashDanger("ALL CASSANDRA HOSTS ARE DOWN!")
-        } catch(e: IllegalStateException) {
+        } catch (e: IllegalStateException) {
             model.flashDanger("ALL CASSANDRA HOSTS ARE DOWN!")
         }
         model.put("path", path + ".vm")
@@ -40,8 +42,8 @@ open class FrameController {
                 MenuItem("overview", path, repoid, "fa fa-dashboard", "Dashboard", "green"),
                 MenuItem("repositories", path, repoid, "fa fa-bitbucket", "Buckets", "green"),
                 MenuItem("searchid", path, repoid, "fa fa-file", "Files", "green"),
-                       // .addChild(MenuItem("searchid", path, repoid, "fa fa-file", "Explorer", "green"))
-                        //.addChild(MenuItem("debug", path, repoid, "fa fa-file", "Details", "green")),
+                // .addChild(MenuItem("searchid", path, repoid, "fa fa-file", "Explorer", "green"))
+                //.addChild(MenuItem("debug", path, repoid, "fa fa-file", "Details", "green")),
                 MenuItem("users", path, repoid, "fa fa-user", "Users", "green"),
                 MenuItem("plugins", path, repoid, "fa fa-plug", "Plugins", "green"),
                 MenuItem("system", path, repoid, "fa fa-area-chart", "System", "green"),
@@ -84,6 +86,7 @@ open class FrameController {
     }
 
 }
+
 fun Long.humanReadable(): String {
     return ByteFormat.humanReadableByteCount(this, true)
 }
