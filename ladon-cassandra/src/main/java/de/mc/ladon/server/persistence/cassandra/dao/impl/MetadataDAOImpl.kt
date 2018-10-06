@@ -171,6 +171,9 @@ open class MetadataDAOImpl
         }
         // found more than requested
         val hasMore = counter > limit && limit != 0
+        println(
+                "result : $result , commonprefs : $commonPrefixes , hasMore : $hasMore"
+        )
         return Pair(result to commonPrefixes.toList(), hasMore)
     }
 
