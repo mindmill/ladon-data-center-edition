@@ -170,7 +170,7 @@ open class MetadataDAOImpl
             }
         }
         // found more than requested
-        val hasMore = counter > limit
+        val hasMore = counter > limit && limit != 0
         return Pair(result to commonPrefixes.toList(), hasMore)
     }
 
