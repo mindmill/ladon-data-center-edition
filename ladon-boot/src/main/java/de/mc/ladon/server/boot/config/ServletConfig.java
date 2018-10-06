@@ -35,7 +35,7 @@ public class ServletConfig {
     @Autowired
     private S3Repository s3r;
 
-   // @Bean
+    @Bean
     public ServletRegistrationBean redirectServlet() {
         ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
             @Override
@@ -59,7 +59,7 @@ public class ServletConfig {
         ServletRegistrationBean registration = new ServletRegistrationBean(
                 s3Servlet);
         registration.setName("s3servlet");
-        registration.addUrlMappings("/*");
+        registration.addUrlMappings("/services/s3/*");
         registration.setLoadOnStartup(1);
         return registration;
     }
