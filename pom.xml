@@ -146,7 +146,7 @@
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-osgi-bundle</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
@@ -155,11 +155,11 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.jetbrains.kotlin</groupId>-->
-            <!--<artifactId>kotlin-jdk-annotations</artifactId>-->
-            <!--<version>1.0.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-jdk-annotations</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>javax.inject</groupId>

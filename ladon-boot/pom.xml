@@ -172,4 +172,11 @@
         </resources>
         <finalName>ladon_de_${project.version}</finalName>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>mind</id>
+            <name>Mind</name>
+            <url>${repo.internal.url}</url>
+        </repository>
+    </distributionManagement>
 </project>
