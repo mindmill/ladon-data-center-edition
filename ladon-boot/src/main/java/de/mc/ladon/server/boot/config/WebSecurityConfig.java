@@ -46,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/feed/**")
                 .permitAll()
-                .antMatchers("/")
+                .antMatchers("/**")
                 .permitAll()
                 .antMatchers("/admin/assets/**")
                 .permitAll()
