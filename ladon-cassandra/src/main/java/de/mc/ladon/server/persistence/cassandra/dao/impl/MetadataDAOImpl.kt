@@ -154,9 +154,9 @@ open class MetadataDAOImpl
                     if (delimiter != null) {
                         val pref = getCommonPrefix(currentKey, prefix)
                         if (pref == null) {
-                            if (!currentKey.endsWith(prefix)) {
-                                result.add(objectData.let(filingMapper))
-                            }
+                            // if (!currentKey.endsWith(prefix)) {
+                            result.add(objectData.let(filingMapper))
+                            //}
                         } else {
                             commonPrefixes.add(pref)
                         }
