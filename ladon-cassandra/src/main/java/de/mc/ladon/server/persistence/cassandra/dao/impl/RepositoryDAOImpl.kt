@@ -25,8 +25,8 @@ open class RepositoryDAOImpl @Inject constructor(mm: MappingManagerProvider, val
     val mapper = mm.getMapper(DbRepository::class.java)
     val accessor = mm.getAccessor(RepositoryAccessor::class.java)
 
-    override fun getRepositories(callContext: LadonCallContext): List<Repository> {
-        return accessor.value.listRepositories().all()
+    override fun getRepositories(callContext: LadonCallContext): Sequence<Repository> {
+        return accessor.value.listRepositories().asSequence()
     }
 
     override fun setVersioned(callContext: LadonCallContext, repoId: String, versioned: Boolean) {

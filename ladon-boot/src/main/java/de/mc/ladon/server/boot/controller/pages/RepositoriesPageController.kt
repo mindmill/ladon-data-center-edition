@@ -53,9 +53,9 @@ class RepositoriesPageController : FrameController() {
             if (!Validator.isValidBucketName(newrepoid)) throw LadonIllegalArgumentException("Bucket Name $newrepoid is not valid, bucketnames have to be < 64 characters, a-z 0-9 . _ : - ")
             if (repoDao.getRepository(callContext, newrepoid) != null) throw LadonIllegalArgumentException("Bucket with id $newrepoid already exists")
             repoDao.addRepository(callContext, newrepoid)
-            model.put("repos", repoDao.getRepositories(callContext))
+            model.put("repos", repoDao.getRepositories(callContext).take(20))
         } catch (e: Exception) {
-            model.put("repos", repoDao.getRepositories(callContext))
+            model.put("repos", repoDao.getRepositories(callContext).take(20))
             model.flashDanger(e.message ?: "Error while creating new Bucket")
             return super.updateModel(model, "repositories", BoxConfig.SYSTEM_REPO)
         }
@@ -74,9 +74,9 @@ class RepositoriesPageController : FrameController() {
             if (!empty) throw LadonIllegalArgumentException("Bucket with id $repoid is not empty")
             if (repoDao.getRepository(callContext, repoid) == null) throw LadonIllegalArgumentException("Bucket with id $repoid doesn't exists")
             repoDao.deleteRepository(callContext, repoid)
-            model.put("repos", repoDao.getRepositories(callContext))
+            model.put("repos", repoDao.getRepositories(callContext).take(20))
         } catch (e: Exception) {
-            model.put("repos", repoDao.getRepositories(callContext))
+            model.put("repos", repoDao.getRepositories(callContext).take(20))
             model.flashDanger(e.message ?: "Error while deleting bucket $repoid")
             return super.updateModel(model, "repositories", BoxConfig.SYSTEM_REPO)
         }

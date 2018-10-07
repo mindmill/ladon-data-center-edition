@@ -21,18 +21,18 @@ open class FrameController {
 
 
     private fun updateMenu(model: MutableMap<String, Any>, path: String, repoid: String): String {
-        model.put("repoid", repoid)
+        model["repoid"] = repoid
         try {
-            model.put("repositories", repoDao.getRepositories(SystemCallContext()).filter {
+            model["repositories"] = repoDao.getRepositories(SystemCallContext()).filter {
                 it.repoId!!.contains(model["repoprefix"] as String? ?: "")
-            }.sortedBy { it.creationdate }.take(20))
+            }.take(20).toList()
         } catch (e: NoHostAvailableException) {
             model.flashDanger("ALL CASSANDRA HOSTS ARE DOWN!")
         } catch (e: IllegalStateException) {
             model.flashDanger("ALL CASSANDRA HOSTS ARE DOWN!")
         }
-        model.put("path", path + ".vm")
-        model.put("menuitems", getMenuItems(path, repoid))
+        model["path"] = path + ".vm"
+        model["menuitems"] = getMenuItems(path, repoid)
         return "templates/border"
     }
 
@@ -82,7 +82,7 @@ open class FrameController {
     }
 
     private fun MutableMap<String, Any>.flash(message: String, type: String) {
-        this.put("flash", Pair(type, message))
+        this["flash"] = Pair(type, message)
     }
 
 }
