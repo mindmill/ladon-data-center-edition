@@ -24,16 +24,8 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
-                            de.mc.ladon.server.core.api.tasks,
-                            de.mc.ladon.server.core.api.exceptions,
-                            de.mc.ladon.server.core.api.executor,
-                            de.mc.ladon.server.core.api.hooks,
-                            de.mc.ladon.server.core.api.persistence,
-                            de.mc.ladon.server.core.api.persistence.dao,
-                            de.mc.ladon.server.core.api.persistence.encryption,
-                            de.mc.ladon.server.core.api.persistence.entities,
-                            de.mc.ladon.server.core.api.persistence.services,
-                            de.mc.ladon.server.core.api.request
+                            de.mc.ladon.server.core.api.*,
+                            de.mc.ladon.server.plugin.api.*
                         </Export-Package>
                         <!--<Private-Package>*</Private-Package>-->
                         <Bundle-Name>Mind Consulting :: Ladon Data Center Plugin API</Bundle-Name>

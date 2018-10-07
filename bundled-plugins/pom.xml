@@ -12,6 +12,11 @@
     <artifactId>bundled-plugins</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-osgi-bundle</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
             <groupId>de.mc.ladon</groupId>
             <artifactId>plugin-api</artifactId>
             <version>${project.parent.version}</version>
