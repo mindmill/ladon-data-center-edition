@@ -13,7 +13,7 @@ import de.mc.ladon.server.core.api.request.LadonCallContext
  */
 interface RepositoryDAO {
 
-    fun getRepositories(callContext: LadonCallContext): List<Repository>
+    fun getRepositories(callContext: LadonCallContext): Sequence<Repository>
 
     fun getRepository(callContext: LadonCallContext, repoId: String?): Repository?
 

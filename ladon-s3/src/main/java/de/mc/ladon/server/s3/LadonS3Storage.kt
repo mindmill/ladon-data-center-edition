@@ -43,7 +43,7 @@ open class LadonS3Storage @Inject constructor(
             val cuser = userRoleDAO.getUser(it.createdby!!)
                     ?: throw InternalErrorException("User not found : ${it.createdby}", callContext.requestId)
             S3BucketImpl(it.repoId, it.creationdate, cuser.toS3User())
-        }
+        }.toList()
     }
 
 
