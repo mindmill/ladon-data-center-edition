@@ -1,6 +1,6 @@
 package de.mc.ladon.server.plugin.api
 
-interface LadonAdminPage {
+interface AdminPage {
 
     val path: String
 

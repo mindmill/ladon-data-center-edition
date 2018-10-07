@@ -1,11 +1,10 @@
 package de.mc.ladon.server.plugin.api
 
-import de.mc.ladon.server.plugin.runtime.PluginContext
 
 interface LadonPlugin {
 
 
-    fun adminPage(pluginContext: PluginContext): LadonAdminPage?
+    fun adminPage(pluginContext: PluginContext): AdminPage?
 
     fun install(pluginContext: PluginContext): Boolean
 

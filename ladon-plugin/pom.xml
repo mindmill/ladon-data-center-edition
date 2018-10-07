@@ -22,16 +22,16 @@
         <artifactId>org.apache.felix.framework</artifactId>
         <version>6.0.1</version>
     </dependency>
-    <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.shell</artifactId>
-        <version>1.4.3</version>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>org.apache.felix.shell.tui</artifactId>
-        <version>1.4.1</version>
-    </dependency>
+    <!--<dependency>-->
+        <!--<groupId>org.apache.felix</groupId>-->
+        <!--<artifactId>org.apache.felix.shell</artifactId>-->
+        <!--<version>1.4.3</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+        <!--<groupId>org.apache.felix</groupId>-->
+        <!--<artifactId>org.apache.felix.shell.tui</artifactId>-->
+        <!--<version>1.4.1</version>-->
+    <!--</dependency>-->
     <!--<dependency>-->
         <!--<groupId>org.apache.felix</groupId>-->
         <!--<artifactId>org.apache.felix.webconsole</artifactId>-->
