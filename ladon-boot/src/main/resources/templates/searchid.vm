@@ -44,9 +44,7 @@
 
                             </div>
                         </form>
-                        #if($!delimiter == true)
                         <a href="searchid?repoid=$repoid&delimiter=on&searchpath=$!parent" ><i class="fa fa-arrow-up"></i> up</a>
-                        #end
                     </div>
                 </div>
                 <div class="col-md-4">

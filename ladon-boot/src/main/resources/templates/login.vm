@@ -43,9 +43,7 @@
     <div id="page-wrapper">
 
         <div id="page-inner">
-            #set ($flash = "")
-            #set ($flash = $session.flash)
-            #if ($flash != "")
+            #if ($flash)
                 <div class="alert alert-$flash.getFirst()">
                     <i class="fa fa-info"></i> $flash.getSecond()
                 </div>
