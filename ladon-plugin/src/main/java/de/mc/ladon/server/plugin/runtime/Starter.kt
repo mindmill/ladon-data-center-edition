@@ -1,5 +1,7 @@
 package de.mc.ladon.server.plugin.runtime
 
+import de.mc.ladon.server.core.api.persistence.Database
+import de.mc.ladon.server.core.api.persistence.dao.*
 import de.mc.ladon.server.core.util.PathUtils.getLadonHome
 import de.mc.ladon.server.core.util.PathUtils.getSystemDir
 import de.mc.ladon.server.plugin.api.LadonPlugin
@@ -35,12 +37,19 @@ class LadonRuntimeActivator(val pluginContext: PluginContext) : BundleActivator 
         this.context = context
         context.addBundleListener { log.info(it.toString()) }
 
+        context.registerService(BinaryDataDAO::class.java, pluginContext.binaryDataDAO, null)
+        context.registerService(ChangeTokenDAO::class.java, pluginContext.changeTokenDAO, null)
+        context.registerService(MetadataDAO::class.java, pluginContext.metadataDAO, null)
+        context.registerService(RepositoryDAO::class.java, pluginContext.repositoryDAO, null)
+        context.registerService(ChunkDAO::class.java, pluginContext.chunkDAO, null)
+        context.registerService(Database::class.java, pluginContext.database, null)
+        context.registerService(UserRoleDAO::class.java, pluginContext.userRoleDAO, null)
+
 
         pluginTracker = ServiceTracker(context, LadonPlugin::class.java,
                 object : ServiceTrackerCustomizer<LadonPlugin, Any> {
                     override fun addingService(reference: ServiceReference<LadonPlugin>): LadonPlugin? {
                         val plugin = context.getService(reference)
-                        plugin.start(pluginContext)
                         log.info("added plugin ${plugin.javaClass}")
                         return null
                     }
@@ -49,13 +58,13 @@ class LadonRuntimeActivator(val pluginContext: PluginContext) : BundleActivator 
 
                     override fun removedService(reference: ServiceReference<LadonPlugin>, service: Any) {
                         val plugin = context.getService(reference)
-                        plugin.stop(pluginContext)
                         log.info("removed plugin  ${plugin.javaClass}")
 
                     }
 
                 })
         pluginTracker?.open()
+
     }
 
     override fun stop(context: BundleContext) {
@@ -79,16 +88,6 @@ class LadonPluginRuntime @Inject constructor(pluginContext: PluginContext) {
         val list = ArrayList<BundleActivator>()
         list.add(activator)
         list.add(org.slf4j.osgi.logservice.impl.Activator())
-//        list.add(org.apache.felix.shell.impl.Activator())
-//        list.add(org.apache.felix.shell.tui.Activator())
-//        list.add(org.apache.aries.blueprint.container.BlueprintExtender())
-//        list.add(org.apache.felix.http.jetty.internal.JettyActivator())
-        list.add(org.apache.felix.http.whiteboard.internal.WhiteboardActivator())
-//        list.add(org.apache.cxf.transport.http.osgi.HTTPTransportActivator())
-//        list.add(org.apache.cxf.transport.http_jetty.osgi.HTTPJettyTransportActivator())
-//        list.add(org.apache.felix.webconsole.internal.OsgiManagerActivator())
-//        list.add(org.apache.felix.cm.impl.Activator())
-//        list.add(de.mc.ladon.s3server.osgi.S3ServerActivator())
         list.add(org.apache.felix.fileinstall.internal.FileInstall())
         config[FelixConstants.SYSTEMBUNDLE_ACTIVATORS_PROP] = list
         config[BundleCache.CACHE_ROOTDIR_PROP] = getLadonHome()
