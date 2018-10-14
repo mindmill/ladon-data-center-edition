@@ -14,7 +14,7 @@
     <properties>
         <cassandra-driver.version>3.6.0</cassandra-driver.version>
         <kotlin.version>1.2.71</kotlin.version>
-        <ladon.version>2.0.1-SNAPSHOT</ladon.version>
+        <ladon.version>2.0.1</ladon.version>
     </properties>
 
 
