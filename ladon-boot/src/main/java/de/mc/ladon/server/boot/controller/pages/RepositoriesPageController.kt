@@ -4,9 +4,11 @@ import de.mc.ladon.s3server.common.Validator
 import de.mc.ladon.server.boot.controller.FrameController
 import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
 import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
+import de.mc.ladon.server.core.api.persistence.dao.RepositoryDAO
 import de.mc.ladon.server.core.api.persistence.entities.Repository
 import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.core.config.BoxConfig
+import de.mc.ladon.server.core.request.impl.SystemCallContext
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -26,6 +28,14 @@ class RepositoriesPageController : FrameController() {
     @Autowired
     lateinit var metaDao: MetadataDAO
 
+    @Autowired
+    lateinit var repoDao: RepositoryDAO
+
+    override fun getRepos(prefix: String): List<Repository> {
+      return  repoDao.getRepositories(SystemCallContext()).filter {
+            it.repoId!!.contains(prefix)
+        }.take(20).toList()
+    }
 
     @RequestMapping("repositories", method = [RequestMethod.GET, RequestMethod.POST])
     fun repos(model: MutableMap<String, Any>, @RequestParam(required = false) repoid: String?, @RequestParam(required = false) repoprefix: String?): String {

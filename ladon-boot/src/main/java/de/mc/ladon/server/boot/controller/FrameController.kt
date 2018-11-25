@@ -1,10 +1,8 @@
 package de.mc.ladon.server.boot.controller
 
 import com.datastax.driver.core.exceptions.NoHostAvailableException
-import de.mc.ladon.server.core.api.persistence.dao.RepositoryDAO
-import de.mc.ladon.server.core.request.impl.SystemCallContext
+import de.mc.ladon.server.core.api.persistence.entities.Repository
 import de.mc.ladon.server.core.util.ByteFormat
-import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * FrameController
@@ -12,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
  */
 open class FrameController {
 
-    @Autowired
-    lateinit var repoDao: RepositoryDAO
 
     fun updateModel(model: MutableMap<String, Any>, path: String, repoid: String): String {
         return updateMenu(model, path, repoid)
@@ -23,9 +19,7 @@ open class FrameController {
     private fun updateMenu(model: MutableMap<String, Any>, path: String, repoid: String): String {
         model["repoid"] = repoid
         try {
-            model["repositories"] = repoDao.getRepositories(SystemCallContext()).filter {
-                it.repoId!!.contains(model["repoprefix"] as String? ?: "")
-            }.take(20).toList()
+            model["repositories"] = getRepos(model["repoprefix"] as String? ?: "")
         } catch (e: NoHostAvailableException) {
             model.flashDanger("ALL CASSANDRA HOSTS ARE DOWN!")
         } catch (e: IllegalStateException) {
@@ -36,6 +30,7 @@ open class FrameController {
         return "templates/border"
     }
 
+    open fun getRepos(prefix: String = "") = listOf<Repository>()
 
     fun getMenuItems(path: String, repoid: String): List<MenuItem> {
         return arrayListOf(
