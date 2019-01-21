@@ -703,7 +703,7 @@ footer a.tz {
 
 footer a.tz:before {
     content: '';
-    background: url('http://ladon.org/img/LADON_FINAL_WEB.png') no-repeat 0 0px;
+    background: url('https://ladon.org/img/LADON_FINAL_WEB.png') no-repeat 0 0px;
     background-size: auto 100%;
     width: 100px;
     height: 30px;

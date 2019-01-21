@@ -35,7 +35,7 @@ appender reference in the root level section below.
         </filter>
         <file>./logs/ladon.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>./logs/ladon.log.%i.zip</fileNamePattern>
+            <fileNamePattern>./logs/ladon.log.%i.gz</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>20</maxIndex>
         </rollingPolicy>

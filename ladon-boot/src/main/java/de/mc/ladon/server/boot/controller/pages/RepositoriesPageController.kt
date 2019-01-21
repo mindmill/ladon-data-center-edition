@@ -10,6 +10,7 @@ import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.core.config.BoxConfig
 import de.mc.ladon.server.core.request.impl.SystemCallContext
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbRepository
+import de.mc.ladon.server.persistence.cassandra.tasks.StatisticsTaskRunner
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.ModelAttribute
@@ -31,11 +32,21 @@ class RepositoriesPageController : FrameController() {
     @Autowired
     lateinit var repoDao: RepositoryDAO
 
+    @Autowired
+    lateinit var statsRunner: StatisticsTaskRunner
+
     override fun getRepos(prefix: String): List<Repository> {
-      return  repoDao.getRepositories(SystemCallContext()).filter {
+        return repoDao.getRepositories(SystemCallContext()).filter {
             it.repoId!!.contains(prefix)
         }.take(20).toList()
     }
+
+    @RequestMapping("runstats", method = [RequestMethod.GET])
+    fun runStats(model: MutableMap<String, Any>, callContext: LadonCallContext): String {
+        statsRunner.collectStats(callContext)
+        return "redirect:searchid"
+    }
+
 
     @RequestMapping("repositories", method = [RequestMethod.GET, RequestMethod.POST])
     fun repos(model: MutableMap<String, Any>, @RequestParam(required = false) repoid: String?, @RequestParam(required = false) repoprefix: String?): String {
