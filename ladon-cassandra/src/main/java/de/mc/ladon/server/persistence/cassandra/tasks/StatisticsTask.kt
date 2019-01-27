@@ -61,7 +61,8 @@ class StatisticsTask(
             content.use {
                 PrintWriter(it).apply {
                     println("Ladon Repository Stats ${Date()}\n")
-                    println("Buckets: ${sizePerBucket.size}, total size: ${sizePerBucket.map { it.value.second }.sum().humanReadable()}\n")
+                    println("Buckets: ${sizePerBucket.size},\ntotal files: ${sizePerBucket.map { it.value.first }.sum()}" +
+                            "\ntotal size: ${sizePerBucket.map { it.value.second }.sum().humanReadable()}\n")
                     sizePerBucket.forEach { repo, size ->
                         println("$repo:  Files: ${size.first} Size: ${size.second.humanReadable()} ")
                     }
