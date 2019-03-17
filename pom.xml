@@ -6,7 +6,7 @@
 
     <groupId>de.mc.ladon</groupId>
     <artifactId>mc-ladon-server</artifactId>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <modules>
         <module>ladon-core</module>
         <module>ladon-plugin-api</module>
