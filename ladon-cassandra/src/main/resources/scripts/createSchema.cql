@@ -45,7 +45,6 @@ deleted timestamp,
 deletedby text,
 PRIMARY KEY (repoid , versionseriesid,  changetoken)
 )WITH CLUSTERING ORDER BY (versionseriesid ASC, changetoken DESC);
-ALTER TABLE LADON.OBJECTS WITH compression = { 'sstable_compression' : 'SnappyCompressor' };
 
 CREATE INDEX vsid_idx ON LADON.OBJECTS (versionseriesid) ;
 
