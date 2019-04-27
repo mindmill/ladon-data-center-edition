@@ -4,10 +4,12 @@
 
 package de.mc.ladon.server.persistence.cassandra.dao.impl
 
+import com.datastax.driver.core.utils.UUIDs
 import com.google.common.base.Strings
 import de.mc.ladon.server.core.api.exceptions.LadonIllegalArgumentException
 import de.mc.ladon.server.core.api.exceptions.LadonObjectNotFoundException
 import de.mc.ladon.server.core.api.hooks.LadonHookManager
+import de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO
 import de.mc.ladon.server.core.api.persistence.dao.MetadataDAO
 import de.mc.ladon.server.core.api.persistence.entities.ChangeType
 import de.mc.ladon.server.core.api.persistence.entities.HistoryKey
@@ -21,6 +23,7 @@ import de.mc.ladon.server.core.persistence.entities.impl.LadonResourceKey
 import de.mc.ladon.server.persistence.cassandra.dao.api.ObjectDataAccessor
 import de.mc.ladon.server.persistence.cassandra.database.MappingManagerProvider
 import de.mc.ladon.server.persistence.cassandra.entities.impl.DbObjectData
+import java.math.BigInteger
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
@@ -33,7 +36,8 @@ import javax.inject.Named
 @Named
 open class MetadataDAOImpl
 @Inject constructor(mm: MappingManagerProvider,
-                    val hookManager: LadonHookManager) : MetadataDAO {
+                    val hookManager: LadonHookManager,
+                    val changeTokenDao: ChangeTokenDAO) : MetadataDAO {
 
 
     //private val LOG = LoggerFactory.getLogger(javaClass)
@@ -173,6 +177,23 @@ open class MetadataDAOImpl
         val hasMore = counter > limit && limit != 0
         // LOG.info("result : $result , commonprefs : $commonPrefixes , hasMore : $hasMore")
         return Pair(result to commonPrefixes.toList(), hasMore)
+    }
+
+    override fun listMetadataLatestChanges(cc: LadonCallContext,
+                                           repoId: String,
+                                           prefix: String,
+                                           since: Long,
+                                           limit: Int): List<Metadata> {
+
+        val allChangesSince = changeTokenDao.getAllChangesSince(cc,
+                repoId,
+                UUIDs.startOf(since).toString(),
+                BigInteger.valueOf(limit.toLong()))
+
+        return allChangesSince.filter { it.versionseriesId!!.startsWith(prefix) }.mapNotNull {
+            getDbObjectData(LadonResourceKey(it.repoId!!, it.versionseriesId!!, it.changeToken!!))
+                    ?.let(filingMapper)
+        }
     }
 
     private fun getCommonPrefix(key: String, prefix: String, delimiter: String = "/"): String? {

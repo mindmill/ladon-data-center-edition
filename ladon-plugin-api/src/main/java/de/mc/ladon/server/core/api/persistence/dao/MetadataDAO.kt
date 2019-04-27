@@ -8,6 +8,7 @@ import de.mc.ladon.server.core.api.persistence.entities.HistoryKey
 import de.mc.ladon.server.core.api.persistence.entities.Metadata
 import de.mc.ladon.server.core.api.persistence.entities.ResourceKey
 import de.mc.ladon.server.core.api.request.LadonCallContext
+import java.util.*
 
 /**
  * ObjectDataDAO
@@ -65,4 +66,8 @@ interface MetadataDAO {
                         includeVersions: Boolean = false): Pair<Pair<List<Metadata>, List<String>>, Boolean>
 
 
+    fun listMetadataLatestChanges(cc: LadonCallContext,
+                                  repoId: String,
+                                  prefix: String,
+                                  since: Long, limit: Int): List<Metadata>
 }

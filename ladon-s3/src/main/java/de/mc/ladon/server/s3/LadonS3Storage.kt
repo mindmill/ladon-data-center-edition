@@ -196,28 +196,44 @@ open class LadonS3Storage @Inject constructor(
         val prefix = callContext.params.prefix ?: ""
         val delimiter = callContext.params.delimiter
         val includeVersions = callContext.params.listVersions()
+        val since = callContext.params.ladonChangesSince()
+        if (since != null) {
+            val changes = metaDAO.listMetadataLatestChanges(callContext.toLadonCC(), bucketName, prefix, since.toLong(), maxKeys)
+            return S3ListBucketResultImpl(changes.map {
+                val content = it[LadonContentMeta::class]!!
+                S3ObjectImpl(it.key().versionSeriesId,
+                        it.content().created,
+                        bucketName,
+                        content.length,
+                        callContext.user,
+                        it.properties().toS3Meta(),
+                        null,
+                        it.properties().get(S3Constants.CONTENT_TYPE),
+                        content.hash, it.key().changeToken.toString(), it.isDeleted(), true)
+            }, listOf(), false, bucketName, null, null)
+        } else {
+            val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker, delimiter, maxKeys, includeVersions)
+            val (objectList, prefixes) = result.first
+            val truncated = result.second
 
-        val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker, delimiter, maxKeys, includeVersions)
-        val (objectList, prefixes) = result.first
-        val truncated = result.second
-
-        // TODO fix latest version hack
-        var lastKey = ""
-        return S3ListBucketResultImpl(objectList.map {
-            val latest = lastKey != it.key().versionSeriesId
-            lastKey = it.key().versionSeriesId
-            val content = it[LadonContentMeta::class]!!
-            S3ObjectImpl(it.key().versionSeriesId,
-                    it.content().created,
-                    bucketName,
-                    content.length,
-                    callContext.user,
-                    it.properties().toS3Meta(),
-                    null,
-                    it.properties().get(S3Constants.CONTENT_TYPE),
-                    content.hash, it.key().changeToken.toString(), it.isDeleted(), latest)
-            //TODO
-        }, prefixes, truncated, bucketName, null, null)
+            // TODO fix latest version hack
+            var lastKey = ""
+            return S3ListBucketResultImpl(objectList.map {
+                val latest = lastKey != it.key().versionSeriesId
+                lastKey = it.key().versionSeriesId
+                val content = it[LadonContentMeta::class]!!
+                S3ObjectImpl(it.key().versionSeriesId,
+                        it.content().created,
+                        bucketName,
+                        content.length,
+                        callContext.user,
+                        it.properties().toS3Meta(),
+                        null,
+                        it.properties().get(S3Constants.CONTENT_TYPE),
+                        content.hash, it.key().changeToken.toString(), it.isDeleted(), latest)
+                //TODO
+            }, prefixes, truncated, bucketName, null, null)
+        }
     }
 
     override fun deleteObject(callContext: S3CallContext, bucketName: String, objectKey: String) {
