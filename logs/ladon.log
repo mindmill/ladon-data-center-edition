@@ -1,0 +1,927 @@
+INFO  2019-04-27 19:46:43 de.mc.ladon.server.boot.LadonApplicationKt Starting LadonApplicationKt on deskstation with PID 20258 (/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-boot/target/classes started by ralf in /home/ralf/Dokumente/prog/ladon-data-center-edition)
+INFO  2019-04-27 19:46:43 de.mc.ladon.server.boot.LadonApplicationKt No active profile set, falling back to default profiles: default
+INFO  2019-04-27 19:46:43 org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@48ae9b55: startup date [Sat Apr 27 19:46:43 CEST 2019]; root of context hierarchy
+INFO  2019-04-27 19:46:43 org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 5.2.4.Final
+INFO  2019-04-27 19:46:44 org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO  2019-04-27 19:46:44 org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer Tomcat initialized with port(s): 8080 (http)
+INFO  2019-04-27 19:46:44 org.apache.catalina.core.StandardService Starting service Tomcat
+INFO  2019-04-27 19:46:44 org.apache.catalina.core.StandardEngine Starting Servlet Engine: Apache Tomcat/8.0.36
+INFO  2019-04-27 19:46:44 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+INFO  2019-04-27 19:46:44 org.springframework.web.context.ContextLoader Root WebApplicationContext: initialization completed in 1565 ms
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'metricFilter' to: [/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'httpPutFormContentFilter' to: [/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'requestContextFilter' to: [/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.DelegatingFilterProxyRegistrationBean Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'webRequestLoggingFilter' to: [/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'performanceLoggingFilter' to servlets: [s3servlet]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'corsFilter' to servlets: [s3servlet]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'applicationContextIdFilter' to: [/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.ServletRegistrationBean Mapping servlet: 'redirectServlet' to [/]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.ServletRegistrationBean Mapping servlet: 's3servlet' to [/services/s3/*]
+INFO  2019-04-27 19:46:45 org.springframework.boot.context.embedded.ServletRegistrationBean Mapping servlet: 'dispatcherServletRegistration' to [/admin/*, /login]
+INFO  2019-04-27 19:46:45 org.springframework.security.web.DefaultSecurityFilterChain Creating filter chain: OrRequestMatcher [requestMatchers=[Ant [pattern='/css/**'], Ant [pattern='/js/**'], Ant [pattern='/images/**'], Ant [pattern='/**/favicon.ico'], Ant [pattern='/templates/error']]], []
+INFO  2019-04-27 19:46:45 org.springframework.security.web.DefaultSecurityFilterChain Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4753fdb0, org.springframework.security.web.context.SecurityContextPersistenceFilter@2cedbace, org.springframework.security.web.header.HeaderWriterFilter@571d143a, org.springframework.security.web.authentication.logout.LogoutFilter@696c5cfe, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5e1a3c8c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4132f890, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@36d93c92, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6b72159, org.springframework.security.web.session.SessionManagementFilter@77e566ce, org.springframework.security.web.access.ExceptionTranslationFilter@282ab7a2, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3a512417]
+INFO  2019-04-27 19:46:45 org.springframework.security.web.DefaultSecurityFilterChain Creating filter chain: org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration$LazyEndpointPathRequestMatcher@595bbedd, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@258a5640, org.springframework.security.web.context.SecurityContextPersistenceFilter@5f9d7f7d, org.springframework.security.web.header.HeaderWriterFilter@7981eadb, org.springframework.security.web.authentication.logout.LogoutFilter@788fa764, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@46427e7f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@518f0b4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@73b905fe, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@70ee7508, org.springframework.security.web.session.SessionManagementFilter@18b261ec, org.springframework.security.web.access.ExceptionTranslationFilter@5cc0d3e1, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@c5e0e78]
+INFO  2019-04-27 19:46:45 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator start host ativator
+INFO  2019-04-27 19:46:45 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.framework [0]]
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@48ae9b55: startup date [Sat Apr 27 19:46:43 CEST 2019]; root of context hierarchy
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/feed/{repoid}/atom],methods=[GET]}" onto public final java.lang.String de.mc.ladon.server.boot.feed.BucketRssView.repoFeed(java.lang.String,javax.servlet.http.HttpServletRequest)
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/error]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.VelocityErrorController.error(java.util.Map<java.lang.String, java.lang.Object>,javax.servlet.http.HttpServletRequest)
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/login]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.LoginController.welcome(java.util.Map<java.lang.String, java.lang.Object>,javax.servlet.http.HttpServletRequest)
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/debug]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.showId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.String)
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/remove-version],methods=[GET]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.getRemoveVersion(java.util.Map<java.lang.String, java.lang.Object>,java.lang.String)
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/remove-version],methods=[POST]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.postRemoveVersion(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String)
+INFO  2019-04-27 19:46:45 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/searchid]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String)
+WARN  2019-04-27 19:46:45 org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'debugPageController' method 
+public static java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId$default(de.mc.ladon.server.boot.controller.pages.DebugPageController,java.util.Map,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String,int,java.lang.Object)
+to {[/searchid]}: There is already 'debugPageController' bean method
+public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String) mapped.
+WARN  2019-04-27 19:46:45 org.springframework.context.annotation.CommonAnnotationBeanPostProcessor Invocation of destroy method failed on bean with name 'databaseImpl': java.lang.NullPointerException
+INFO  2019-04-27 19:46:45 org.apache.catalina.core.StandardService Stopping service Tomcat
+ERROR 2019-04-27 19:46:45 org.springframework.boot.SpringApplication Application startup failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'debugPageController' method 
+public static java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId$default(de.mc.ladon.server.boot.controller.pages.DebugPageController,java.util.Map,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String,int,java.lang.Object)
+to {[/searchid]}: There is already 'debugPageController' bean method
+public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1578)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:545)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:118)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:760)
+	at org.springframework.boot.SpringApplication.createAndRefreshContext(SpringApplication.java:360)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1185)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1174)
+	at de.mc.ladon.server.boot.LadonApplicationKt.main(LadonApplication.kt:22)
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'debugPageController' method 
+public static java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId$default(de.mc.ladon.server.boot.controller.pages.DebugPageController,java.util.Map,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String,int,java.lang.Object)
+to {[/searchid]}: There is already 'debugPageController' bean method
+public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.assertUniqueMethodMapping(AbstractHandlerMethodMapping.java:567)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:531)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:255)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:241)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:213)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:183)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:125)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1637)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1574)
+	... 16 common frames omitted
+INFO  2019-04-27 19:46:45 org.springframework.boot.logging.ClasspathLoggingApplicationListener Application failed to start with classpath: [file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/cldrdata.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/dnsns.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/icedtea-sound.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/jaccess.jar, file:/usr/share/java/java-atk-wrapper.jar, file:/usr/share/java/openjfx/jre/lib/ext/jfxrt.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/localedata.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/nashorn.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/sunec.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/sunjce_provider.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/sunpkcs11.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/zipfs.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar, file:/usr/share/java/openjfx/jre/lib/jfxswt.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/management-agent.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-boot/target/classes/, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-web/1.3.7.RELEASE/spring-boot-starter-web-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/1.3.7.RELEASE/spring-boot-starter-tomcat-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/8.0.36/tomcat-embed-core-8.0.36.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/8.0.36/tomcat-embed-el-8.0.36.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-logging-juli/8.0.36/tomcat-embed-logging-juli-8.0.36.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/8.0.36/tomcat-embed-websocket-8.0.36.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-validation/1.3.7.RELEASE/spring-boot-starter-validation-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/hibernate/hibernate-validator/5.2.4.Final/hibernate-validator-5.2.4.Final.jar, file:/home/ralf/.m2/repository/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar, file:/home/ralf/.m2/repository/org/jboss/logging/jboss-logging/3.3.0.Final/jboss-logging-3.3.0.Final.jar, file:/home/ralf/.m2/repository/com/fasterxml/classmate/1.1.0/classmate-1.1.0.jar, file:/home/ralf/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.6.7/jackson-databind-2.6.7.jar, file:/home/ralf/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.6.7/jackson-annotations-2.6.7.jar, file:/home/ralf/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.6.7/jackson-core-2.6.7.jar, file:/home/ralf/.m2/repository/org/springframework/spring-web/4.2.7.RELEASE/spring-web-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-beans/4.2.7.RELEASE/spring-beans-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-context/4.2.7.RELEASE/spring-context-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-webmvc/4.2.7.RELEASE/spring-webmvc-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-expression/4.2.7.RELEASE/spring-expression-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter/1.3.7.RELEASE/spring-boot-starter-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot/1.3.7.RELEASE/spring-boot-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/1.3.7.RELEASE/spring-boot-autoconfigure-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-logging/1.3.7.RELEASE/spring-boot-starter-logging-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/ch/qos/logback/logback-classic/1.1.7/logback-classic-1.1.7.jar, file:/home/ralf/.m2/repository/ch/qos/logback/logback-core/1.1.7/logback-core-1.1.7.jar, file:/home/ralf/.m2/repository/org/slf4j/jcl-over-slf4j/1.7.21/jcl-over-slf4j-1.7.21.jar, file:/home/ralf/.m2/repository/org/slf4j/jul-to-slf4j/1.7.21/jul-to-slf4j-1.7.21.jar, file:/home/ralf/.m2/repository/org/slf4j/log4j-over-slf4j/1.7.21/log4j-over-slf4j-1.7.21.jar, file:/home/ralf/.m2/repository/org/springframework/spring-core/4.2.7.RELEASE/spring-core-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/yaml/snakeyaml/1.16/snakeyaml-1.16.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-velocity/1.3.7.RELEASE/spring-boot-starter-velocity-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar, file:/home/ralf/.m2/repository/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar, file:/home/ralf/.m2/repository/commons-digester/commons-digester/2.1/commons-digester-2.1.jar, file:/home/ralf/.m2/repository/org/apache/velocity/velocity/1.7/velocity-1.7.jar, file:/home/ralf/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar, file:/home/ralf/.m2/repository/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar, file:/home/ralf/.m2/repository/commons-chain/commons-chain/1.1/commons-chain-1.1.jar, file:/home/ralf/.m2/repository/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar, file:/home/ralf/.m2/repository/dom4j/dom4j/1.1/dom4j-1.1.jar, file:/home/ralf/.m2/repository/oro/oro/2.0.8/oro-2.0.8.jar, file:/home/ralf/.m2/repository/sslext/sslext/1.2-0/sslext-1.2-0.jar, file:/home/ralf/.m2/repository/org/apache/struts/struts-core/1.3.8/struts-core-1.3.8.jar, file:/home/ralf/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar, file:/home/ralf/.m2/repository/org/apache/struts/struts-taglib/1.3.8/struts-taglib-1.3.8.jar, file:/home/ralf/.m2/repository/org/apache/struts/struts-tiles/1.3.8/struts-tiles-1.3.8.jar, file:/home/ralf/.m2/repository/org/springframework/spring-context-support/4.2.7.RELEASE/spring-context-support-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-actuator/1.3.7.RELEASE/spring-boot-starter-actuator-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-actuator/1.3.7.RELEASE/spring-boot-actuator-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-security/1.3.7.RELEASE/spring-boot-starter-security-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-aop/4.2.7.RELEASE/spring-aop-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar, file:/home/ralf/.m2/repository/org/springframework/security/spring-security-config/4.0.4.RELEASE/spring-security-config-4.0.4.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/security/spring-security-core/4.0.4.RELEASE/spring-security-core-4.0.4.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/security/spring-security-web/4.0.4.RELEASE/spring-security-web-4.0.4.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-test/1.3.7.RELEASE/spring-boot-starter-test-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/junit/junit/4.12/junit-4.12.jar, file:/home/ralf/.m2/repository/org/mockito/mockito-core/1.10.19/mockito-core-1.10.19.jar, file:/home/ralf/.m2/repository/org/objenesis/objenesis/2.1/objenesis-2.1.jar, file:/home/ralf/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar, file:/home/ralf/.m2/repository/org/hamcrest/hamcrest-library/1.3/hamcrest-library-1.3.jar, file:/home/ralf/.m2/repository/org/springframework/spring-test/4.2.7.RELEASE/spring-test-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-configuration-processor/1.3.7.RELEASE/spring-boot-configuration-processor-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/json/json/20140107/json-20140107.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-core/target/classes/, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-plugin-api/target/classes/, file:/home/ralf/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar, file:/home/ralf/.m2/repository/net/jpountz/lz4/lz4/1.3.0/lz4-1.3.0.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.2.71/kotlin-stdlib-1.2.71.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.2.71/kotlin-stdlib-common-1.2.71.jar, file:/home/ralf/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-jdk-annotations/1.0.0/kotlin-jdk-annotations-1.0.0.jar, file:/home/ralf/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar, file:/home/ralf/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-cassandra/target/classes/, file:/home/ralf/.m2/repository/org/apache/cassandra/cassandra-all/3.11.3/cassandra-all-3.11.3.jar, file:/home/ralf/.m2/repository/com/ning/compress-lzf/0.8.4/compress-lzf-0.8.4.jar, file:/home/ralf/.m2/repository/commons-cli/commons-cli/1.1/commons-cli-1.1.jar, file:/home/ralf/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar, file:/home/ralf/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar, file:/home/ralf/.m2/repository/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar, file:/home/ralf/.m2/repository/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.4/concurrentlinkedhashmap-lru-1.4.jar, file:/home/ralf/.m2/repository/org/antlr/antlr/3.5.2/antlr-3.5.2.jar, file:/home/ralf/.m2/repository/org/antlr/ST4/4.0.8/ST4-4.0.8.jar, file:/home/ralf/.m2/repository/org/antlr/antlr-runtime/3.5.2/antlr-runtime-3.5.2.jar, file:/home/ralf/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.2/jackson-core-asl-1.9.2.jar, file:/home/ralf/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.2/jackson-mapper-asl-1.9.2.jar, file:/home/ralf/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar, file:/home/ralf/.m2/repository/com/boundary/high-scale-lib/1.0.6/high-scale-lib-1.0.6.jar, file:/home/ralf/.m2/repository/org/mindrot/jbcrypt/0.3m/jbcrypt-0.3m.jar, file:/home/ralf/.m2/repository/io/airlift/airline/0.6/airline-0.6.jar, file:/home/ralf/.m2/repository/io/dropwizard/metrics/metrics-core/3.1.2/metrics-core-3.1.2.jar, file:/home/ralf/.m2/repository/io/dropwizard/metrics/metrics-jvm/3.1.5/metrics-jvm-3.1.5.jar, file:/home/ralf/.m2/repository/com/addthis/metrics/reporter-config3/3.0.3/reporter-config3-3.0.3.jar, file:/home/ralf/.m2/repository/com/addthis/metrics/reporter-config-base/3.0.3/reporter-config-base-3.0.3.jar, file:/home/ralf/.m2/repository/com/thinkaurelius/thrift/thrift-server/0.3.7/thrift-server-0.3.7.jar, file:/home/ralf/.m2/repository/com/lmax/disruptor/3.0.1/disruptor-3.0.1.jar, file:/home/ralf/.m2/repository/com/clearspring/analytics/stream/2.5.2/stream-2.5.2.jar, file:/home/ralf/.m2/repository/it/unimi/dsi/fastutil/6.5.7/fastutil-6.5.7.jar, file:/home/ralf/.m2/repository/org/apache/thrift/libthrift/0.9.2/libthrift-0.9.2.jar, file:/home/ralf/.m2/repository/org/apache/httpcomponents/httpcore/4.4.5/httpcore-4.4.5.jar, file:/home/ralf/.m2/repository/org/apache/cassandra/cassandra-thrift/3.11.3/cassandra-thrift-3.11.3.jar, file:/home/ralf/.m2/repository/com/carrotsearch/hppc/0.5.4/hppc-0.5.4.jar, file:/home/ralf/.m2/repository/de/jflex/jflex/1.6.0/jflex-1.6.0.jar, file:/home/ralf/.m2/repository/org/apache/ant/ant/1.7.0/ant-1.7.0.jar, file:/home/ralf/.m2/repository/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar, file:/home/ralf/.m2/repository/com/github/rholder/snowball-stemmer/1.3.0.581.1/snowball-stemmer-1.3.0.581.1.jar, file:/home/ralf/.m2/repository/com/googlecode/concurrent-trees/concurrent-trees/2.4.0/concurrent-trees-2.4.0.jar, file:/home/ralf/.m2/repository/net/java/dev/jna/jna/4.2.2/jna-4.2.2.jar, file:/home/ralf/.m2/repository/com/github/jbellis/jamm/0.3.0/jamm-0.3.0.jar, file:/home/ralf/.m2/repository/io/netty/netty-all/4.0.44.Final/netty-all-4.0.44.Final.jar, file:/home/ralf/.m2/repository/joda-time/joda-time/2.8.2/joda-time-2.8.2.jar, file:/home/ralf/.m2/repository/org/fusesource/sigar/1.6.4/sigar-1.6.4.jar, file:/home/ralf/.m2/repository/org/eclipse/jdt/core/compiler/ecj/4.4.2/ecj-4.4.2.jar, file:/home/ralf/.m2/repository/org/caffinitas/ohc/ohc-core/0.4.4/ohc-core-0.4.4.jar, file:/home/ralf/.m2/repository/org/caffinitas/ohc/ohc-core-j8/0.4.4/ohc-core-j8-0.4.4.jar, file:/home/ralf/.m2/repository/com/github/ben-manes/caffeine/caffeine/2.2.6/caffeine-2.2.6.jar, file:/home/ralf/.m2/repository/org/jctools/jctools-core/1.2.1/jctools-core-1.2.1.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm/5.0.4/asm-5.0.4.jar, file:/home/ralf/.m2/repository/com/datastax/cassandra/cassandra-driver-core/3.6.0/cassandra-driver-core-3.6.0.jar, file:/home/ralf/.m2/repository/io/netty/netty-handler/4.0.56.Final/netty-handler-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-buffer/4.0.56.Final/netty-buffer-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-common/4.0.56.Final/netty-common-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-transport/4.0.56.Final/netty-transport-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-codec/4.0.56.Final/netty-codec-4.0.56.Final.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-ffi/2.1.7/jnr-ffi-2.1.7.jar, file:/home/ralf/.m2/repository/com/github/jnr/jffi/1.2.16/jffi-1.2.16.jar, file:/home/ralf/.m2/repository/com/github/jnr/jffi/1.2.16/jffi-1.2.16-native.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-commons/5.0.3/asm-commons-5.0.3.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-analysis/5.0.3/asm-analysis-5.0.3.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-tree/5.0.3/asm-tree-5.0.3.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-util/5.0.3/asm-util-5.0.3.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-x86asm/1.0.2/jnr-x86asm-1.0.2.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-posix/3.0.44/jnr-posix-3.0.44.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-constants/0.9.9/jnr-constants-0.9.9.jar, file:/home/ralf/.m2/repository/com/datastax/cassandra/cassandra-driver-extras/3.6.0/cassandra-driver-extras-3.6.0.jar, file:/home/ralf/.m2/repository/com/datastax/cassandra/cassandra-driver-mapping/3.6.0/cassandra-driver-mapping-3.6.0.jar, file:/home/ralf/.m2/repository/org/xerial/snappy/snappy-java/1.1.1.6/snappy-java-1.1.1.6.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-s3/target/classes/, file:/home/ralf/.m2/repository/de/mindconsulting/ladon-s3-server/2.0.0/ladon-s3-server-2.0.0.jar, file:/home/ralf/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-plugin/target/classes/, file:/home/ralf/.m2/repository/org/apache/felix/org.apache.felix.framework/6.0.1/org.apache.felix.framework-6.0.1.jar, file:/home/ralf/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.9/animal-sniffer-annotations-1.9.jar, file:/home/ralf/.m2/repository/org/apache/felix/org.apache.felix.fileinstall/3.6.4/org.apache.felix.fileinstall-3.6.4.jar, file:/home/ralf/.m2/repository/org/slf4j/osgi-over-slf4j/1.7.25/osgi-over-slf4j-1.7.25.jar, file:/home/ralf/.m2/repository/de/mc/logging/1.1.0/logging-1.1.0.jar, file:/home/ralf/.m2/repository/com/rometools/rome/1.7.0/rome-1.7.0.jar, file:/home/ralf/.m2/repository/com/rometools/rome-utils/1.7.0/rome-utils-1.7.0.jar, file:/home/ralf/.m2/repository/org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar, file:/home/ralf/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.2.71/kotlin-stdlib-jdk8-1.2.71.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.2.71/kotlin-stdlib-jdk7-1.2.71.jar, file:/home/ralf/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/183.4886.37/lib/idea_rt.jar]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [1]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.classic [2]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.scr [3]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.core [4]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [5]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.jetbrains.kotlin.osgi-bundle [6]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.promise [7]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=slf4j.api [8]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.function [9]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.service.component [10]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.s3-plugin [11]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=com.google.guava [12]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.function [9]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.function [9]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.classic [2]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=slf4j.api [8]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [1]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.scr [3]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.promise [7]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.core [4]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=com.google.guava [12]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.jetbrains.kotlin.osgi-bundle [6]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.s3-plugin [11]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.s3-plugin [11]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.classic [2]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.promise [7]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=slf4j.api [8]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=com.google.guava [12]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [5]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [5]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.jetbrains.kotlin.osgi-bundle [6]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [1]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.core [4]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.scr [3]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.service.component [10]]
+INFO  2019-04-27 19:46:49 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.service.component [10]]
+ERROR 2019-04-27 19:47:15 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:47:20 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+INFO  2019-04-27 19:47:23 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator stop host activator
+INFO  2019-04-27 19:49:06 de.mc.ladon.server.boot.LadonApplicationKt Starting LadonApplicationKt on deskstation with PID 20597 (/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-boot/target/classes started by ralf in /home/ralf/Dokumente/prog/ladon-data-center-edition)
+INFO  2019-04-27 19:49:06 de.mc.ladon.server.boot.LadonApplicationKt No active profile set, falling back to default profiles: default
+INFO  2019-04-27 19:49:06 org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@48ae9b55: startup date [Sat Apr 27 19:49:06 CEST 2019]; root of context hierarchy
+INFO  2019-04-27 19:49:06 org.hibernate.validator.internal.util.Version HV000001: Hibernate Validator 5.2.4.Final
+INFO  2019-04-27 19:49:07 org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer Tomcat initialized with port(s): 8080 (http)
+INFO  2019-04-27 19:49:07 org.apache.catalina.core.StandardService Starting service Tomcat
+INFO  2019-04-27 19:49:07 org.apache.catalina.core.StandardEngine Starting Servlet Engine: Apache Tomcat/8.0.36
+INFO  2019-04-27 19:49:07 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] Initializing Spring embedded WebApplicationContext
+INFO  2019-04-27 19:49:07 org.springframework.web.context.ContextLoader Root WebApplicationContext: initialization completed in 1305 ms
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'metricFilter' to: [/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'httpPutFormContentFilter' to: [/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'requestContextFilter' to: [/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.DelegatingFilterProxyRegistrationBean Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'webRequestLoggingFilter' to: [/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'performanceLoggingFilter' to servlets: [s3servlet]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'corsFilter' to servlets: [s3servlet]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.FilterRegistrationBean Mapping filter: 'applicationContextIdFilter' to: [/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.ServletRegistrationBean Mapping servlet: 'redirectServlet' to [/]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.ServletRegistrationBean Mapping servlet: 's3servlet' to [/services/s3/*]
+INFO  2019-04-27 19:49:07 org.springframework.boot.context.embedded.ServletRegistrationBean Mapping servlet: 'dispatcherServletRegistration' to [/admin/*, /login]
+INFO  2019-04-27 19:49:08 org.springframework.security.web.DefaultSecurityFilterChain Creating filter chain: OrRequestMatcher [requestMatchers=[Ant [pattern='/css/**'], Ant [pattern='/js/**'], Ant [pattern='/images/**'], Ant [pattern='/**/favicon.ico'], Ant [pattern='/templates/error']]], []
+INFO  2019-04-27 19:49:08 org.springframework.security.web.DefaultSecurityFilterChain Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6c2423e1, org.springframework.security.web.context.SecurityContextPersistenceFilter@5f2e1b9f, org.springframework.security.web.header.HeaderWriterFilter@3a00b37, org.springframework.security.web.authentication.logout.LogoutFilter@5254374d, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5e1f1475, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6f445b48, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6bb5f6d2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@53030bf9, org.springframework.security.web.session.SessionManagementFilter@6257c8c4, org.springframework.security.web.access.ExceptionTranslationFilter@366115c3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2dad171f]
+INFO  2019-04-27 19:49:08 org.springframework.security.web.DefaultSecurityFilterChain Creating filter chain: org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration$LazyEndpointPathRequestMatcher@24afe58a, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1d591166, org.springframework.security.web.context.SecurityContextPersistenceFilter@482505cb, org.springframework.security.web.header.HeaderWriterFilter@43f3fd7a, org.springframework.security.web.authentication.logout.LogoutFilter@60101865, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@4b5a62ba, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@28fbf8f6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@743fd8be, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@50eefc5, org.springframework.security.web.session.SessionManagementFilter@21d6bda9, org.springframework.security.web.access.ExceptionTranslationFilter@2aa952f3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@31b11fd6]
+INFO  2019-04-27 19:49:08 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator start host ativator
+INFO  2019-04-27 19:49:08 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.framework [0]]
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@48ae9b55: startup date [Sat Apr 27 19:49:06 CEST 2019]; root of context hierarchy
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/feed/{repoid}/atom],methods=[GET]}" onto public final java.lang.String de.mc.ladon.server.boot.feed.BucketRssView.repoFeed(java.lang.String,javax.servlet.http.HttpServletRequest)
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/error]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.VelocityErrorController.error(java.util.Map<java.lang.String, java.lang.Object>,javax.servlet.http.HttpServletRequest)
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/login]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.LoginController.welcome(java.util.Map<java.lang.String, java.lang.Object>,javax.servlet.http.HttpServletRequest)
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/remove-version],methods=[GET]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.getRemoveVersion(java.util.Map<java.lang.String, java.lang.Object>,java.lang.String)
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/remove-version],methods=[POST]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.postRemoveVersion(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String)
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/searchid]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String)
+INFO  2019-04-27 19:49:08 org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping Mapped "{[/debug]}" onto public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.showId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.String)
+WARN  2019-04-27 19:49:08 org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'debugPageController' method 
+public static java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId$default(de.mc.ladon.server.boot.controller.pages.DebugPageController,java.util.Map,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String,int,java.lang.Object)
+to {[/searchid]}: There is already 'debugPageController' bean method
+public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String) mapped.
+WARN  2019-04-27 19:49:08 org.springframework.context.annotation.CommonAnnotationBeanPostProcessor Invocation of destroy method failed on bean with name 'databaseImpl': java.lang.NullPointerException
+INFO  2019-04-27 19:49:08 org.apache.catalina.core.StandardService Stopping service Tomcat
+ERROR 2019-04-27 19:49:08 org.springframework.boot.SpringApplication Application startup failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'requestMappingHandlerMapping' defined in class path resource [org/springframework/boot/autoconfigure/web/WebMvcAutoConfiguration$EnableWebMvcConfiguration.class]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'debugPageController' method 
+public static java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId$default(de.mc.ladon.server.boot.controller.pages.DebugPageController,java.util.Map,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String,int,java.lang.Object)
+to {[/searchid]}: There is already 'debugPageController' bean method
+public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String) mapped.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1578)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:545)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:118)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:760)
+	at org.springframework.boot.SpringApplication.createAndRefreshContext(SpringApplication.java:360)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1185)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1174)
+	at de.mc.ladon.server.boot.LadonApplicationKt.main(LadonApplication.kt:22)
+Caused by: java.lang.IllegalStateException: Ambiguous mapping. Cannot map 'debugPageController' method 
+public static java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId$default(de.mc.ladon.server.boot.controller.pages.DebugPageController,java.util.Map,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String,int,java.lang.Object)
+to {[/searchid]}: There is already 'debugPageController' bean method
+public final java.lang.String de.mc.ladon.server.boot.controller.pages.DebugPageController.searchId(java.util.Map<java.lang.String, java.lang.Object>,de.mc.ladon.server.core.api.request.LadonCallContext,java.lang.String,java.lang.String,java.lang.Boolean,java.lang.Boolean,java.lang.String) mapped.
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.assertUniqueMethodMapping(AbstractHandlerMethodMapping.java:567)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping$MappingRegistry.register(AbstractHandlerMethodMapping.java:531)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.registerHandlerMethod(AbstractHandlerMethodMapping.java:255)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.detectHandlerMethods(AbstractHandlerMethodMapping.java:241)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.initHandlerMethods(AbstractHandlerMethodMapping.java:213)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.afterPropertiesSet(AbstractHandlerMethodMapping.java:183)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping.afterPropertiesSet(RequestMappingHandlerMapping.java:125)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1637)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1574)
+	... 16 common frames omitted
+INFO  2019-04-27 19:49:08 org.springframework.boot.logging.ClasspathLoggingApplicationListener Application failed to start with classpath: [file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/charsets.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/cldrdata.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/dnsns.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/icedtea-sound.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/jaccess.jar, file:/usr/share/java/java-atk-wrapper.jar, file:/usr/share/java/openjfx/jre/lib/ext/jfxrt.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/localedata.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/nashorn.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/sunec.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/sunjce_provider.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/sunpkcs11.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/zipfs.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jce.jar, file:/usr/share/java/openjfx/jre/lib/jfxswt.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jsse.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/management-agent.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/resources.jar, file:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-boot/target/classes/, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-web/1.3.7.RELEASE/spring-boot-starter-web-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/1.3.7.RELEASE/spring-boot-starter-tomcat-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/8.0.36/tomcat-embed-core-8.0.36.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/8.0.36/tomcat-embed-el-8.0.36.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-logging-juli/8.0.36/tomcat-embed-logging-juli-8.0.36.jar, file:/home/ralf/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/8.0.36/tomcat-embed-websocket-8.0.36.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-validation/1.3.7.RELEASE/spring-boot-starter-validation-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/hibernate/hibernate-validator/5.2.4.Final/hibernate-validator-5.2.4.Final.jar, file:/home/ralf/.m2/repository/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar, file:/home/ralf/.m2/repository/org/jboss/logging/jboss-logging/3.3.0.Final/jboss-logging-3.3.0.Final.jar, file:/home/ralf/.m2/repository/com/fasterxml/classmate/1.1.0/classmate-1.1.0.jar, file:/home/ralf/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.6.7/jackson-databind-2.6.7.jar, file:/home/ralf/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.6.7/jackson-annotations-2.6.7.jar, file:/home/ralf/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.6.7/jackson-core-2.6.7.jar, file:/home/ralf/.m2/repository/org/springframework/spring-web/4.2.7.RELEASE/spring-web-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-beans/4.2.7.RELEASE/spring-beans-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-context/4.2.7.RELEASE/spring-context-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-webmvc/4.2.7.RELEASE/spring-webmvc-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-expression/4.2.7.RELEASE/spring-expression-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter/1.3.7.RELEASE/spring-boot-starter-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot/1.3.7.RELEASE/spring-boot-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/1.3.7.RELEASE/spring-boot-autoconfigure-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-logging/1.3.7.RELEASE/spring-boot-starter-logging-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/ch/qos/logback/logback-classic/1.1.7/logback-classic-1.1.7.jar, file:/home/ralf/.m2/repository/ch/qos/logback/logback-core/1.1.7/logback-core-1.1.7.jar, file:/home/ralf/.m2/repository/org/slf4j/jcl-over-slf4j/1.7.21/jcl-over-slf4j-1.7.21.jar, file:/home/ralf/.m2/repository/org/slf4j/jul-to-slf4j/1.7.21/jul-to-slf4j-1.7.21.jar, file:/home/ralf/.m2/repository/org/slf4j/log4j-over-slf4j/1.7.21/log4j-over-slf4j-1.7.21.jar, file:/home/ralf/.m2/repository/org/springframework/spring-core/4.2.7.RELEASE/spring-core-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/yaml/snakeyaml/1.16/snakeyaml-1.16.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-velocity/1.3.7.RELEASE/spring-boot-starter-velocity-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar, file:/home/ralf/.m2/repository/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar, file:/home/ralf/.m2/repository/commons-digester/commons-digester/2.1/commons-digester-2.1.jar, file:/home/ralf/.m2/repository/org/apache/velocity/velocity/1.7/velocity-1.7.jar, file:/home/ralf/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar, file:/home/ralf/.m2/repository/org/apache/velocity/velocity-tools/2.0/velocity-tools-2.0.jar, file:/home/ralf/.m2/repository/commons-chain/commons-chain/1.1/commons-chain-1.1.jar, file:/home/ralf/.m2/repository/commons-validator/commons-validator/1.3.1/commons-validator-1.3.1.jar, file:/home/ralf/.m2/repository/dom4j/dom4j/1.1/dom4j-1.1.jar, file:/home/ralf/.m2/repository/oro/oro/2.0.8/oro-2.0.8.jar, file:/home/ralf/.m2/repository/sslext/sslext/1.2-0/sslext-1.2-0.jar, file:/home/ralf/.m2/repository/org/apache/struts/struts-core/1.3.8/struts-core-1.3.8.jar, file:/home/ralf/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar, file:/home/ralf/.m2/repository/org/apache/struts/struts-taglib/1.3.8/struts-taglib-1.3.8.jar, file:/home/ralf/.m2/repository/org/apache/struts/struts-tiles/1.3.8/struts-tiles-1.3.8.jar, file:/home/ralf/.m2/repository/org/springframework/spring-context-support/4.2.7.RELEASE/spring-context-support-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-actuator/1.3.7.RELEASE/spring-boot-starter-actuator-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-actuator/1.3.7.RELEASE/spring-boot-actuator-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-security/1.3.7.RELEASE/spring-boot-starter-security-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/spring-aop/4.2.7.RELEASE/spring-aop-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar, file:/home/ralf/.m2/repository/org/springframework/security/spring-security-config/4.0.4.RELEASE/spring-security-config-4.0.4.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/security/spring-security-core/4.0.4.RELEASE/spring-security-core-4.0.4.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/security/spring-security-web/4.0.4.RELEASE/spring-security-web-4.0.4.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-starter-test/1.3.7.RELEASE/spring-boot-starter-test-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/junit/junit/4.12/junit-4.12.jar, file:/home/ralf/.m2/repository/org/mockito/mockito-core/1.10.19/mockito-core-1.10.19.jar, file:/home/ralf/.m2/repository/org/objenesis/objenesis/2.1/objenesis-2.1.jar, file:/home/ralf/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar, file:/home/ralf/.m2/repository/org/hamcrest/hamcrest-library/1.3/hamcrest-library-1.3.jar, file:/home/ralf/.m2/repository/org/springframework/spring-test/4.2.7.RELEASE/spring-test-4.2.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/springframework/boot/spring-boot-configuration-processor/1.3.7.RELEASE/spring-boot-configuration-processor-1.3.7.RELEASE.jar, file:/home/ralf/.m2/repository/org/json/json/20140107/json-20140107.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-core/target/classes/, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-plugin-api/target/classes/, file:/home/ralf/.m2/repository/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar, file:/home/ralf/.m2/repository/net/jpountz/lz4/lz4/1.3.0/lz4-1.3.0.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.2.71/kotlin-stdlib-1.2.71.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.2.71/kotlin-stdlib-common-1.2.71.jar, file:/home/ralf/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-jdk-annotations/1.0.0/kotlin-jdk-annotations-1.0.0.jar, file:/home/ralf/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar, file:/home/ralf/.m2/repository/com/google/guava/guava/19.0/guava-19.0.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-cassandra/target/classes/, file:/home/ralf/.m2/repository/org/apache/cassandra/cassandra-all/3.11.3/cassandra-all-3.11.3.jar, file:/home/ralf/.m2/repository/com/ning/compress-lzf/0.8.4/compress-lzf-0.8.4.jar, file:/home/ralf/.m2/repository/commons-cli/commons-cli/1.1/commons-cli-1.1.jar, file:/home/ralf/.m2/repository/commons-codec/commons-codec/1.9/commons-codec-1.9.jar, file:/home/ralf/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar, file:/home/ralf/.m2/repository/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar, file:/home/ralf/.m2/repository/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.4/concurrentlinkedhashmap-lru-1.4.jar, file:/home/ralf/.m2/repository/org/antlr/antlr/3.5.2/antlr-3.5.2.jar, file:/home/ralf/.m2/repository/org/antlr/ST4/4.0.8/ST4-4.0.8.jar, file:/home/ralf/.m2/repository/org/antlr/antlr-runtime/3.5.2/antlr-runtime-3.5.2.jar, file:/home/ralf/.m2/repository/org/codehaus/jackson/jackson-core-asl/1.9.2/jackson-core-asl-1.9.2.jar, file:/home/ralf/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.2/jackson-mapper-asl-1.9.2.jar, file:/home/ralf/.m2/repository/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar, file:/home/ralf/.m2/repository/com/boundary/high-scale-lib/1.0.6/high-scale-lib-1.0.6.jar, file:/home/ralf/.m2/repository/org/mindrot/jbcrypt/0.3m/jbcrypt-0.3m.jar, file:/home/ralf/.m2/repository/io/airlift/airline/0.6/airline-0.6.jar, file:/home/ralf/.m2/repository/io/dropwizard/metrics/metrics-core/3.1.2/metrics-core-3.1.2.jar, file:/home/ralf/.m2/repository/io/dropwizard/metrics/metrics-jvm/3.1.5/metrics-jvm-3.1.5.jar, file:/home/ralf/.m2/repository/com/addthis/metrics/reporter-config3/3.0.3/reporter-config3-3.0.3.jar, file:/home/ralf/.m2/repository/com/addthis/metrics/reporter-config-base/3.0.3/reporter-config-base-3.0.3.jar, file:/home/ralf/.m2/repository/com/thinkaurelius/thrift/thrift-server/0.3.7/thrift-server-0.3.7.jar, file:/home/ralf/.m2/repository/com/lmax/disruptor/3.0.1/disruptor-3.0.1.jar, file:/home/ralf/.m2/repository/com/clearspring/analytics/stream/2.5.2/stream-2.5.2.jar, file:/home/ralf/.m2/repository/it/unimi/dsi/fastutil/6.5.7/fastutil-6.5.7.jar, file:/home/ralf/.m2/repository/org/apache/thrift/libthrift/0.9.2/libthrift-0.9.2.jar, file:/home/ralf/.m2/repository/org/apache/httpcomponents/httpcore/4.4.5/httpcore-4.4.5.jar, file:/home/ralf/.m2/repository/org/apache/cassandra/cassandra-thrift/3.11.3/cassandra-thrift-3.11.3.jar, file:/home/ralf/.m2/repository/com/carrotsearch/hppc/0.5.4/hppc-0.5.4.jar, file:/home/ralf/.m2/repository/de/jflex/jflex/1.6.0/jflex-1.6.0.jar, file:/home/ralf/.m2/repository/org/apache/ant/ant/1.7.0/ant-1.7.0.jar, file:/home/ralf/.m2/repository/org/apache/ant/ant-launcher/1.7.0/ant-launcher-1.7.0.jar, file:/home/ralf/.m2/repository/com/github/rholder/snowball-stemmer/1.3.0.581.1/snowball-stemmer-1.3.0.581.1.jar, file:/home/ralf/.m2/repository/com/googlecode/concurrent-trees/concurrent-trees/2.4.0/concurrent-trees-2.4.0.jar, file:/home/ralf/.m2/repository/net/java/dev/jna/jna/4.2.2/jna-4.2.2.jar, file:/home/ralf/.m2/repository/com/github/jbellis/jamm/0.3.0/jamm-0.3.0.jar, file:/home/ralf/.m2/repository/io/netty/netty-all/4.0.44.Final/netty-all-4.0.44.Final.jar, file:/home/ralf/.m2/repository/joda-time/joda-time/2.8.2/joda-time-2.8.2.jar, file:/home/ralf/.m2/repository/org/fusesource/sigar/1.6.4/sigar-1.6.4.jar, file:/home/ralf/.m2/repository/org/eclipse/jdt/core/compiler/ecj/4.4.2/ecj-4.4.2.jar, file:/home/ralf/.m2/repository/org/caffinitas/ohc/ohc-core/0.4.4/ohc-core-0.4.4.jar, file:/home/ralf/.m2/repository/org/caffinitas/ohc/ohc-core-j8/0.4.4/ohc-core-j8-0.4.4.jar, file:/home/ralf/.m2/repository/com/github/ben-manes/caffeine/caffeine/2.2.6/caffeine-2.2.6.jar, file:/home/ralf/.m2/repository/org/jctools/jctools-core/1.2.1/jctools-core-1.2.1.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm/5.0.4/asm-5.0.4.jar, file:/home/ralf/.m2/repository/com/datastax/cassandra/cassandra-driver-core/3.6.0/cassandra-driver-core-3.6.0.jar, file:/home/ralf/.m2/repository/io/netty/netty-handler/4.0.56.Final/netty-handler-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-buffer/4.0.56.Final/netty-buffer-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-common/4.0.56.Final/netty-common-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-transport/4.0.56.Final/netty-transport-4.0.56.Final.jar, file:/home/ralf/.m2/repository/io/netty/netty-codec/4.0.56.Final/netty-codec-4.0.56.Final.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-ffi/2.1.7/jnr-ffi-2.1.7.jar, file:/home/ralf/.m2/repository/com/github/jnr/jffi/1.2.16/jffi-1.2.16.jar, file:/home/ralf/.m2/repository/com/github/jnr/jffi/1.2.16/jffi-1.2.16-native.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-commons/5.0.3/asm-commons-5.0.3.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-analysis/5.0.3/asm-analysis-5.0.3.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-tree/5.0.3/asm-tree-5.0.3.jar, file:/home/ralf/.m2/repository/org/ow2/asm/asm-util/5.0.3/asm-util-5.0.3.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-x86asm/1.0.2/jnr-x86asm-1.0.2.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-posix/3.0.44/jnr-posix-3.0.44.jar, file:/home/ralf/.m2/repository/com/github/jnr/jnr-constants/0.9.9/jnr-constants-0.9.9.jar, file:/home/ralf/.m2/repository/com/datastax/cassandra/cassandra-driver-extras/3.6.0/cassandra-driver-extras-3.6.0.jar, file:/home/ralf/.m2/repository/com/datastax/cassandra/cassandra-driver-mapping/3.6.0/cassandra-driver-mapping-3.6.0.jar, file:/home/ralf/.m2/repository/org/xerial/snappy/snappy-java/1.1.1.6/snappy-java-1.1.1.6.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-s3/target/classes/, file:/home/ralf/.m2/repository/de/mindconsulting/ladon-s3-server/2.0.0/ladon-s3-server-2.0.0.jar, file:/home/ralf/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar, file:/home/ralf/Dokumente/prog/ladon-data-center-edition/ladon-plugin/target/classes/, file:/home/ralf/.m2/repository/org/apache/felix/org.apache.felix.framework/6.0.1/org.apache.felix.framework-6.0.1.jar, file:/home/ralf/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.9/animal-sniffer-annotations-1.9.jar, file:/home/ralf/.m2/repository/org/apache/felix/org.apache.felix.fileinstall/3.6.4/org.apache.felix.fileinstall-3.6.4.jar, file:/home/ralf/.m2/repository/org/slf4j/osgi-over-slf4j/1.7.25/osgi-over-slf4j-1.7.25.jar, file:/home/ralf/.m2/repository/de/mc/logging/1.1.0/logging-1.1.0.jar, file:/home/ralf/.m2/repository/com/rometools/rome/1.7.0/rome-1.7.0.jar, file:/home/ralf/.m2/repository/com/rometools/rome-utils/1.7.0/rome-utils-1.7.0.jar, file:/home/ralf/.m2/repository/org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar, file:/home/ralf/.m2/repository/org/apache/httpcomponents/httpclient/4.5.2/httpclient-4.5.2.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.2.71/kotlin-stdlib-jdk8-1.2.71.jar, file:/home/ralf/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.2.71/kotlin-stdlib-jdk7-1.2.71.jar, file:/home/ralf/.local/share/JetBrains/Toolbox/apps/IDEA-U/ch-0/183.4886.37/lib/idea_rt.jar]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [1]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.classic [2]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.scr [3]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.core [4]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [5]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.jetbrains.kotlin.osgi-bundle [6]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.promise [7]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=slf4j.api [8]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.function [9]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.service.component [10]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.s3-plugin [11]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=com.google.guava [12]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.classic [2]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.core [4]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=slf4j.api [8]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=slf4j.api [8]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.jetbrains.kotlin.osgi-bundle [6]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=com.google.guava [12]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.scr [3]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [1]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.s3-plugin [11]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.function [9]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.promise [7]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.s3-plugin [11]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.classic [2]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.apache.felix.scr [3]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [5]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [5]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.service.component [10]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.service.component [10]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=de.mc.ladon.plugin-api [1]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.promise [7]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=com.google.guava [12]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=ch.qos.logback.core [4]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.jetbrains.kotlin.osgi-bundle [6]]
+INFO  2019-04-27 19:49:12 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator org.osgi.framework.BundleEvent[source=org.osgi.util.function [9]]
+ERROR 2019-04-27 19:49:38 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:49:43 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:49:48 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:49:53 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:49:58 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:03 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:08 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:13 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:18 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:23 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:28 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:33 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:38 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:43 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:48 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:53 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:50:58 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:03 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:08 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:13 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:18 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:23 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:28 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:33 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:38 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:43 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:48 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:53 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:51:58 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:03 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:08 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:13 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:18 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:23 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:28 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:33 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:38 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:43 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+ERROR 2019-04-27 19:52:48 de.mc.ladon.server.plugin.runtime.SystemRepoSync system repo sync error
+java.lang.IllegalStateException: (database as DatabaseImpl).session must not be null
+	at de.mc.ladon.server.persistence.cassandra.database.SessionProvider.get(SessionProvider.kt:16)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:35)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl.executePrepared(StatementCacheImpl.kt:26)
+	at de.mc.ladon.server.persistence.cassandra.dao.impl.ChangeTokenDAOImpl.getLatestChangeToken(ChangeTokenDAOImpl.kt:41)
+	at de.mc.ladon.server.core.api.persistence.dao.ChangeTokenDAO$DefaultImpls.getLatestChangeToken$default(ChangeTokenDAO.kt:19)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.hasChanges(SystemRepoSync.kt:54)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync.sync(SystemRepoSync.kt:63)
+	at de.mc.ladon.server.plugin.runtime.SystemRepoSync$1.run(SystemRepoSync.kt:33)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+INFO  2019-04-27 19:52:51 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator stop host activator

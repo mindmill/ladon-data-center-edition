@@ -64,6 +64,22 @@ open class LadonS3Storage @Inject constructor(
         }
     }
 
+    override fun updateMetadata(callContext: S3CallContext, bucketName: String, objectKey: String) {
+        val lcc = callContext.toLadonCC()
+        val repo = repoDAO.getRepository(lcc, bucketName)
+                ?: throw NoSuchBucketException(bucketName, callContext.requestId)
+        var meta = metaDAO.getMetadataLatest(lcc, LadonHistoryKey(bucketName, objectKey))
+                ?: throw NoSuchKeyException(objectKey, callContext.requestId)
+        if (meta.isDeleted()) throw NoSuchKeyException(objectKey, callContext.requestId)
+        val props = meta.properties()
+
+        val newProps = callContext.header.fullHeader.filter { it.key.startsWith(S3Constants.X_AMZ_META_PREFIX) }
+        newProps.forEach { k, v -> props[k] = v }
+        val key = LadonResourceKey(bucketName, objectKey, lcc.callId)
+        meta.set(props)
+        metaDAO.saveMetadata(lcc, key, meta)
+        callContext.setResponseHeader(S3ResponseHeaderImpl())
+    }
 
     override fun createObject(callContext: S3CallContext, bucketName: String, objectKey: String) {
         val lcc = callContext.toLadonCC()
@@ -180,6 +196,7 @@ open class LadonS3Storage @Inject constructor(
         val prefix = callContext.params.prefix ?: ""
         val delimiter = callContext.params.delimiter
         val includeVersions = callContext.params.listVersions()
+        val orderByTimestamp = callContext.params.orderdByTimestamp()
 
         val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker, delimiter, maxKeys, includeVersions)
         val (objectList, prefixes) = result.first
