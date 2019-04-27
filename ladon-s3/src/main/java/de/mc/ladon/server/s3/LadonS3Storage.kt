@@ -196,7 +196,6 @@ open class LadonS3Storage @Inject constructor(
         val prefix = callContext.params.prefix ?: ""
         val delimiter = callContext.params.delimiter
         val includeVersions = callContext.params.listVersions()
-        val orderByTimestamp = callContext.params.orderdByTimestamp()
 
         val result = metaDAO.listAllMetadata(callContext.toLadonCC(), bucketName, prefix, marker, delimiter, maxKeys, includeVersions)
         val (objectList, prefixes) = result.first
