@@ -1,345 +1,399 @@
+openapi: 3.0.1
+info:
+  title: Ladon Datacenter Edition
+  description: Ladon REST Storage API
+  version: 2.2.0
+servers:
+  - url: /admin
+security:
+  - login: []
 tags:
   - name: Documents
     description: Storage Api
-securityDefinitions:
-  login:
-    type: basic
-security:
-  - login: []
-definitions:
-  Document:
-    type: object
-    properties:
-      key:
-        type: string
-      bucket:
-        type: string
-      created:
-        type: string
-      version:
-        type: string
-      latest:
-        type: boolean
-      description:
-        type: string
-      size:
-        type: integer
-        format: int64
-      content-type:
-        type: string
-      etag:
-        type: string
-
-      usermeta:
-        type: object
-        additionalProperties:
-          type: string
-    additionalProperties: false
-    required:
-      - key
-      - bucket
-produces:
-  - application/json
 paths:
-  '/rest/v1/':
+  /rest/v1/:
     get:
       tags:
         - Buckets
-      operationId: 'listBuckets'
-      responses:
-        '200':
-          schema:
-            type: array
-            items:
-              type: string
-          description: ''
       summary: list all bucket names
-  '/rest/v1/{bucket}/':
+      operationId: listBuckets
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /rest/v1/{bucket}:
     get:
       tags:
         - Documents
-      operationId: 'listDocuments'
-      parameters:
-        - in: query
-          name: limit
-          description: ''
-          required: false
-          type: integer
-          format: int64
-        - in: query
-          name: page
-          description: ''
-          required: false
-          type: integer
-          format: int64
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Document'
-          description: ''
       summary: list all document metadata of the bucket
-    put:
-      tags:
-        - Buckets
-      operationId: 'createNewBucket'
+      operationId: listDocuments
       parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: ''
-      summary: create a new bucket
-    delete:
-      tags:
-        - Buckets
-      operationId: 'deleteEmptyBucket'
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: ''
-      summary: delete an empty bucket
-  '/rest/v1/{bucket}/{key}':
-    get:
-      tags:
-        - Documents
-      operationId: 'getDocument'
-      produces:
-        - '*/*'
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-      summary: get the selected document
-      responses:
-        '200':
-          description: ''
-    head:
-      tags:
-        - Documents
-      operationId: 'getMetadata'
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-      summary: get the selected document's metadata
-      responses:
-        '200':
+        - name: limit
+          in: query
           schema:
-            $ref: '#/definitions/Document'
-          description: ''
-    delete:
-      tags:
-        - Documents
-      operationId: 'deleteDocument'
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          description: ''
-      summary: delete the selected document (delete version marker, can be recovered)
-    put:
-      tags:
-        - Documents
-      operationId: 'putDocument'
-      consumes:
-        - '*/*'
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: body
-          name: content
-          description: ''
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: bucket
+          in: path
           required: true
           schema:
             type: string
-            format: binary
       responses:
-        '200':
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+    put:
+      tags:
+        - Buckets
+      summary: create a new bucket
+      operationId: createNewBucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
           schema:
-            $ref: '#/definitions/Document'
-          description: ''
-      summary: put a  document. if there is a document with the same key already, a new version is created
-  '/rest/v1/{bucket}/{key}/versions/':
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultResponse'
+    delete:
+      tags:
+        - Buckets
+      summary: delete an empty bucket
+      operationId: deleteEmptyBucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultResponse'
+  /rest/v1/{bucket}/{key}:
     get:
       tags:
         - Documents
-      operationId: 'listDocumentVersions'
+      summary: get the selected document
+      operationId: getDocument
       parameters:
-        - in: path
-          name: bucket
-          description: ''
+        - name: bucket
+          in: path
           required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-      summary: list the version metadata for the selected document
-      responses:
-        '200':
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Document'
-          description: ''
-  '/rest/v1/{bucket}/{key}/versions/{version}':
-    get:
-      tags:
-        - Documents
-      operationId: 'getDocumentVersion'
-      produces:
-        - '*/*'
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
+            type: string
+        - name: key
+          in: path
           required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: version
-          description: ''
-          required: true
-          type: string
-      summary: get a specific version of the document
-      responses:
-        '200':
-          description: ''
-    head:
-      tags:
-        - Documents
-      operationId: 'getDocumentVersionMetadata'
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: version
-          description: ''
-          required: true
-          type: string
-      summary: get a specific version of the document
-      responses:
-        '200':
           schema:
-            $ref: '#/definitions/Document'
-          description: ''
-
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
     put:
       tags:
         - Documents
-      operationId: 'updateDocumentMetadata'
+      summary: put a  document. if there is a document with the same key already,
+        a new version is created
+      operationId: putDocument
       parameters:
-        - in: path
-          name: bucket
-          description: ''
+        - name: bucket
+          in: path
           required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: version
-          description: ''
-          required: true
-          type: string
-      summary: update a specific version of the document (no new version is created, partial update supported)
-      responses:
-        '200':
           schema:
-            $ref: '#/definitions/Document'
-          description: ''
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: x-ladon-meta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usermeta'
+      requestBody:
+        content:
+          'application/octet-stream':
+            schema:
+              type: string
+              format: binary
+          'application/*':
+            schema:
+              type: string
+              format: binary
+          'text/plain':
+            schema:
+              type: string
+              format: binary
+          '*/*':
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
     delete:
       tags:
         - Documents
-      operationId: 'deleteDocumentVersion'
+      summary: delete the selected document (delete version marker, can be recovered)
+      operationId: deleteDocument
       parameters:
-        - in: path
-          name: bucket
-          description: ''
+        - name: bucket
+          in: path
           required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: version
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
           schema:
-            $ref: '#/definitions/Document'
-          description: ''
-      summary: delete the specific version of the document. (hard delete, can't be restored)
-consumes:
-  - application/json
-info:
-  title: Ladon Datacenter Edition
-  version: 2.2.0
-  description: Ladon REST Storage API
-swagger: '2.0'
-basePath: /admin
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    head:
+      tags:
+        - Documents
+      summary: get the selected document's metadata
+      operationId: getMetadata
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+  /rest/v1/{bucket}/{key}/versions:
+    get:
+      tags:
+        - Documents
+      summary: list the version metadata for the selected document
+      operationId: listDocumentVersions
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+  /rest/v1/{bucket}/{key}/versions/{version}:
+    get:
+      tags:
+        - Documents
+      summary: get a specific version of the document
+      operationId: getDocumentVersion
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+    put:
+      tags:
+        - Documents
+      summary: update a specific version of the document (no new version is created,
+        partial update supported)
+      operationId: updateDocumentMetadata
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    delete:
+      tags:
+        - Documents
+      summary: delete the specific version of the document. (hard delete, can't be
+        restored)
+      operationId: deleteDocumentVersion
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    head:
+      tags:
+        - Documents
+      summary: get a specific version of the document
+      operationId: getDocumentVersionMetadata
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+components:
+  schemas:
+    Usermeta:
+      type: object
+      additionalProperties:
+        type: string
+    Document:
+      required:
+        - bucket
+        - key
+      type: object
+      properties:
+        key:
+          type: string
+        bucket:
+          type: string
+        created:
+          type: string
+        version:
+          type: string
+        latest:
+          type: boolean
+        description:
+          type: string
+        size:
+          type: integer
+          format: int64
+        content-type:
+          type: string
+        etag:
+          type: string
+        usermeta:
+          $ref: '#/components/schemas/Usermeta'
+    DefaultResponse:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    login:
+      type: http
+      scheme: basic
