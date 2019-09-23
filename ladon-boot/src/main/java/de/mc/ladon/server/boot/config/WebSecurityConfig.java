@@ -64,8 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic()
-                .and()
                 .formLogin()
                 .loginPage("/admin/login")
                 .defaultSuccessUrl("/admin/overview")
@@ -75,7 +73,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/admin/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .permitAll();
+                .permitAll()
+                .and()
+                .antMatcher("/admin/rest/**")
+                .csrf().disable()
+                .httpBasic();
     }
 
     @Autowired

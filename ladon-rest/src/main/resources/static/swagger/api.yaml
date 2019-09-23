@@ -38,11 +38,20 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: page
+        - name: prefix
           in: query
           schema:
-            type: integer
-            format: int64
+            type: string
+        - name: marker
+          in: query
+          schema:
+            type: string
+        - name: delimiter
+          in: query
+          schema:
+            type: string
+            enum:
+              - '/'
         - name: bucket
           in: path
           required: true
@@ -135,12 +144,6 @@ paths:
           required: true
           schema:
             type: string
-        - in: header
-          name: x-ladon-meta
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Usermeta'
       requestBody:
         content:
           'application/octet-stream':
@@ -272,7 +275,7 @@ paths:
     put:
       tags:
         - Documents
-      summary: update a specific version of the document (no new version is created,
+      summary: add metadata to a specific version of the document (no new version is created,
         partial update supported)
       operationId: updateDocumentMetadata
       parameters:
@@ -291,6 +294,12 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Usermeta'
+        required: true
       responses:
         200:
           description: ""
