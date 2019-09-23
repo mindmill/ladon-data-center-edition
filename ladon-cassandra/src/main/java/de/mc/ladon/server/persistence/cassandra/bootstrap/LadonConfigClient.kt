@@ -39,7 +39,7 @@ class LadonConfigClient {
         val configServerAddress = if (localSetup) {
             return LadonConfig(Properties().apply {
                 put("self", "127.0.0.1")
-                put("127.0.0.1", "DC1:RC1")
+                put("127.0.0.1", "datacenter1:RC1")
             })
         } else {
             packet.address.hostAddress

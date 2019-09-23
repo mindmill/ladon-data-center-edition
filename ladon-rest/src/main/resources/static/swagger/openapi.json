@@ -1,0 +1,1113 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API overview",
+    "version": "0.1.0"
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://dev.mind-consulting.de"
+    },
+    {
+      "url": "https://sakkex.network"
+    }
+  ],
+  "paths": {
+    "/api/users/{pubKey}/messages": {
+      "get": {
+        "operationId": "getMessages",
+        "summary": "Get the users messages",
+        "tags": [
+          "messages"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      },
+      "post": {
+        "operationId": "submitMessage",
+        "summary": "Submit a signed message",
+        "tags": [
+          "messages"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/messages/{id}": {
+      "delete": {
+        "operationId": "deleteMessage",
+        "summary": "Delete a message",
+        "tags": [
+          "messages"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/appfeatures": {
+      "get": {
+        "operationId": "getAppFeatures",
+        "summary": "Get feature toggles properties",
+        "tags": [
+          "config"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/appconfig": {
+      "get": {
+        "operationId": "getAppConfig",
+        "summary": "Get configuration properties",
+        "tags": [
+          "config"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/auth": {
+      "get": {
+        "operationId": "getAuthChallenge",
+        "summary": "Get a challenge tx for auth",
+        "tags": [
+          "authentication"
+        ],
+        "parameters": [
+          {
+            "name": "account",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthTxResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "sumitAuthResponse",
+        "summary": "submit the signed challenge tx",
+        "tags": [
+          "authentication"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthTxResponse"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/portfolio": {
+      "get": {
+        "operationId": "getStellarDemoPortfolio",
+        "summary": "Get the  stellar assets for demo user",
+        "tags": [
+          "portfolio"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/portfolio/categories": {
+      "get": {
+        "operationId": "getStellarCategories",
+        "summary": "Get the categories for stellar assets",
+        "tags": [
+          "portfolio"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/portfolio/assets/{issuer}/{code}": {
+      "get": {
+        "operationId": "getPortfolioAssetById",
+        "summary": "Get the users asset detailsby id",
+        "tags": [
+          "portfolio"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "issuer",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/exchange/assets": {
+      "get": {
+        "operationId": "getExchangeAssets",
+        "summary": "Get the users exchage assets",
+        "tags": [
+          "exchange"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/exchange/assets/{id}": {
+      "get": {
+        "operationId": "getExchangeAssetById",
+        "summary": "Get the users asset by id",
+        "tags": [
+          "exchange"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/index/assets": {
+      "get": {
+        "operationId": "getIndexAssets",
+        "summary": "Get the users exchage assets",
+        "tags": [
+          "index"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/index/assets/{id}": {
+      "get": {
+        "operationId": "getIndexAssetById",
+        "summary": "Get the users asset by id",
+        "tags": [
+          "index"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/subscriptions": {
+      "get": {
+        "operationId": "getSubscriptions",
+        "summary": "Get the users exchage assets",
+        "tags": [
+          "subscription"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "selection",
+            "in": "query",
+            "required": true,
+            "example": "offerings",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "offerings",
+                "subscriptions"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/subscriptions/{id}": {
+      "get": {
+        "operationId": "getSubscriptionById",
+        "summary": "Get the users subscription by id",
+        "tags": [
+          "subscription"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/subscriptions/{id}/orders": {
+      "get": {
+        "operationId": "getOrdersForSubscriptionById",
+        "summary": "Get the users subscription orders by id",
+        "tags": [
+          "subscription"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      },
+      "put": {
+        "operationId": "subscribeToAsset",
+        "summary": "Subscribe to an asset",
+        "tags": [
+          "subscription"
+        ],
+        "parameters": [
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionOrder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/documents": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "list all documents of the authenticated user",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Document"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/documents/{key}": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "get the selected document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "put a new document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "delete the selected document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/documents/{key}/version": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "get the version metadata for the selected document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/documents/{key}/version/{version}": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "get a specific version of the document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "delete the specific version of the document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    },
+    "/api/users/{pubKey}/documents/{key}/version/{version}/signature": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "get all signatures of the selected document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "x",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "y",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "get all signatures of the selected document",
+        "parameters": [
+          {
+            "name": "encoding",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "base64",
+                "plain"
+              ]
+            }
+          },
+          {
+            "name": "x",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "y",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "pubKey",
+            "in": "path",
+            "required": true,
+            "example": "9140031f-38b5-4357-97b4-60a7b996b733",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuthTxResponse": {
+        "type": "object",
+        "properties": {
+          "transaction": {
+            "type": "string",
+            "description": "the signed tx"
+          }
+        }
+      },
+      "SubscriptionOrder": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Subsribed Asset Id"
+          },
+          "tranches": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "series": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "quantity": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Document": {
+        "required": [
+          "created",
+          "key",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "user": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "latest": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "content-type": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

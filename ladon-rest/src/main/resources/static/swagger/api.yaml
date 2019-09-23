@@ -1,0 +1,345 @@
+tags:
+  - name: Documents
+    description: Storage Api
+securityDefinitions:
+  login:
+    type: basic
+security:
+  - login: []
+definitions:
+  Document:
+    type: object
+    properties:
+      key:
+        type: string
+      bucket:
+        type: string
+      created:
+        type: string
+      version:
+        type: string
+      latest:
+        type: boolean
+      description:
+        type: string
+      size:
+        type: integer
+        format: int64
+      content-type:
+        type: string
+      etag:
+        type: string
+
+      usermeta:
+        type: object
+        additionalProperties:
+          type: string
+    additionalProperties: false
+    required:
+      - key
+      - bucket
+produces:
+  - application/json
+paths:
+  '/rest/v1/':
+    get:
+      tags:
+        - Buckets
+      operationId: 'listBuckets'
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              type: string
+          description: ''
+      summary: list all bucket names
+  '/rest/v1/{bucket}/':
+    get:
+      tags:
+        - Documents
+      operationId: 'listDocuments'
+      parameters:
+        - in: query
+          name: limit
+          description: ''
+          required: false
+          type: integer
+          format: int64
+        - in: query
+          name: page
+          description: ''
+          required: false
+          type: integer
+          format: int64
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Document'
+          description: ''
+      summary: list all document metadata of the bucket
+    put:
+      tags:
+        - Buckets
+      operationId: 'createNewBucket'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: create a new bucket
+    delete:
+      tags:
+        - Buckets
+      operationId: 'deleteEmptyBucket'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: delete an empty bucket
+  '/rest/v1/{bucket}/{key}':
+    get:
+      tags:
+        - Documents
+      operationId: 'getDocument'
+      produces:
+        - '*/*'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+      summary: get the selected document
+      responses:
+        '200':
+          description: ''
+    head:
+      tags:
+        - Documents
+      operationId: 'getMetadata'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+      summary: get the selected document's metadata
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
+          description: ''
+    delete:
+      tags:
+        - Documents
+      operationId: 'deleteDocument'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+      summary: delete the selected document (delete version marker, can be recovered)
+    put:
+      tags:
+        - Documents
+      operationId: 'putDocument'
+      consumes:
+        - '*/*'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+        - in: body
+          name: content
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: binary
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
+          description: ''
+      summary: put a  document. if there is a document with the same key already, a new version is created
+  '/rest/v1/{bucket}/{key}/versions/':
+    get:
+      tags:
+        - Documents
+      operationId: 'listDocumentVersions'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+      summary: list the version metadata for the selected document
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Document'
+          description: ''
+  '/rest/v1/{bucket}/{key}/versions/{version}':
+    get:
+      tags:
+        - Documents
+      operationId: 'getDocumentVersion'
+      produces:
+        - '*/*'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: version
+          description: ''
+          required: true
+          type: string
+      summary: get a specific version of the document
+      responses:
+        '200':
+          description: ''
+    head:
+      tags:
+        - Documents
+      operationId: 'getDocumentVersionMetadata'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: version
+          description: ''
+          required: true
+          type: string
+      summary: get a specific version of the document
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
+          description: ''
+
+    put:
+      tags:
+        - Documents
+      operationId: 'updateDocumentMetadata'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: version
+          description: ''
+          required: true
+          type: string
+      summary: update a specific version of the document (no new version is created, partial update supported)
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
+          description: ''
+    delete:
+      tags:
+        - Documents
+      operationId: 'deleteDocumentVersion'
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: version
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
+          description: ''
+      summary: delete the specific version of the document. (hard delete, can't be restored)
+consumes:
+  - application/json
+info:
+  title: Ladon Datacenter Edition
+  version: 2.2.0
+  description: Ladon REST Storage API
+swagger: '2.0'
+basePath: /admin
