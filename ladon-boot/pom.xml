@@ -79,6 +79,11 @@
             <version>${ladon.version}</version>
         </dependency>
         <dependency>
+            <groupId>de.mc.ladon</groupId>
+            <artifactId>ladon-cmis</artifactId>
+            <version>${ladon.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.rometools</groupId>
             <artifactId>rome</artifactId>
             <version>1.7.0</version>
