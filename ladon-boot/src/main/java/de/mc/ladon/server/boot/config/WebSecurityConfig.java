@@ -50,8 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/admin/assets/**")
                 .permitAll()
-                .antMatchers("/admin/swagger/**")
-                .permitAll()
                 .antMatchers("/admin/cassandra/init")
                 .permitAll()
                 .antMatchers("/admin/health")
@@ -73,11 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/admin/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .permitAll()
-                .and()
-                .antMatcher("/admin/rest/**")
-                .csrf().disable()
-                .httpBasic();
+                .permitAll();
     }
 
     @Autowired

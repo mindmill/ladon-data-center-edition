@@ -8,6 +8,9 @@ import de.mc.ladon.s3server.logging.PerformanceLoggingFilter;
 import de.mc.ladon.s3server.repository.api.S3Repository;
 import de.mc.ladon.s3server.servlet.S3Servlet;
 import de.mc.ladon.server.s3.LadonS3Config;
+import org.apache.chemistry.opencmis.server.impl.CmisRepositoryContextListener;
+import org.apache.chemistry.opencmis.server.impl.browser.CmisBrowserBindingServlet;
+import org.apache.chemistry.opencmis.server.impl.webservices.CmisWebServicesServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
@@ -23,6 +26,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ServletConfig
@@ -35,19 +40,19 @@ public class ServletConfig {
     @Autowired
     private S3Repository s3r;
 
-    @Bean
-    public ServletRegistrationBean redirectServlet() {
-        ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
-            @Override
-            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                resp.sendRedirect("/admin/overview");
-            }
-        });
-        registration.setName("redirectServlet");
-        registration.addUrlMappings("/");
-        registration.setLoadOnStartup(1);
-        return registration;
-    }
+//    @Bean
+//    public ServletRegistrationBean redirectServlet() {
+//        ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
+//            @Override
+//            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//                resp.sendRedirect("/admin/overview");
+//            }
+//        });
+//        registration.setName("redirectServlet");
+//        registration.addUrlMappings("/");
+//        registration.setLoadOnStartup(1);
+//        return registration;
+//    }
 
 
     @Bean
@@ -60,6 +65,26 @@ public class ServletConfig {
                 s3Servlet);
         registration.setName("s3servlet");
         registration.addUrlMappings("/services/s3/*");
+        registration.setLoadOnStartup(1);
+        return registration;
+    }
+
+
+    @Bean
+    CmisRepositoryContextListener cmisListener(){
+        return new CmisRepositoryContextListener();
+    }
+
+    @Bean
+    public ServletRegistrationBean cmisServletRegistrationBean() {
+        CmisBrowserBindingServlet cmisServlet = new CmisBrowserBindingServlet();
+        ServletRegistrationBean registration = new ServletRegistrationBean(cmisServlet);
+        Map<String, String> initParams = new HashMap<>();
+//        initParams.put("template", "/WEB-INF/cmis-endpoints.json");
+        initParams.put("callContextHandler", "org.apache.chemistry.opencmis.server.impl.browser.token.TokenCallContextHandler");
+        registration.setInitParameters(initParams);
+        registration.setName("cmisServlet");
+        registration.addUrlMappings("/services/cmis/*");
         registration.setLoadOnStartup(1);
         return registration;
     }

@@ -91,22 +91,22 @@
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>4.1.2</version>
                 <executions>
-                    <execution>
-                        <id>server</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/static/swagger/api.yaml</inputSpec>
-                            <generatorName>spring</generatorName>
-                            <configOptions>
-                                <sourceFolder>src/gen/java/main</sourceFolder>
-                                <apiPackage>de.mc.ladon.rest.api</apiPackage>
-                                <modelPackage>de.mc.ladon.rest.api.model</modelPackage>
-                                <interfaceOnly>true</interfaceOnly>
-                            </configOptions>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>server</id>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <inputSpec>${project.basedir}/src/main/resources/static/swagger/api.yaml</inputSpec>-->
+<!--                            <generatorName>kotlin-server</generatorName>-->
+<!--                            <configOptions>-->
+<!--                                <sourceFolder>src/gen/java/main</sourceFolder>-->
+<!--                                <packageName>de.mc.ladon.rest.api</packageName>-->
+<!--                                <modelPackage>de.mc.ladon.rest.api.model</modelPackage>-->
+<!--                                <interfaceOnly>true</interfaceOnly>-->
+<!--                            </configOptions>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
                     <execution>
                         <id>client</id>
                         <goals>
