@@ -1,0 +1,24 @@
+<configuration>
+    <appender name="ACCESSLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/ladon-access.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>./logs/ladon-access.log.%i.gz</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>20</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>1000MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>common</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>common</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="ACCESSLOG"/>
+</configuration>
