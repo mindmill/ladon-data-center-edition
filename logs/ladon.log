@@ -1636,3 +1636,9 @@ INFO  2019-09-30 02:59:07 de.mc.ladon.server.persistence.cassandra.dao.impl.Stat
 INFO  2019-09-30 02:59:35 de.mc.ladon.server.persistence.cassandra.dao.impl.StatementCacheImpl preparing statement : {SELECT * FROM ladon.changetoken_view WHERE REPOID = :repoid  ORDER BY CHANGETOKEN DESC LIMIT 1}
 INFO  2019-09-30 02:59:35 de.mc.ladon.server.plugin.runtime.SystemRepoSync running system repo sync
 INFO  2019-09-30 02:59:35 de.mc.ladon.server.plugin.runtime.SystemRepoSync finished system repo sync
+INFO  2019-09-30 03:44:33 org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@5a2d131d: startup date [Mon Sep 30 02:59:03 CEST 2019]; root of context hierarchy
+INFO  2019-09-30 03:44:33 de.mc.ladon.server.plugin.runtime.LadonRuntimeActivator stop host activator
+INFO  2019-09-30 03:44:33 org.springframework.context.support.DefaultLifecycleProcessor Stopping beans in phase 0
+INFO  2019-09-30 03:44:33 org.springframework.boot.actuate.endpoint.jmx.EndpointMBeanExporter Unregistering JMX-exposed beans on shutdown
+INFO  2019-09-30 03:44:33 org.springframework.boot.actuate.endpoint.jmx.EndpointMBeanExporter Unregistering JMX-exposed beans
+INFO  2019-09-30 03:44:33 org.springframework.jmx.export.annotation.AnnotationMBeanExporter Unregistering JMX-exposed beans on shutdown

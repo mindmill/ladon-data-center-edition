@@ -10,7 +10,6 @@ import de.mc.ladon.s3server.servlet.S3Servlet;
 import de.mc.ladon.server.s3.LadonS3Config;
 import org.apache.chemistry.opencmis.server.impl.CmisRepositoryContextListener;
 import org.apache.chemistry.opencmis.server.impl.browser.CmisBrowserBindingServlet;
-import org.apache.chemistry.opencmis.server.impl.endpoints.SimpleCmisEndpointsDocumentServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
@@ -84,18 +83,6 @@ public class ServletConfig {
         return registration;
     }
 
-    @Bean
-    public ServletRegistrationBean cmisEndpointsServletRegistrationBean() {
-        SimpleCmisEndpointsDocumentServlet cmisEndpointServlet = new SimpleCmisEndpointsDocumentServlet();
-        ServletRegistrationBean registration = new ServletRegistrationBean(cmisEndpointServlet);
-        Map<String, String> initParams = new HashMap<>();
-        initParams.put("template", "/WEB-INF/cmis-endpoints.json");
-        registration.setInitParameters(initParams);
-        registration.setName("cmisendpoints");
-        registration.addUrlMappings("/services/cmis-endpoints.json");
-        registration.setLoadOnStartup(3);
-        return registration;
-    }
 
     @Bean
     @ConditionalOnProperty(value = "ladon.s3.loggingenabled", havingValue = "true")
