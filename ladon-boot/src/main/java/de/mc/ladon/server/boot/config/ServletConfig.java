@@ -10,22 +10,17 @@ import de.mc.ladon.s3server.servlet.S3Servlet;
 import de.mc.ladon.server.s3.LadonS3Config;
 import org.apache.chemistry.opencmis.server.impl.CmisRepositoryContextListener;
 import org.apache.chemistry.opencmis.server.impl.browser.CmisBrowserBindingServlet;
-import org.apache.chemistry.opencmis.server.impl.webservices.CmisWebServicesServlet;
+import org.apache.chemistry.opencmis.server.impl.endpoints.SimpleCmisEndpointsDocumentServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
-import org.springframework.boot.context.embedded.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.HttpServletBean;
 
 import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +66,7 @@ public class ServletConfig {
 
 
     @Bean
-    CmisRepositoryContextListener cmisListener(){
+    CmisRepositoryContextListener cmisListener() {
         return new CmisRepositoryContextListener();
     }
 
@@ -85,7 +80,20 @@ public class ServletConfig {
         registration.setInitParameters(initParams);
         registration.setName("cmisServlet");
         registration.addUrlMappings("/services/cmis/*");
-        registration.setLoadOnStartup(1);
+        registration.setLoadOnStartup(2);
+        return registration;
+    }
+
+    @Bean
+    public ServletRegistrationBean cmisEndpointsServletRegistrationBean() {
+        SimpleCmisEndpointsDocumentServlet cmisEndpointServlet = new SimpleCmisEndpointsDocumentServlet();
+        ServletRegistrationBean registration = new ServletRegistrationBean(cmisEndpointServlet);
+        Map<String, String> initParams = new HashMap<>();
+        initParams.put("template", "/WEB-INF/cmis-endpoints.json");
+        registration.setInitParameters(initParams);
+        registration.setName("cmisendpoints");
+        registration.addUrlMappings("/services/cmis-endpoints.json");
+        registration.setLoadOnStartup(3);
         return registration;
     }
 
