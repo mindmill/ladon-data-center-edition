@@ -101,5 +101,6 @@ appender reference in the root level section below.
     </root>
 
     <logger name="org.apache.cassandra" level="INFO"/>
+    <logger name="org.springframework.security" level="TRACE"/>
     <logger name="com.thinkaurelius.thrift" level="ERROR"/>
 </configuration>

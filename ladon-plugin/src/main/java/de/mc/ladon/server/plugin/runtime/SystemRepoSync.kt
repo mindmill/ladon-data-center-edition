@@ -18,7 +18,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-@Named
+//@Named
 class SystemRepoSync @Inject constructor(val changeTokenDAO: ChangeTokenDAO,
                                          val binaryDataDAO: BinaryDataDAO,
                                          val metadataDAO: MetadataDAO) {

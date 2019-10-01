@@ -14,7 +14,6 @@
         <module>ladon-cassandra</module>
         <module>ladon-boot</module>
         <module>ladon-plugin</module>
-        <module>ladon-rest</module>
         <module>bundled-plugins</module>
         <module>ladon-cmis</module>
     </modules>

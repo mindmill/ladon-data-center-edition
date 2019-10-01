@@ -74,7 +74,7 @@ class LadonRuntimeActivator(val pluginContext: PluginContext) : BundleActivator 
     }
 }
 
-@Named
+//@Named
 class LadonPluginRuntime @Inject constructor(pluginContext: PluginContext) {
 
     private val activator: LadonRuntimeActivator

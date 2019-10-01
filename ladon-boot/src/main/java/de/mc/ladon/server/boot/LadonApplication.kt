@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * LadonApplication
  * Created by Ralf Ulrich on 27.10.15.
  */
-@SpringBootApplication(scanBasePackages = arrayOf("de.mc.ladon.server"))
+@SpringBootApplication(scanBasePackages = ["de.mc.ladon"])
 @EnableConfigurationProperties(DatabaseConfigImpl::class, LadonS3ConfigImpl::class)
 open class LadonApplication
 

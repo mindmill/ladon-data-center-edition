@@ -18,8 +18,13 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.HttpServletBean;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,19 +39,19 @@ public class ServletConfig {
     @Autowired
     private S3Repository s3r;
 
-//    @Bean
-//    public ServletRegistrationBean redirectServlet() {
-//        ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
-//            @Override
-//            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//                resp.sendRedirect("/admin/overview");
-//            }
-//        });
-//        registration.setName("redirectServlet");
-//        registration.addUrlMappings("/");
-//        registration.setLoadOnStartup(1);
-//        return registration;
-//    }
+    @Bean
+    public ServletRegistrationBean redirectServlet() {
+        ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
+            @Override
+            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+                resp.sendRedirect("/admin/overview");
+            }
+        });
+        registration.setName("redirectServlet");
+        registration.addUrlMappings("/");
+        registration.setLoadOnStartup(1);
+        return registration;
+    }
 
 
     @Bean
