@@ -121,7 +121,8 @@ data class Document(
         val etag: String,
         val created: LocalDateTime,
         val contentType: String,
-        val userMetadata: Map<String, String>)
+        val userMetadata: Map<String, String>,
+        val isFolder: Boolean = false)
 
 data class ContentDocument(val meta: Document,
                            val content: InputStream)
