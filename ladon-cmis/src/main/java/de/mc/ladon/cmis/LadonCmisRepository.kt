@@ -18,6 +18,7 @@
  */
 package de.mc.ladon.cmis
 
+import de.mc.ladon.server.core.api.LadonRepository
 import org.apache.chemistry.opencmis.commons.BasicPermissions
 import org.apache.chemistry.opencmis.commons.PropertyIds
 import org.apache.chemistry.opencmis.commons.data.*
@@ -44,6 +45,9 @@ class LadonCmisRepository(
         private val typeManager: LadonCmisTypeManager) {
 
     val rootDirectory: File
+    val userManager = lazy { LadonServicesHolder.userDetailsManager() }
+    val ladonRepo = lazy { LadonServicesHolder.getService(LadonRepository::class.java) }
+
 
     private val readWriteUserMap: MutableMap<String, Boolean>
 
@@ -1921,13 +1925,17 @@ class LadonCmisRepository(
         if (context == null) {
             throw CmisPermissionDeniedException("No user context!")
         }
-
-        val readOnly = readWriteUserMap[context.username] ?: throw CmisPermissionDeniedException("Unknown user!")
+        val user = try {
+            userManager.value.loadUserByUsername(context.username)
+        } catch (e: Exception) {
+            throw CmisPermissionDeniedException("Unknown user!")
+        }
+        val roles = user.roles
+        val readOnly = !roles.contains("write")
 
         if (readOnly && writeRequired) {
             throw CmisPermissionDeniedException("No write permission!")
         }
-
         return readOnly
     }
 
