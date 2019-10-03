@@ -86,7 +86,8 @@ interface LadonRepository {
     fun putDocument(userId: String,
                     bucket: String,
                     key: String,
-                    content: InputStream): Document
+                    content: InputStream,
+                    metadata: Map<String, String> = mapOf()): Document
 
     @Throws(UserNotFound::class,
             BucketIllegalAccess::class,
@@ -97,7 +98,18 @@ interface LadonRepository {
                                bucket: String,
                                key: String,
                                version: String,
-                               metadata: Map<String,String>): Document
+                               metadata: Map<String, String>): Document
+
+    @Throws(UserNotFound::class,
+            BucketIllegalAccess::class,
+            BucketNotFound::class,
+            DocumentNotFound::class,
+            DocumentIllegalAccess::class)
+    fun copyDocument(userId: String,
+                     bucket: String,
+                     key: String,
+                     targetBucket: String,
+                     targetKey: String): Document
 }
 
 data class Document(
