@@ -220,6 +220,18 @@ open class LadonCassandraRepository @Inject constructor(
                     ?: 1000).toInt(), false)
             val (objectList, prefixes) = result.first
             val truncated = result.second
+            prefixes.map {  // TODO folders are not realy versioned
+                Document(
+                        bucket,
+                        it,
+                        "none",
+                        true,
+                        0,
+                        "",
+                        LocalDateTime.MIN,
+                        "",
+                        mapOf(), true)
+            } +
             objectList.map {
                 val content = it.content()
                 Document(
