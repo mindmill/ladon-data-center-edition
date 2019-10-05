@@ -27,7 +27,7 @@ import java.util.*
  * Controller for the Plugin info page
  * Created by Ralf Ulrich on 13.12.15.
  */
-@Controller
+//@Controller
 class PluginsPageController : FrameController() {
 
     @Autowired
