@@ -18,6 +18,9 @@
  */
 package de.mc.ladon.cmis
 
+import de.mc.ladon.cmis.FileShareUtils.*
+import de.mc.ladon.server.core.api.Document
+import de.mc.ladon.server.core.api.DocumentNotFound
 import de.mc.ladon.server.core.api.LadonRepository
 import org.apache.chemistry.opencmis.commons.BasicPermissions
 import org.apache.chemistry.opencmis.commons.PropertyIds
@@ -26,8 +29,9 @@ import org.apache.chemistry.opencmis.commons.data.Properties
 import org.apache.chemistry.opencmis.commons.definitions.*
 import org.apache.chemistry.opencmis.commons.enums.*
 import org.apache.chemistry.opencmis.commons.exceptions.*
-import org.apache.chemistry.opencmis.commons.impl.*
 import org.apache.chemistry.opencmis.commons.impl.Base64
+import org.apache.chemistry.opencmis.commons.impl.IOUtils
+import org.apache.chemistry.opencmis.commons.impl.MimeTypes
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.*
 import org.apache.chemistry.opencmis.commons.impl.server.ObjectInfoImpl
 import org.apache.chemistry.opencmis.commons.server.CallContext
@@ -37,6 +41,8 @@ import org.slf4j.LoggerFactory
 import java.io.*
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 class LadonCmisRepository(
@@ -309,7 +315,7 @@ class LadonCmisRepository(
         }
 
         // check type
-        val typeId = FileShareUtils.getObjectTypeId(properties)
+        val typeId = getObjectTypeId(properties)
         val type = typeManager.getInternalTypeDefinition(typeId)
                 ?: throw CmisObjectNotFoundException("Type '$typeId' is unknown!")
         if (type.baseTypeId != BaseTypeId.CMIS_DOCUMENT) {
@@ -320,7 +326,7 @@ class LadonCmisRepository(
         val props = compileWriteProperties(typeId, context.username, context.username, properties)
 
         // check the name
-        val name = FileShareUtils.getStringProperty(properties, PropertyIds.NAME)
+        val name = getStringProperty(properties, PropertyIds.NAME)
         if (!isValidName(name)) {
             throw CmisNameConstraintViolationException("Name is not valid!")
         }
@@ -351,7 +357,7 @@ class LadonCmisRepository(
 
         // set creation date
         addPropertyDateTime(props, typeId, null, PropertyIds.CREATION_DATE,
-                FileShareUtils.millisToCalendar(newFile.lastModified()))
+                millisToCalendar(newFile.lastModified()))
 
         // write properties
         writePropertiesFile(newFile, props)
@@ -392,7 +398,7 @@ class LadonCmisRepository(
         readCustomProperties(source, sourceProperties, null, ObjectInfoImpl())
 
         // get the type id
-        var typeId = FileShareUtils.getIdProperty(sourceProperties, PropertyIds.OBJECT_TYPE_ID)
+        var typeId = getIdProperty(sourceProperties, PropertyIds.OBJECT_TYPE_ID)
         if (typeId == null) {
             typeId = BaseTypeId.CMIS_DOCUMENT.value()
         }
@@ -412,7 +418,7 @@ class LadonCmisRepository(
         // replace properties
         if (properties != null) {
             // find new name
-            val newName = FileShareUtils.getStringProperty(properties, PropertyIds.NAME)
+            val newName = getStringProperty(properties, PropertyIds.NAME)
             if (newName != null) {
                 if (!isValidName(newName)) {
                     throw CmisNameConstraintViolationException("Name is not valid!")
@@ -451,7 +457,7 @@ class LadonCmisRepository(
         addPropertyId(newProperties, typeId, null, PropertyIds.OBJECT_TYPE_ID, typeId)
         addPropertyString(newProperties, typeId, null, PropertyIds.CREATED_BY, context.username)
         addPropertyDateTime(newProperties, typeId, null, PropertyIds.CREATION_DATE,
-                FileShareUtils.millisToCalendar(System.currentTimeMillis()))
+                millisToCalendar(System.currentTimeMillis()))
         addPropertyString(newProperties, typeId, null, PropertyIds.LAST_MODIFIED_BY, context.username)
 
         // check the file
@@ -509,7 +515,7 @@ class LadonCmisRepository(
         }
 
         // check type
-        val typeId = FileShareUtils.getObjectTypeId(properties)
+        val typeId = getObjectTypeId(properties)
         val type = typeManager.getInternalTypeDefinition(typeId)
                 ?: throw CmisObjectNotFoundException("Type '$typeId' is unknown!")
         if (type.baseTypeId != BaseTypeId.CMIS_FOLDER) {
@@ -520,7 +526,7 @@ class LadonCmisRepository(
         val props = compileWriteProperties(typeId, context.username, context.username, properties)
 
         // check the name
-        val name = FileShareUtils.getStringProperty(properties, PropertyIds.NAME)
+        val name = getStringProperty(properties, PropertyIds.NAME)
         if (!isValidName(name)) {
             throw CmisNameConstraintViolationException("Name is not valid.")
         }
@@ -539,7 +545,7 @@ class LadonCmisRepository(
 
         // set creation date
         addPropertyDateTime(props, typeId, null, PropertyIds.CREATION_DATE,
-                FileShareUtils.millisToCalendar(newFolder.lastModified()))
+                millisToCalendar(newFolder.lastModified()))
 
         // write properties
         writePropertiesFile(newFolder, props)
@@ -610,7 +616,7 @@ class LadonCmisRepository(
         }
 
         // check overwrite
-        val owf = FileShareUtils.getBooleanParameter(overwriteFlag, true)
+        val owf = getBooleanParameter(overwriteFlag, true)
         if (!owf && file.length() > 0) {
             throw CmisContentAlreadyExistsException("Content already exists!")
         }
@@ -668,7 +674,7 @@ class LadonCmisRepository(
         debug("deleteTree")
         checkUser(context, true)
 
-        val cof = FileShareUtils.getBooleanParameter(continueOnFailure, false)
+        val cof = getBooleanParameter(continueOnFailure, false)
 
         // get the file or folder
         val file = getFile(folderId)
@@ -732,35 +738,35 @@ class LadonCmisRepository(
         }
 
         // get the file or folder
-        val file = getFile(objectId.value)
+        val document = getDocument(context.username,objectId.value.fromBase64Id())
 
         // get and check the new name
-        val newName = FileShareUtils.getStringProperty(properties, PropertyIds.NAME)
-        val isRename = newName != null && file.name != newName
+        val newName = getStringProperty(properties, PropertyIds.NAME)
+        val isRename = newName != null && document.getName() != newName
         if (isRename && !isValidName(newName)) {
             throw CmisNameConstraintViolationException("Name is not valid!")
         }
 
         // get old properties
         val oldProperties = PropertiesImpl()
-        readCustomProperties(file, oldProperties, null, ObjectInfoImpl())
+        readCustomProperties(document, oldProperties, null)
 
         // get the type id
-        var typeId = FileShareUtils.getIdProperty(oldProperties, PropertyIds.OBJECT_TYPE_ID)
+        var typeId = getIdProperty(oldProperties, PropertyIds.OBJECT_TYPE_ID)
         if (typeId == null) {
-            typeId = if (file.isDirectory) BaseTypeId.CMIS_FOLDER.value() else BaseTypeId.CMIS_DOCUMENT.value()
+            typeId = if (document.isFolder) BaseTypeId.CMIS_FOLDER.value() else BaseTypeId.CMIS_DOCUMENT.value()
         }
 
         // get the creator
-        var creator = FileShareUtils.getStringProperty(oldProperties, PropertyIds.CREATED_BY)
+        var creator = getStringProperty(oldProperties, PropertyIds.CREATED_BY)
         if (creator == null) {
             creator = context.username
         }
 
         // get creation date
-        var creationDate = FileShareUtils.getDateTimeProperty(oldProperties, PropertyIds.CREATION_DATE)
+        var creationDate = getDateTimeProperty(oldProperties, PropertyIds.CREATION_DATE)
         if (creationDate == null) {
-            creationDate = FileShareUtils.millisToCalendar(file.lastModified())
+            creationDate = millisToCalendar(document.created.toEpochSecond(ZoneOffset.UTC))
         }
 
         // compile the properties
@@ -915,17 +921,17 @@ class LadonCmisRepository(
         }
 
         // get the file or folder
-        val file = getFile(objectId)
+        val document =getDocument(context.username,objectId!!.fromBase64Id())
 
         // set defaults if values not set
-        val iaa = FileShareUtils.getBooleanParameter(includeAllowableActions, false)
-        val iacl = FileShareUtils.getBooleanParameter(includeAcl, false)
+        val iaa = getBooleanParameter(includeAllowableActions, false)
+        val iacl = getBooleanParameter(includeAcl, false)
 
         // split filter
-        val filterCollection = FileShareUtils.splitFilter(filter)
+        val filterCollection = splitFilter(filter)
 
         // gather properties
-        return compileObjectData(context, file, filterCollection, iaa, iacl, userReadOnly, objectInfos)
+        return compileObjectData(context, document, filterCollection, iaa, iacl, userReadOnly, objectInfos)
     }
 
     /**
@@ -934,13 +940,8 @@ class LadonCmisRepository(
     fun getAllowableActions(context: CallContext, objectId: String): AllowableActions {
         debug("getAllowableActions")
         val userReadOnly = checkUser(context, false)
-
-        val file = getFile(objectId)
-        if (!file.exists()) {
-            throw CmisObjectNotFoundException("Object not found!")
-        }
-
-        return compileAllowableActions(file, userReadOnly)
+        val document = getDocument(context.username, objectId.fromBase64Id())
+        return compileAllowableActions(document, userReadOnly)
     }
 
     /**
@@ -949,14 +950,8 @@ class LadonCmisRepository(
     fun getAcl(context: CallContext, objectId: String): Acl {
         debug("getAcl")
         checkUser(context, false)
-
-        // get the file or folder
-        val file = getFile(objectId)
-        if (!file.exists()) {
-            throw CmisObjectNotFoundException("Object not found!")
-        }
-
-        return compileAcl(file)
+        val document = getDocument(context.username, objectId.fromBase64Id())
+        return compileAcl(document)
     }
 
     /**
@@ -967,24 +962,15 @@ class LadonCmisRepository(
         checkUser(context, false)
 
         // get the file
-        val file = getFile(objectId)
-        if (!file.isFile) {
+        val document = getDocument(context.username, objectId.fromBase64Id())
+        if (document.isFolder) {
             throw CmisStreamNotSupportedException("Not a file!")
         }
 
-        if (file.length() == 0L) {
+        if (document.size == 0L) {
             throw CmisConstraintException("Document has no content!")
         }
 
-        var stream: InputStream? = null
-        try {
-            stream = BufferedInputStream(FileInputStream(file), 64 * 1024)
-            if (offset != null || length != null) {
-                stream = ContentRangeInputStream(stream, offset, length)
-            }
-        } catch (e: FileNotFoundException) {
-            throw CmisObjectNotFoundException(e.message, e)
-        }
 
         // compile data
         val result: ContentStreamImpl
@@ -994,10 +980,10 @@ class LadonCmisRepository(
             result = ContentStreamImpl()
         }
 
-        result.fileName = file.name
-        result.setLength(BigInteger.valueOf(file.length()))
-        result.mimeType = MimeTypes.getMIMEType(file)
-        result.stream = stream
+        result.fileName = document.getName()
+        result.setLength(BigInteger.valueOf(document.size))
+        result.mimeType = document.getMimeType()
+        result.stream = getDocumentContent(context.username, objectId.fromBase64Id())
 
         return result
     }
@@ -1012,11 +998,11 @@ class LadonCmisRepository(
         val userReadOnly = checkUser(context, false)
 
         // split filter
-        val filterCollection = FileShareUtils.splitFilter(filter)
+        val filterCollection = splitFilter(filter)
 
         // set defaults if values not set
-        val iaa = FileShareUtils.getBooleanParameter(includeAllowableActions, false)
-        val ips = FileShareUtils.getBooleanParameter(includePathSegment, false)
+        val iaa = getBooleanParameter(includeAllowableActions, false)
+        val ips = getBooleanParameter(includePathSegment, false)
 
         // skip and max
         var skip = skipCount?.toInt() ?: 0
@@ -1030,19 +1016,14 @@ class LadonCmisRepository(
         }
 
         // get the folder
-        val folder = getFile(folderId)
-        if (!folder.isDirectory) {
+        val folder = getDocument(context.username, folderId.fromBase64Id())
+        if (!folder.isFolder) {
             throw CmisObjectNotFoundException("Not a folder!")
         }
 
         // get the children
-        val children = ArrayList<File>()
-        for (child in folder.listFiles()!!) {
-            // skip hidden and shadow files
-            if (child.isHidden || child.name == SHADOW_FOLDER || child.path.endsWith(SHADOW_EXT)) {
-                continue
-            }
-
+        val children = ArrayList<Document>()
+        for (child in getChildDocuments(context.username, folderId.fromBase64Id())) {
             children.add(child)
         }
 
@@ -1062,31 +1043,31 @@ class LadonCmisRepository(
                 queryName = queryName.substring(0, queryName.length - 5).trim { it <= ' ' }
             }
 
-            var comparator: Comparator<File>? = null
+            var comparator: Comparator<Document>? = null
 
             if ("cmis:name" == queryName) {
                 comparator = Comparator { f1, f2 ->
-                    f1.name.toLowerCase(Locale.ENGLISH)
-                            .compareTo(f2.name.toLowerCase(Locale.ENGLISH))
+                    f1.getName().toLowerCase(Locale.ENGLISH)
+                            .compareTo(f2.getName().toLowerCase(Locale.ENGLISH))
                 }
             } else if ("cmis:creationDate" == queryName || "cmis:lastModificationDate" == queryName) {
-                comparator = Comparator { f1, f2 -> java.lang.Long.compare(f1.lastModified(), f2.lastModified()) }
+                comparator = Comparator { f1, f2 -> f1.created.compareTo(f2.created) }
             } else if ("cmis:contentStreamLength" == queryName) {
-                comparator = Comparator { f1, f2 -> java.lang.Long.compare(f1.length(), f2.length()) }
+                comparator = Comparator { f1, f2 -> java.lang.Long.compare(f1.size, f2.size) }
             } else if ("cmis:objectId" == queryName) {
                 comparator = Comparator { f1, f2 ->
                     try {
-                        return@Comparator fileToId(f1).compareTo(fileToId(f2))
+                        return@Comparator f1.getId().compareTo(f2.getId())
                     } catch (e: IOException) {
                         return@Comparator 0
                     }
                 }
             } else if ("cmis:baseTypeId" == queryName) {
                 comparator = Comparator { f1, f2 ->
-                    if (f1.isDirectory == f2.isDirectory) {
+                    if (f1.isFolder == f2.isFolder) {
                         return@Comparator 0
                     }
-                    if (f1.isDirectory) -1 else 1
+                    if (f1.isFolder) -1 else 1
                 }
             } else if ("cmis:createdBy" == queryName || "cmis:lastModifiedBy" == queryName) {
                 // do nothing
@@ -1132,7 +1113,7 @@ class LadonCmisRepository(
             objectInFolder.setObject(compileObjectData(context, child, filterCollection, iaa, false, userReadOnly,
                     objectInfos))
             if (ips) {
-                objectInFolder.pathSegment = child.name
+                objectInFolder.pathSegment = child.getName()
             }
 
             result.objects.add(objectInFolder)
@@ -1162,15 +1143,15 @@ class LadonCmisRepository(
         }
 
         // split filter
-        val filterCollection = FileShareUtils.splitFilter(filter)
+        val filterCollection = splitFilter(filter)
 
         // set defaults if values not set
-        val iaa = FileShareUtils.getBooleanParameter(includeAllowableActions, false)
-        val ips = FileShareUtils.getBooleanParameter(includePathSegment, false)
+        val iaa = getBooleanParameter(includeAllowableActions, false)
+        val ips = getBooleanParameter(includePathSegment, false)
 
         // get the folder
-        val folder = getFile(folderId)
-        if (!folder.isDirectory) {
+        val folder = getDocument(context.username, folderId.fromBase64Id())
+        if (!folder.isFolder) {
             throw CmisObjectNotFoundException("Not a folder!")
         }
 
@@ -1181,7 +1162,7 @@ class LadonCmisRepository(
 
         // get the tree
         val result = ArrayList<ObjectInFolderContainer>()
-        gatherDescendants(context, folder, result, foldersOnly, d, filterCollection, iaa, ips, userReadOnly,
+        gatherDescendants(context, folder.getAbsolutPath(), result, foldersOnly, d, filterCollection, iaa, ips, userReadOnly,
                 objectInfos)
 
         return result
@@ -1190,21 +1171,15 @@ class LadonCmisRepository(
     /**
      * Gather the children of a folder.
      */
-    private fun gatherDescendants(context: CallContext, folder: File, list: MutableList<ObjectInFolderContainer>?,
+    private fun gatherDescendants(context: CallContext, folder: String, list: MutableList<ObjectInFolderContainer>,
                                   foldersOnly: Boolean, depth: Int, filter: Set<String>?, includeAllowableActions: Boolean,
                                   includePathSegments: Boolean, userReadOnly: Boolean, objectInfos: ObjectInfoHandler) {
-        assert(folder != null)
-        assert(list != null)
 
         // iterate through children
-        for (child in folder.listFiles()!!) {
-            // skip hidden and shadow files
-            if (child.isHidden || child.name == SHADOW_FOLDER || child.path.endsWith(SHADOW_EXT)) {
-                continue
-            }
+        for (child in getChildDocuments(context.username, folder)) {
 
             // folders only?
-            if (foldersOnly && !child.isDirectory) {
+            if (foldersOnly && !child.isFolder) {
                 continue
             }
 
@@ -1213,18 +1188,18 @@ class LadonCmisRepository(
             objectInFolder.setObject(compileObjectData(context, child, filter, includeAllowableActions, false,
                     userReadOnly, objectInfos))
             if (includePathSegments) {
-                objectInFolder.pathSegment = child.name
+                objectInFolder.pathSegment = child.getName()
             }
 
             val container = ObjectInFolderContainerImpl()
             container.setObject(objectInFolder)
 
-            list!!.add(container)
+            list.add(container)
 
             // move to next level
-            if (depth != 1 && child.isDirectory) {
+            if (depth != 1 && child.isFolder) {
                 container.children = ArrayList()
-                gatherDescendants(context, child, container.children, foldersOnly, depth - 1, filter,
+                gatherDescendants(context, child.getAbsolutPath(), container.children, foldersOnly, depth - 1, filter,
                         includeAllowableActions, includePathSegments, userReadOnly, objectInfos)
             }
         }
@@ -1259,33 +1234,30 @@ class LadonCmisRepository(
         val userReadOnly = checkUser(context, false)
 
         // split filter
-        val filterCollection = FileShareUtils.splitFilter(filter)
+        val filterCollection = splitFilter(filter)
 
         // set defaults if values not set
-        val iaa = FileShareUtils.getBooleanParameter(includeAllowableActions, false)
-        val irps = FileShareUtils.getBooleanParameter(includeRelativePathSegment, false)
-
-        // get the file or folder
-        val file = getFile(objectId)
-
+        val iaa = includeAllowableActions ?: false
+        val irps = includeRelativePathSegment ?: false
         // don't climb above the root folder
-        if (rootDirectory == file) {
+        if (objectId == ROOT_ID) {
             return emptyList()
         }
-
+        // get the file or folder
+        val document = getDocument(context.username, objectId.fromBase64Id())
         // set object info of the the object
         if (context.isObjectInfoRequired) {
-            compileObjectData(context, file, null, false, false, userReadOnly, objectInfos)
+            compileObjectData(context, document, null, false, false, userReadOnly, objectInfos)
         }
 
         // get parent folder
-        val parent = file.parentFile
+        val parent = document.getParent(context.username)
         val `object` = compileObjectData(context, parent, filterCollection, iaa, false, userReadOnly, objectInfos)
 
         val result = ObjectParentDataImpl()
         result.setObject(`object`)
         if (irps) {
-            result.relativePathSegment = file.name
+            result.relativePathSegment = document.getName()
         }
 
         return listOf<ObjectParentData>(result)
@@ -1300,48 +1272,52 @@ class LadonCmisRepository(
         val userReadOnly = checkUser(context, false)
 
         // split filter
-        val filterCollection = FileShareUtils.splitFilter(filter)
+        val filterCollection = splitFilter(filter)
 
         // check path
-        if (folderPath == null || folderPath.length == 0 || folderPath[0] != '/') {
+        if (folderPath == null || folderPath.isEmpty() || folderPath[0] != '/') {
             throw CmisInvalidArgumentException("Invalid folder path!")
         }
 
-        // get the file or folder
-        var file: File? = null
-        if (folderPath.length == 1) {
-            file = rootDirectory
+
+        val document = if (folderPath.length == 1) {
+            ROOT_DOCUMENT
         } else {
-            val path = folderPath.replace('/', File.separatorChar).substring(1)
-            file = File(rootDirectory, path)
+            val path = folderPath.replace('/', File.separatorChar)
+            getDocument(context.username, path)
         }
 
-        if (!file.exists()) {
-            throw CmisObjectNotFoundException("Path doesn't exist.")
-        }
-
-        return compileObjectData(context, file, filterCollection, includeAllowableActions, includeACL, userReadOnly,
+        return compileObjectData(
+                context,
+                document,
+                filterCollection,
+                includeAllowableActions,
+                includeACL,
+                userReadOnly,
                 objectInfos)
     }
 
     // --- helpers ---
 
-    /**
-     * Compiles an object type object from a file or folder.
-     */
-    private fun compileObjectData(context: CallContext, file: File, filter: Set<String>?,
-                                  includeAllowableActions: Boolean, includeAcl: Boolean, userReadOnly: Boolean, objectInfos: ObjectInfoHandler?): ObjectData {
+
+    private fun compileObjectData(context: CallContext,
+                                  document: Document,
+                                  filter: Set<String>?,
+                                  includeAllowableActions: Boolean,
+                                  includeAcl: Boolean,
+                                  userReadOnly: Boolean,
+                                  objectInfos: ObjectInfoHandler?): ObjectData {
         val result = ObjectDataImpl()
         val objectInfo = ObjectInfoImpl()
 
-        result.properties = compileProperties(context, file, filter, objectInfo)
+        result.properties = compileProperties(context, document, filter, objectInfo)
 
         if (includeAllowableActions) {
-            result.allowableActions = compileAllowableActions(file, userReadOnly)
+            result.allowableActions = compileAllowableActions(document, userReadOnly)
         }
 
         if (includeAcl) {
-            result.acl = compileAcl(file)
+            result.acl = compileAcl(document)
             result.setIsExactAcl(true)
         }
 
@@ -1353,19 +1329,13 @@ class LadonCmisRepository(
         return result
     }
 
-    /**
-     * Gathers all base properties of a file or folder.
-     */
-    private fun compileProperties(context: CallContext, file: File?, orgfilter: Set<String>?,
+
+    private fun compileProperties(context: CallContext, document: Document?, orgfilter: Set<String>?,
                                   objectInfo: ObjectInfoImpl): Properties {
-        if (file == null) {
+        if (document == null) {
             throw IllegalArgumentException("File must not be null!")
         }
 
-        // we can't gather properties if the file or folder doesn't exist
-        if (!file.exists()) {
-            throw CmisObjectNotFoundException("Object not found!")
-        }
 
         // copy filter
         val filter = if (orgfilter == null) null else HashSet(orgfilter)
@@ -1373,7 +1343,7 @@ class LadonCmisRepository(
         // find base type
         var typeId: String? = null
 
-        if (file.isDirectory) {
+        if (document.isFolder) {
             typeId = BaseTypeId.CMIS_FOLDER.value()
             objectInfo.baseType = BaseTypeId.CMIS_FOLDER
             objectInfo.typeId = typeId
@@ -1417,12 +1387,12 @@ class LadonCmisRepository(
             val result = PropertiesImpl()
 
             // id
-            val id = fileToId(file)
+            val id = document.getId()
             addPropertyId(result, typeId, filter, PropertyIds.OBJECT_ID, id)
             objectInfo.id = id
 
             // name
-            val name = file.name
+            val name = document.getName()
             addPropertyString(result, typeId, filter, PropertyIds.NAME, name)
             objectInfo.name = name
 
@@ -1432,14 +1402,14 @@ class LadonCmisRepository(
             objectInfo.createdBy = USER_UNKNOWN
 
             // creation and modification date
-            val lastModified = FileShareUtils.millisToCalendar(file.lastModified())
+            val lastModified = millisToCalendar(document.created.toEpochSecond(ZoneOffset.UTC))
             addPropertyDateTime(result, typeId, filter, PropertyIds.CREATION_DATE, lastModified)
             addPropertyDateTime(result, typeId, filter, PropertyIds.LAST_MODIFICATION_DATE, lastModified)
             objectInfo.creationDate = lastModified
             objectInfo.lastModificationDate = lastModified
 
-            // change token - always null
-            addPropertyString(result, typeId, filter, PropertyIds.CHANGE_TOKEN, null)
+            // change token
+            addPropertyString(result, typeId, filter, PropertyIds.CHANGE_TOKEN, document.version)
 
             // CMIS 1.1 properties
             if (context.cmisVersion != CmisVersion.CMIS_1_0) {
@@ -1448,17 +1418,16 @@ class LadonCmisRepository(
             }
 
             // directory or file
-            if (file.isDirectory) {
+            if (document.isFolder) {
                 // base type and type name
                 addPropertyId(result, typeId, filter, PropertyIds.BASE_TYPE_ID, BaseTypeId.CMIS_FOLDER.value())
                 addPropertyId(result, typeId, filter, PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_FOLDER.value())
-                val path = getRepositoryPath(file)
+                val path = document.getAbsolutPath()
                 addPropertyString(result, typeId, filter, PropertyIds.PATH, path)
 
                 // folder properties
-                if (rootDirectory != file) {
-                    addPropertyId(result, typeId, filter, PropertyIds.PARENT_ID,
-                            if (rootDirectory == file.parentFile) ROOT_ID else fileToId(file.parentFile))
+                if (document.bucket != ROOT_ID) {
+                    addPropertyId(result, typeId, filter, PropertyIds.PARENT_ID, document.getParentId())
                     objectInfo.setHasParent(true)
                 } else {
                     addPropertyId(result, typeId, filter, PropertyIds.PARENT_ID, null)
@@ -1476,8 +1445,8 @@ class LadonCmisRepository(
                 addPropertyBoolean(result, typeId, filter, PropertyIds.IS_LATEST_VERSION, true)
                 addPropertyBoolean(result, typeId, filter, PropertyIds.IS_MAJOR_VERSION, true)
                 addPropertyBoolean(result, typeId, filter, PropertyIds.IS_LATEST_MAJOR_VERSION, true)
-                addPropertyString(result, typeId, filter, PropertyIds.VERSION_LABEL, file.name)
-                addPropertyId(result, typeId, filter, PropertyIds.VERSION_SERIES_ID, fileToId(file))
+                addPropertyString(result, typeId, filter, PropertyIds.VERSION_LABEL, document.version)
+                addPropertyId(result, typeId, filter, PropertyIds.VERSION_SERIES_ID, document.getId())
                 addPropertyBoolean(result, typeId, filter, PropertyIds.IS_VERSION_SERIES_CHECKED_OUT, false)
                 addPropertyString(result, typeId, filter, PropertyIds.VERSION_SERIES_CHECKED_OUT_BY, null)
                 addPropertyString(result, typeId, filter, PropertyIds.VERSION_SERIES_CHECKED_OUT_ID, null)
@@ -1486,7 +1455,7 @@ class LadonCmisRepository(
                     addPropertyBoolean(result, typeId, filter, PropertyIds.IS_PRIVATE_WORKING_COPY, false)
                 }
 
-                if (file.length() == 0L) {
+                if (document.size == 0L) {
                     addPropertyBigInteger(result, typeId, filter, PropertyIds.CONTENT_STREAM_LENGTH, null)
                     addPropertyString(result, typeId, filter, PropertyIds.CONTENT_STREAM_MIME_TYPE, null)
                     addPropertyString(result, typeId, filter, PropertyIds.CONTENT_STREAM_FILE_NAME, null)
@@ -1495,21 +1464,21 @@ class LadonCmisRepository(
                     objectInfo.contentType = null
                     objectInfo.fileName = null
                 } else {
-                    addPropertyInteger(result, typeId, filter, PropertyIds.CONTENT_STREAM_LENGTH, file.length())
-                    addPropertyString(result, typeId, filter, PropertyIds.CONTENT_STREAM_MIME_TYPE,
-                            MimeTypes.getMIMEType(file))
-                    addPropertyString(result, typeId, filter, PropertyIds.CONTENT_STREAM_FILE_NAME, file.name)
+                    val mime = document.getMimeType()
+                    addPropertyInteger(result, typeId, filter, PropertyIds.CONTENT_STREAM_LENGTH, document.size)
+                    addPropertyString(result, typeId, filter, PropertyIds.CONTENT_STREAM_MIME_TYPE, mime)
+                    addPropertyString(result, typeId, filter, PropertyIds.CONTENT_STREAM_FILE_NAME, document.getName())
 
                     objectInfo.setHasContent(true)
-                    objectInfo.contentType = MimeTypes.getMIMEType(file)
-                    objectInfo.fileName = file.name
+                    objectInfo.contentType = mime
+                    objectInfo.fileName = document.getName()
                 }
 
                 addPropertyId(result, typeId, filter, PropertyIds.CONTENT_STREAM_ID, null)
             }
 
             // read custom properties
-            readCustomProperties(file, result, filter, objectInfo)
+            readCustomProperties(document, result, filter)
 
             if (filter != null) {
                 if (!filter.isEmpty()) {
@@ -1526,85 +1495,44 @@ class LadonCmisRepository(
 
     }
 
+    private fun Document.getMimeType(): String {
+        return try {
+            MimeTypes.getMIMEType(getName().substringAfterLast("."))
+        } catch (e: Exception) {
+            "application/octet-stream"
+        }
+    }
+
     /**
      * Reads and adds properties.
      */
-    private fun readCustomProperties(file: File, properties: PropertiesImpl, filter: MutableSet<String>?,
-                                     objectInfo: ObjectInfoImpl) {
-        val propFile = getPropertiesFile(file)
-
-        // if it doesn't exists, ignore it
-        if (!propFile.exists()) {
-            return
-        }
-
-        // parse it
-        var obj: ObjectData? = null
-        var stream: InputStream? = null
-        try {
-            stream = BufferedInputStream(FileInputStream(propFile), 64 * 1024)
-            val parser = XMLUtils.createParser(stream)
-            XMLUtils.findNextStartElemenet(parser)
-            obj = XMLConverter.convertObject(parser)
-            parser.close()
-        } catch (e: Exception) {
-            LOG.warn("Unvalid CMIS properties: {}", propFile.absolutePath, e)
-        } finally {
-            IOUtils.closeQuietly(stream)
-        }
-
-        if (obj == null || obj.properties == null) {
-            return
-        }
+    private fun readCustomProperties(document: Document, properties: PropertiesImpl, filter: MutableSet<String>?) {
 
         // add it to properties
-        for (prop in obj.properties.propertyList) {
+        for (prop in document.userMetadata) {
             // overwrite object info
-            if (prop is PropertyString) {
-                val firstValueStr = prop.firstValue
-                if (PropertyIds.NAME == prop.getId()) {
-                    objectInfo.name = firstValueStr
-                } else if (PropertyIds.OBJECT_TYPE_ID == prop.getId()) {
-                    objectInfo.typeId = firstValueStr
-                } else if (PropertyIds.CREATED_BY == prop.getId()) {
-                    objectInfo.createdBy = firstValueStr
-                } else if (PropertyIds.CONTENT_STREAM_MIME_TYPE == prop.getId()) {
-                    objectInfo.contentType = firstValueStr
-                } else if (PropertyIds.CONTENT_STREAM_FILE_NAME == prop.getId()) {
-                    objectInfo.fileName = firstValueStr
-                }
-            }
 
-            if (prop is PropertyDateTime) {
-                val firstValueCal = prop.firstValue
-                if (PropertyIds.CREATION_DATE == prop.getId()) {
-                    objectInfo.creationDate = firstValueCal
-                } else if (PropertyIds.LAST_MODIFICATION_DATE == prop.getId()) {
-                    objectInfo.lastModificationDate = firstValueCal
-                }
-            }
 
             // check filter
             if (filter != null) {
-                if (!filter.contains(prop.queryName)) {
+                if (!filter.contains(prop.key)) {
                     continue
                 } else {
-                    filter.remove(prop.queryName)
+                    filter.remove(prop.key)
                 }
             }
 
             // don't overwrite id
-            if (PropertyIds.OBJECT_ID == prop.id) {
+            if (PropertyIds.OBJECT_ID == prop.key) {
                 continue
             }
 
             // don't overwrite base type
-            if (PropertyIds.BASE_TYPE_ID == prop.id) {
+            if (PropertyIds.BASE_TYPE_ID == prop.key) {
                 continue
             }
-
             // add it
-            properties.replaceProperty(prop)
+            properties.replaceProperty(PropertyStringImpl(prop.key, prop.value))
         }
     }
 
@@ -1663,36 +1591,36 @@ class LadonCmisRepository(
         return result
     }
 
-    /**
-     * Writes the properties for a document or folder.
-     */
-    private fun writePropertiesFile(file: File, properties: Properties?) {
-        val propFile = getPropertiesFile(file)
-
-        // if no properties set delete the properties file
-        if (properties == null || properties.properties == null || properties.properties.size == 0) {
-            propFile.delete()
-            return
-        }
-
-        // create object
-        val `object` = ObjectDataImpl()
-        `object`.properties = properties
-
-        var stream: OutputStream? = null
-        try {
-            stream = BufferedOutputStream(FileOutputStream(propFile))
-            val writer = XMLUtils.createWriter(stream)
-            XMLUtils.startXmlDocument(writer)
-            XMLConverter.writeObject(writer, CmisVersion.CMIS_1_1, true, "object", XMLConstants.NAMESPACE_CMIS, `object`)
-            XMLUtils.endXmlDocument(writer)
-            writer.close()
-        } catch (e: Exception) {
-            throw CmisStorageException("Couldn't store properties!", e)
-        } finally {
-            IOUtils.closeQuietly(stream)
-        }
-    }
+//    /**
+//     * Writes the properties for a document or folder.
+//     */
+//    private fun writePropertiesFile(file: File, properties: Properties?) {
+//        val propFile = getPropertiesFile(file)
+//
+//        // if no properties set delete the properties file
+//        if (properties == null || properties.properties == null || properties.properties.size == 0) {
+//            propFile.delete()
+//            return
+//        }
+//
+//        // create object
+//        val `object` = ObjectDataImpl()
+//        `object`.properties = properties
+//
+//        var stream: OutputStream? = null
+//        try {
+//            stream = BufferedOutputStream(FileOutputStream(propFile))
+//            val writer = XMLUtils.createWriter(stream)
+//            XMLUtils.startXmlDocument(writer)
+//            XMLConverter.writeObject(writer, CmisVersion.CMIS_1_1, true, "object", XMLConstants.NAMESPACE_CMIS, `object`)
+//            XMLUtils.endXmlDocument(writer)
+//            writer.close()
+//        } catch (e: Exception) {
+//            throw CmisStorageException("Couldn't store properties!", e)
+//        } finally {
+//            IOUtils.closeQuietly(stream)
+//        }
+//    }
 
     private fun isEmptyProperty(prop: PropertyData<*>?): Boolean {
         return if (prop == null || prop.values == null) {
@@ -1819,19 +1747,15 @@ class LadonCmisRepository(
     /**
      * Compiles the allowable actions for a file or folder.
      */
-    private fun compileAllowableActions(file: File?, userReadOnly: Boolean): AllowableActions {
-        if (file == null) {
+    private fun compileAllowableActions(document: Document?, userReadOnly: Boolean): AllowableActions {
+        if (document == null) {
             throw IllegalArgumentException("File must not be null!")
         }
 
-        // we can't gather allowable actions if the file or folder doesn't exist
-        if (!file.exists()) {
-            throw CmisObjectNotFoundException("Object not found!")
-        }
 
-        val isReadOnly = !file.canWrite()
-        val isFolder = file.isDirectory
-        val isRoot = rootDirectory == file
+        val isReadOnly = userReadOnly
+        val isFolder = document.isFolder
+        val isRoot = document.bucket == ROOT_ID
 
         val aas = EnumSet.noneOf(Action::class.java)
 
@@ -1851,7 +1775,7 @@ class LadonCmisRepository(
             addAction(aas, Action.CAN_CREATE_FOLDER, !userReadOnly)
             addAction(aas, Action.CAN_DELETE_TREE, !userReadOnly && !isReadOnly)
         } else {
-            addAction(aas, Action.CAN_GET_CONTENT_STREAM, file.length() > 0)
+            addAction(aas, Action.CAN_GET_CONTENT_STREAM, document.size > 0)
             addAction(aas, Action.CAN_SET_CONTENT_STREAM, !userReadOnly && !isReadOnly)
             addAction(aas, Action.CAN_DELETE_CONTENT_STREAM, !userReadOnly && !isReadOnly)
             addAction(aas, Action.CAN_GET_ALL_VERSIONS, true)
@@ -1872,7 +1796,7 @@ class LadonCmisRepository(
     /**
      * Compiles the ACL for a file or folder.
      */
-    private fun compileAcl(file: File): Acl {
+    private fun compileAcl(document: Document): Acl {
         val result = AccessControlListImpl()
         result.aces = ArrayList()
 
@@ -1885,7 +1809,7 @@ class LadonCmisRepository(
             entry.principal = principal
             entry.permissions = ArrayList()
             entry.permissions.add(BasicPermissions.READ)
-            if (!value && file.canWrite()) {
+            if (!value) {
                 entry.permissions.add(BasicPermissions.WRITE)
                 entry.permissions.add(BasicPermissions.ALL)
             }
@@ -1946,103 +1870,118 @@ class LadonCmisRepository(
         return readOnly
     }
 
-    /**
-     * Returns the properties file of the given file.
-     */
-    private fun getPropertiesFile(file: File): File {
-        return if (file.isDirectory) {
-            File(file, SHADOW_FOLDER)
-        } else File(file.absolutePath + SHADOW_EXT)
+//    /**
+//     * Returns the properties file of the given file.
+//     */
+//    private fun getPropertiesFile(file: File): File {
+//        return if (file.isDirectory) {
+//            File(file, SHADOW_FOLDER)
+//        } else File(file.absolutePath + SHADOW_EXT)
+//
+//    }
 
-    }
+//    /**
+//     * Returns the File object by id or throws an appropriate exception.
+//     */
+//    private fun getFile(id: String?): File {
+//        try {
+//            return idToFile(id)
+//        } catch (e: Exception) {
+//            throw CmisObjectNotFoundException(e.message, e)
+//        }
+//
+//    }
 
-    /**
-     * Returns the File object by id or throws an appropriate exception.
-     */
-    private fun getFile(id: String?): File {
+//    /**
+//     * Converts an id to a File object. A simple and insecure implementation,
+//     * but good enough for now.
+//     */
+//    @Throws(IOException::class)
+//    private fun idToFile(id: String?): File {
+//        if (id == null || id.length == 0) {
+//            throw CmisInvalidArgumentException("Id is not valid!")
+//        }
+//
+//        return if (id == ROOT_ID) {
+//            rootDirectory
+//        } else File(rootDirectory, String(Base64.decode(id.toByteArray(charset("US-ASCII"))), Charsets.UTF_8).replace('/',
+//                File.separatorChar))
+//
+//    }
+
+
+    private fun getDocument(userId: String, file: String): Document {
+        val (bucket, key) = splitFileToBucketKey(file)
         try {
-            return idToFile(id)
-        } catch (e: Exception) {
-            throw CmisObjectNotFoundException(e.message, e)
-        }
-
-    }
-
-    /**
-     * Converts an id to a File object. A simple and insecure implementation,
-     * but good enough for now.
-     */
-    @Throws(IOException::class)
-    private fun idToFile(id: String?): File {
-        if (id == null || id.length == 0) {
-            throw CmisInvalidArgumentException("Id is not valid!")
-        }
-
-        return if (id == ROOT_ID) {
-            rootDirectory
-        } else File(rootDirectory, String(Base64.decode(id.toByteArray(charset("US-ASCII"))), Charsets.UTF_8).replace('/',
-                File.separatorChar))
-
-    }
-
-
-    fun String.toBase64Id() =  String(Base64.decode(this.toByteArray(charset("US-ASCII"))), Charsets.UTF_8)
-            .replace('/',File.separatorChar)
-
-    fun String.fromBase64Id()= Base64.encodeBytes(this.toByteArray(charset("UTF-8")))
-    data class LadonFile(val bucket: String, val key: String? = null, val isDirectory: Boolean = false)
-
-    private fun getChildFiles(userId: String, file: LadonFile): List<LadonFile> {
-        return if (file.bucket == ROOT_ID) {
-             ladonRepo.value.listBuckets(userId).map { LadonFile(it,isDirectory = true) }
-        }else{
-           ladonRepo.value.listDocuments(userId,file.bucket,null,null,"/",null)
-                   .map { LadonFile(it.bucket,it.key,it.isFolder) }
+            return ladonRepo.value.getDocument(userId, bucket, key).meta
+        } catch (e: DocumentNotFound) {
+            throw CmisObjectNotFoundException("Object not found!")
         }
     }
 
-
-    /**
-     * Returns the id of a File object or throws an appropriate exception.
-     */
-    private fun getId(file: File): String {
-        try {
-            return fileToId(file)
-        } catch (e: Exception) {
-            throw CmisRuntimeException(e.message, e)
-        }
-
+    private fun getDocumentContent(userId: String, file: String): InputStream {
+        val (bucket, key) = splitFileToBucketKey(file)
+        return ladonRepo.value.getDocument(userId, bucket, key).content
     }
 
-    /**
-     * Creates a File object from an id. A simple and insecure implementation,
-     * but good enough for now.
-     */
-    @Throws(IOException::class)
-    private fun fileToId(file: File?): String {
-        if (file == null) {
-            throw IllegalArgumentException("File is not valid!")
+    private fun getChildDocuments(userId: String, file: String): List<Document> {
+        return if (file == ROOT_ID || file == "/") {
+            ladonRepo.value.listBuckets(userId)
+                    .map { Document(it, "", "", true, 0, "", LocalDateTime.MIN, "", mapOf(), true) }
+        } else {
+            val (bucket, key) = splitFileToBucketKey(file)
+            ladonRepo.value.listDocuments(userId, bucket, key, null, "/", null)
         }
-
-        if (rootDirectory == file) {
-            return ROOT_ID
-        }
-
-        val path = getRepositoryPath(file)
-
-        return Base64.encodeBytes(path.toByteArray(charset("UTF-8")))
     }
 
-    private fun getRepositoryPath(file: File): String {
-        var path = file.absolutePath.substring(rootDirectory.absolutePath.length)
-                .replace(File.separatorChar, '/')
-        if (path.length == 0) {
-            path = "/"
-        } else if (path[0] != '/') {
-            path = "/$path"
-        }
-        return path
-    }
+    private fun Document.getParent(username: String) = getDocument(username, getParentPath())
+
+
+    private fun splitFileToBucketKey(file: String) =
+            file.substring(1).let { it.substringBefore("/") to it.substringAfter("/") }
+
+
+//    /**
+//     * Returns the id of a File object or throws an appropriate exception.
+//     */
+//    private fun getId(file: File): String {
+//        try {
+//            return fileToId(file)
+//        } catch (e: Exception) {
+//            throw CmisRuntimeException(e.message, e)
+//        }
+//
+//    }
+
+//    /**
+//     * Creates a File object from an id. A simple and insecure implementation,
+//     * but good enough for now.
+//     */
+//    @Throws(IOException::class)
+//    private fun fileToId(file: File?): String {
+//        if (file == null) {
+//            throw IllegalArgumentException("File is not valid!")
+//        }
+//
+//        if (rootDirectory == file) {
+//            return ROOT_ID
+//        }
+//
+//        val path = getRepositoryPath(file)
+//
+//        return Base64.encodeBytes(path.toByteArray(charset("UTF-8")))
+//    }
+//
+//    private fun getRepositoryPath(file: File): String {
+//        var path = file.absolutePath.substring(rootDirectory.absolutePath.length)
+//                .replace(File.separatorChar, '/')
+//        if (path.length == 0) {
+//            path = "/"
+//        } else if (path[0] != '/') {
+//            path = "/$path"
+//        }
+//        return path
+//    }
 
     private fun debug(msg: String) {
         if (LOG.isDebugEnabled) {
@@ -2053,13 +1992,25 @@ class LadonCmisRepository(
     companion object {
 
         private val LOG = LoggerFactory.getLogger(LadonCmisRepository::class.java)
-
-        private val ROOT_ID = "@root@"
-        private val SHADOW_EXT = ".cmis.xml"
-        private val SHADOW_FOLDER = "cmis.xml"
+        val ROOT_ID = "@root@"
+        val ROOT_DOCUMENT = Document(ROOT_ID, "", "", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
+//        private val SHADOW_EXT = ".cmis.xml"
+//        private val SHADOW_FOLDER = "cmis.xml"
 
         private val USER_UNKNOWN = "<unknown>"
 
         private val BUFFER_SIZE = 64 * 1024
     }
 }
+
+private fun Document.getId() = getAbsolutPath().toBase64Id()
+private fun Document.getParentId() = if (key.isEmpty()) LadonCmisRepository.ROOT_ID else getParentPath().toBase64Id()
+private fun Document.getName() = key.split("/").last()
+private fun Document.getAbsolutPath() = "/${bucket}/${key}"
+private fun Document.getParentPath() = getAbsolutPath().substringBeforeLast("/")
+
+
+fun String.toBase64Id() = String(Base64.decode(this.toByteArray(charset("US-ASCII"))), Charsets.UTF_8)
+        .replace('/', File.separatorChar)
+
+fun String.fromBase64Id() = Base64.encodeBytes(this.toByteArray(charset("UTF-8")))
