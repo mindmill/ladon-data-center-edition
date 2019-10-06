@@ -99,7 +99,7 @@ class LadonCmisRepository(
         capabilities.setAllVersionsSearchable(false)
         capabilities.setCapabilityJoin(CapabilityJoin.NONE)
         capabilities.setSupportsMultifiling(false)
-        capabilities.setSupportsUnfiling(false)
+        capabilities.setSupportsUnfiling(true)
         capabilities.setSupportsVersionSpecificFiling(false)
         capabilities.setIsPwcSearchable(false)
         capabilities.setIsPwcUpdatable(false)
@@ -262,33 +262,33 @@ class LadonCmisRepository(
         return typeManager.getTypeDefinition(context, typeId)
     }
 
-    /**
-     * Create* dispatch for AtomPub.
-     */
-    fun create(context: CallContext, properties: Properties, folderId: String, contentStream: ContentStream?,
-               versioningState: VersioningState?, objectInfos: ObjectInfoHandler): ObjectData {
-        debug("create")
-        val userReadOnly = checkUser(context, true)
-
-        val typeId = FileShareUtils.getObjectTypeId(properties)
-        val type = typeManager.getInternalTypeDefinition(typeId)
-                ?: throw CmisObjectNotFoundException("Type '$typeId' is unknown!")
-
-        var objectId: String? = null
-        if (type.baseTypeId == BaseTypeId.CMIS_DOCUMENT) {
-            objectId = createDocument(context, properties, folderId, contentStream, versioningState)
-        } else if (type.baseTypeId == BaseTypeId.CMIS_FOLDER) {
-            if (contentStream != null || versioningState != null) {
-                throw CmisInvalidArgumentException("Cannot create a folder with content or a versioning state!")
-            }
-
-            objectId = createFolder(context, properties, folderId)
-        } else {
-            throw CmisObjectNotFoundException("Cannot create object of type '$typeId'!")
-        }
-
-        return compileObjectData(context, getFile(objectId), null, false, false, userReadOnly, objectInfos)
-    }
+//    /**
+//     * Create* dispatch for AtomPub.
+//     */
+//    fun create(context: CallContext, properties: Properties, folderId: String, contentStream: ContentStream?,
+//               versioningState: VersioningState?, objectInfos: ObjectInfoHandler): ObjectData {
+//        debug("create")
+//        val userReadOnly = checkUser(context, true)
+//
+//        val typeId = FileShareUtils.getObjectTypeId(properties)
+//        val type = typeManager.getInternalTypeDefinition(typeId)
+//                ?: throw CmisObjectNotFoundException("Type '$typeId' is unknown!")
+//
+//        var objectId: String? = null
+//        if (type.baseTypeId == BaseTypeId.CMIS_DOCUMENT) {
+//            objectId = createDocument(context, properties, folderId, contentStream, versioningState)
+//        } else if (type.baseTypeId == BaseTypeId.CMIS_FOLDER) {
+//            if (contentStream != null || versioningState != null) {
+//                throw CmisInvalidArgumentException("Cannot create a folder with content or a versioning state!")
+//            }
+//
+//            objectId = createFolder(context, properties, folderId)
+//        } else {
+//            throw CmisObjectNotFoundException("Cannot create object of type '$typeId'!")
+//        }
+//
+//        return compileObjectData(context, getFile(objectId), null, false, false, userReadOnly, objectInfos)
+//    }
 
     /**
      * CMIS createDocument.
@@ -1233,7 +1233,10 @@ class LadonCmisRepository(
     /**
      * CMIS getFolderParent.
      */
-    fun getFolderParent(context: CallContext, folderId: String, filter: String, objectInfos: ObjectInfoHandler): ObjectData {
+    fun getFolderParent(context: CallContext,
+                        folderId: String,
+                        filter: String,
+                        objectInfos: ObjectInfoHandler): ObjectData {
         val parents = getObjectParents(context, folderId, filter, false, false, objectInfos)
 
         if (parents.isEmpty()) {
@@ -1246,8 +1249,12 @@ class LadonCmisRepository(
     /**
      * CMIS getObjectParents.
      */
-    fun getObjectParents(context: CallContext, objectId: String, filter: String,
-                         includeAllowableActions: Boolean?, includeRelativePathSegment: Boolean?, objectInfos: ObjectInfoHandler): List<ObjectParentData> {
+    fun getObjectParents(context: CallContext,
+                         objectId: String,
+                         filter: String,
+                         includeAllowableActions: Boolean?,
+                         includeRelativePathSegment: Boolean?,
+                         objectInfos: ObjectInfoHandler): List<ObjectParentData> {
         debug("getObjectParents")
         val userReadOnly = checkUser(context, false)
 
@@ -1932,7 +1939,7 @@ class LadonCmisRepository(
         }
         val roles = user.roles
         val readOnly = !roles.contains("write")
-
+        return true
         if (readOnly && writeRequired) {
             throw CmisPermissionDeniedException("No write permission!")
         }
@@ -1977,6 +1984,23 @@ class LadonCmisRepository(
                 File.separatorChar))
 
     }
+
+
+    fun String.toBase64Id() =  String(Base64.decode(this.toByteArray(charset("US-ASCII"))), Charsets.UTF_8)
+            .replace('/',File.separatorChar)
+
+    fun String.fromBase64Id()= Base64.encodeBytes(this.toByteArray(charset("UTF-8")))
+    data class LadonFile(val bucket: String, val key: String? = null, val isDirectory: Boolean = false)
+
+    private fun getChildFiles(userId: String, file: LadonFile): List<LadonFile> {
+        return if (file.bucket == ROOT_ID) {
+             ladonRepo.value.listBuckets(userId).map { LadonFile(it,isDirectory = true) }
+        }else{
+           ladonRepo.value.listDocuments(userId,file.bucket,null,null,"/",null)
+                   .map { LadonFile(it.bucket,it.key,it.isFolder) }
+        }
+    }
+
 
     /**
      * Returns the id of a File object or throws an appropriate exception.
