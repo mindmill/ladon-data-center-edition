@@ -30,7 +30,6 @@ import org.apache.chemistry.opencmis.commons.definitions.*
 import org.apache.chemistry.opencmis.commons.enums.*
 import org.apache.chemistry.opencmis.commons.exceptions.*
 import org.apache.chemistry.opencmis.commons.impl.Base64
-import org.apache.chemistry.opencmis.commons.impl.IOUtils
 import org.apache.chemistry.opencmis.commons.impl.MimeTypes
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.*
 import org.apache.chemistry.opencmis.commons.impl.server.ObjectInfoImpl
@@ -38,7 +37,9 @@ import org.apache.chemistry.opencmis.commons.server.CallContext
 import org.apache.chemistry.opencmis.commons.server.ObjectInfoHandler
 import org.apache.chemistry.opencmis.commons.spi.Holder
 import org.slf4j.LoggerFactory
-import java.io.*
+import java.io.File
+import java.io.IOException
+import java.io.InputStream
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.time.LocalDateTime
@@ -332,37 +333,29 @@ class LadonCmisRepository(
         }
 
         // get parent File
-        val parent = getFile(folderId)
-        if (!parent.isDirectory) {
+        val parent = getDocument(context.username, folderId.fromBase64Id())
+        if (!parent.isFolder) {
             throw CmisObjectNotFoundException("Parent is not a folder!")
         }
 
         // check the file
-        val newFile = File(parent, name!!)
-        if (newFile.exists()) {
+        val file = folderId.fromBase64Id() + "/" + name
+        if (documentExists(context.username, file)) {
             throw CmisNameConstraintViolationException("Document already exists!")
-        }
-
-        // create the file
-        try {
-            newFile.createNewFile()
-        } catch (e: IOException) {
-            throw CmisStorageException("Could not create file: " + e.message, e)
-        }
-
-        // write content, if available
-        if (contentStream != null && contentStream.stream != null) {
-            writeContent(newFile, contentStream.stream)
         }
 
         // set creation date
         addPropertyDateTime(props, typeId, null, PropertyIds.CREATION_DATE,
-                millisToCalendar(newFile.lastModified()))
+                millisToCalendar(System.currentTimeMillis()))
 
-        // write properties
-        writePropertiesFile(newFile, props)
+        // write content, if available
+        val newId = if (contentStream != null && contentStream.stream != null) {
+            putDocumentContent(context.username, file, contentStream, props)
+        } else {
+            putDocument(context.username, file, props)
+        }
 
-        return getId(newFile)
+        return newId
     }
 
     /**
@@ -379,23 +372,29 @@ class LadonCmisRepository(
         }
 
         // get parent File
-        val parent = getFile(folderId)
-        if (!parent.isDirectory) {
+        val parent = getDocument(context.username, folderId.fromBase64Id())
+        if (!parent.isFolder) {
             throw CmisObjectNotFoundException("Parent is not a folder!")
         }
 
+        // check the file
+        val sourceFile = sourceId.fromBase64Id()
+
+
         // get source File
-        val source = getFile(sourceId)
-        if (!source.isFile) {
+        val source = getDocument(context.username, sourceFile)
+        if (!source.isFolder) {
             throw CmisObjectNotFoundException("Source is not a document!")
         }
 
         // file name
-        var name = source.name
+        var name = source.getName()
+        val targetFile = folderId.fromBase64Id() + "/" + name
+
 
         // get properties
         val sourceProperties = PropertiesImpl()
-        readCustomProperties(source, sourceProperties, null, ObjectInfoImpl())
+        readCustomProperties(source, sourceProperties, null)
 
         // get the type id
         var typeId = getIdProperty(sourceProperties, PropertyIds.OBJECT_TYPE_ID)
@@ -461,46 +460,14 @@ class LadonCmisRepository(
         addPropertyString(newProperties, typeId, null, PropertyIds.LAST_MODIFIED_BY, context.username)
 
         // check the file
-        val newFile = File(parent, name)
-        if (newFile.exists()) {
+        if (documentExists(context.username, targetFile)) {
             throw CmisNameConstraintViolationException("Document already exists.")
         }
 
         // create the file
-        try {
-            newFile.createNewFile()
-        } catch (e: IOException) {
-            throw CmisStorageException("Could not create file: " + e.message, e)
-        }
-
-        // copy content
-        try {
-            writeContent(newFile, FileInputStream(source))
-        } catch (e: IOException) {
-            throw CmisStorageException("Could not roead or write content: " + e.message, e)
-        }
-
-        // write properties
-        writePropertiesFile(newFile, newProperties)
-
-        return getId(newFile)
+        return copyDocument(context.username, sourceFile, targetFile, newProperties)
     }
 
-    /**
-     * Writes the content to disc.
-     */
-    private fun writeContent(newFile: File, stream: InputStream) {
-        var out: OutputStream? = null
-        try {
-            out = FileOutputStream(newFile)
-            IOUtils.copy(stream, out, BUFFER_SIZE)
-        } catch (e: IOException) {
-            throw CmisStorageException("Could not write content: " + e.message, e)
-        } finally {
-            IOUtils.closeQuietly(out)
-            IOUtils.closeQuietly(stream)
-        }
-    }
 
     /**
      * CMIS createFolder.
@@ -509,48 +476,49 @@ class LadonCmisRepository(
         debug("createFolder")
         checkUser(context, true)
 
-        // check properties
-        if (properties == null || properties.properties == null) {
-            throw CmisInvalidArgumentException("Properties must be set!")
-        }
-
-        // check type
-        val typeId = getObjectTypeId(properties)
-        val type = typeManager.getInternalTypeDefinition(typeId)
-                ?: throw CmisObjectNotFoundException("Type '$typeId' is unknown!")
-        if (type.baseTypeId != BaseTypeId.CMIS_FOLDER) {
-            throw CmisInvalidArgumentException("Type must be a folder type!")
-        }
-
-        // compile the properties
-        val props = compileWriteProperties(typeId, context.username, context.username, properties)
-
-        // check the name
-        val name = getStringProperty(properties, PropertyIds.NAME)
-        if (!isValidName(name)) {
-            throw CmisNameConstraintViolationException("Name is not valid.")
-        }
-
-        // get parent File
-        val parent = getFile(folderId)
-        if (!parent.isDirectory) {
-            throw CmisObjectNotFoundException("Parent is not a folder!")
-        }
-
-        // create the folder
-        val newFolder = File(parent, name!!)
-        if (!newFolder.mkdir()) {
-            throw CmisStorageException("Could not create folder!")
-        }
-
-        // set creation date
-        addPropertyDateTime(props, typeId, null, PropertyIds.CREATION_DATE,
-                millisToCalendar(newFolder.lastModified()))
-
-        // write properties
-        writePropertiesFile(newFolder, props)
-
-        return getId(newFolder)
+//        // check properties
+//        if (properties == null || properties.properties == null) {
+//            throw CmisInvalidArgumentException("Properties must be set!")
+//        }
+//
+//        // check type
+//        val typeId = getObjectTypeId(properties)
+//        val type = typeManager.getInternalTypeDefinition(typeId)
+//                ?: throw CmisObjectNotFoundException("Type '$typeId' is unknown!")
+//        if (type.baseTypeId != BaseTypeId.CMIS_FOLDER) {
+//            throw CmisInvalidArgumentException("Type must be a folder type!")
+//        }
+//
+//        // compile the properties
+//        val props = compileWriteProperties(typeId, context.username, context.username, properties)
+//
+//        // check the name
+//        val name = getStringProperty(properties, PropertyIds.NAME)
+//        if (!isValidName(name)) {
+//            throw CmisNameConstraintViolationException("Name is not valid.")
+//        }
+//
+//        // get parent File
+//        val parent = getFile(folderId)
+//        if (!parent.isDirectory) {
+//            throw CmisObjectNotFoundException("Parent is not a folder!")
+//        }
+//
+//        // create the folder
+//        val newFolder = File(parent, name!!)
+//        if (!newFolder.mkdir()) {
+//            throw CmisStorageException("Could not create folder!")
+//        }
+//
+//        // set creation date
+//        addPropertyDateTime(props, typeId, null, PropertyIds.CREATION_DATE,
+//                millisToCalendar(newFolder.lastModified()))
+//
+//        // write properties
+//        writePropertiesFile(newFolder, props)
+//
+//        return getId(newFolder)
+        TODO()
     }
 
     /**
@@ -565,36 +533,37 @@ class LadonCmisRepository(
             throw CmisInvalidArgumentException("Id is not valid!")
         }
 
-        // get the file and parent
-        val file = getFile(objectId.value)
-        val parent = getFile(targetFolderId)
-
-        // build new path
-        val newFile = File(parent, file.name)
-        if (newFile.exists()) {
-            throw CmisStorageException("Object already exists!")
-        }
-
-        // move it
-        if (!file.renameTo(newFile)) {
-            throw CmisStorageException("Move failed!")
-        } else {
-            // set new id
-            objectId.value = getId(newFile)
-
-            // if it is a file, move properties file too
-            if (newFile.isFile) {
-                val propFile = getPropertiesFile(file)
-                if (propFile.exists()) {
-                    val newPropFile = File(parent, propFile.name)
-                    if (!propFile.renameTo(newPropFile)) {
-                        LOG.error("Could not rename properties file: {}", propFile.name)
-                    }
-                }
-            }
-        }
-
-        return compileObjectData(context, newFile, null, false, false, userReadOnly, objectInfos)
+//        // get the file and parent
+//        val file = getFile(objectId.value)
+//        val parent = getFile(targetFolderId)
+//
+//        // build new path
+//        val newFile = File(parent, file.name)
+//        if (newFile.exists()) {
+//            throw CmisStorageException("Object already exists!")
+//        }
+//
+//        // move it
+//        if (!file.renameTo(newFile)) {
+//            throw CmisStorageException("Move failed!")
+//        } else {
+//            // set new id
+//            objectId.value = getId(newFile)
+//
+//            // if it is a file, move properties file too
+//            if (newFile.isFile) {
+//                val propFile = getPropertiesFile(file)
+//                if (propFile.exists()) {
+//                    val newPropFile = File(parent, propFile.name)
+//                    if (!propFile.renameTo(newPropFile)) {
+//                        LOG.error("Could not rename properties file: {}", propFile.name)
+//                    }
+//                }
+//            }
+//        }
+//
+//        return compileObjectData(context, newFile, null, false, false, userReadOnly, objectInfos)
+        TODO()
     }
 
     /**
@@ -609,37 +578,38 @@ class LadonCmisRepository(
             throw CmisInvalidArgumentException("Id is not valid!")
         }
 
-        // get the file
-        val file = getFile(objectId.value)
-        if (!file.isFile) {
-            throw CmisStreamNotSupportedException("Not a file!")
-        }
-
-        // check overwrite
-        val owf = getBooleanParameter(overwriteFlag, true)
-        if (!owf && file.length() > 0) {
-            throw CmisContentAlreadyExistsException("Content already exists!")
-        }
-
-        var out: OutputStream? = null
-        var `in`: InputStream? = null
-        try {
-            out = FileOutputStream(file, append)
-
-            if (contentStream == null || contentStream.stream == null) {
-                // delete content
-                out.write(ByteArray(0))
-            } else {
-                // set content
-                `in` = contentStream.stream
-                IOUtils.copy(`in`!!, out, BUFFER_SIZE)
-            }
-        } catch (e: Exception) {
-            throw CmisStorageException("Could not write content: " + e.message, e)
-        } finally {
-            IOUtils.closeQuietly(out)
-            IOUtils.closeQuietly(`in`)
-        }
+//        // get the file
+//        val file = getFile(objectId.value)
+//        if (!file.isFile) {
+//            throw CmisStreamNotSupportedException("Not a file!")
+//        }
+//
+//        // check overwrite
+//        val owf = getBooleanParameter(overwriteFlag, true)
+//        if (!owf && file.length() > 0) {
+//            throw CmisContentAlreadyExistsException("Content already exists!")
+//        }
+//
+//        var out: OutputStream? = null
+//        var `in`: InputStream? = null
+//        try {
+//            out = FileOutputStream(file, append)
+//
+//            if (contentStream == null || contentStream.stream == null) {
+//                // delete content
+//                out.write(ByteArray(0))
+//            } else {
+//                // set content
+//                `in` = contentStream.stream
+//                IOUtils.copy(`in`!!, out, BUFFER_SIZE)
+//            }
+//        } catch (e: Exception) {
+//            throw CmisStorageException("Could not write content: " + e.message, e)
+//        } finally {
+//            IOUtils.closeQuietly(out)
+//            IOUtils.closeQuietly(`in`)
+//        }
+        TODO()
     }
 
     /**
@@ -649,22 +619,23 @@ class LadonCmisRepository(
         debug("deleteObject")
         checkUser(context, true)
 
-        // get the file or folder
-        val file = getFile(objectId)
-        if (!file.exists()) {
-            throw CmisObjectNotFoundException("Object not found!")
-        }
-
-        // check if it is a folder and if it is empty
-        if (!isFolderEmpty(file)) {
-            throw CmisConstraintException("Folder is not empty!")
-        }
-
-        // delete properties and actual file
-        getPropertiesFile(file).delete()
-        if (!file.delete()) {
-            throw CmisStorageException("Deletion failed!")
-        }
+//        // get the file or folder
+//        val file = getFile(objectId)
+//        if (!file.exists()) {
+//            throw CmisObjectNotFoundException("Object not found!")
+//        }
+//
+//        // check if it is a folder and if it is empty
+//        if (!isFolderEmpty(file)) {
+//            throw CmisConstraintException("Folder is not empty!")
+//        }
+//
+//        // delete properties and actual file
+//        getPropertiesFile(file).delete()
+//        if (!file.delete()) {
+//            throw CmisStorageException("Deletion failed!")
+//        }
+        TODO()
     }
 
     /**
@@ -676,54 +647,55 @@ class LadonCmisRepository(
 
         val cof = getBooleanParameter(continueOnFailure, false)
 
-        // get the file or folder
-        val file = getFile(folderId)
-
-        val result = FailedToDeleteDataImpl()
-        result.ids = ArrayList()
-
-        // if it is a folder, remove it recursively
-        if (file.isDirectory) {
-            deleteFolder(file, cof, result)
-        } else {
-            throw CmisConstraintException("Object is not a folder!")
-        }
-
-        return result
+//        // get the file or folder
+//        val file = getFile(folderId)
+//
+//        val result = FailedToDeleteDataImpl()
+//        result.ids = ArrayList()
+//
+//        // if it is a folder, remove it recursively
+//        if (file.isDirectory) {
+//            deleteFolder(file, cof, result)
+//        } else {
+//            throw CmisConstraintException("Object is not a folder!")
+//        }
+//
+//        return result
+        TODO()
     }
 
-    /**
-     * Removes a folder and its content.
-     */
-    private fun deleteFolder(folder: File, continueOnFailure: Boolean, ftd: FailedToDeleteDataImpl): Boolean {
-        var success = true
-
-        for (file in folder.listFiles()!!) {
-            if (file.isDirectory) {
-                if (!deleteFolder(file, continueOnFailure, ftd)) {
-                    if (!continueOnFailure) {
-                        return false
-                    }
-                    success = false
-                }
-            } else {
-                if (!file.delete()) {
-                    ftd.ids.add(getId(file))
-                    if (!continueOnFailure) {
-                        return false
-                    }
-                    success = false
-                }
-            }
-        }
-
-        if (!folder.delete()) {
-            ftd.ids.add(getId(folder))
-            success = false
-        }
-
-        return success
-    }
+//    /**
+//     * Removes a folder and its content.
+//     */
+//    private fun deleteFolder(folder: File, continueOnFailure: Boolean, ftd: FailedToDeleteDataImpl): Boolean {
+//        var success = true
+//
+//        for (file in folder.listFiles()!!) {
+//            if (file.isDirectory) {
+//                if (!deleteFolder(file, continueOnFailure, ftd)) {
+//                    if (!continueOnFailure) {
+//                        return false
+//                    }
+//                    success = false
+//                }
+//            } else {
+//                if (!file.delete()) {
+//                    ftd.ids.add(getId(file))
+//                    if (!continueOnFailure) {
+//                        return false
+//                    }
+//                    success = false
+//                }
+//            }
+//        }
+//
+//        if (!folder.delete()) {
+//            ftd.ids.add(getId(folder))
+//            success = false
+//        }
+//
+//        return success
+//    }
 
     /**
      * CMIS updateProperties.
@@ -738,7 +710,7 @@ class LadonCmisRepository(
         }
 
         // get the file or folder
-        val document = getDocument(context.username,objectId.value.fromBase64Id())
+        val document = getDocument(context.username, objectId.value.fromBase64Id())
 
         // get and check the new name
         val newName = getStringProperty(properties, PropertyIds.NAME)
@@ -774,34 +746,34 @@ class LadonCmisRepository(
                 properties)
 
         // write properties
-        writePropertiesFile(file, props)
-
-        // rename file or folder if necessary
-        var newFile = file
-        if (isRename) {
-            val parent = file.parentFile
-            val propFile = getPropertiesFile(file)
-            newFile = File(parent, newName!!)
-            if (!file.renameTo(newFile)) {
-                // if something went wrong, throw an exception
-                throw CmisUpdateConflictException("Could not rename object!")
-            } else {
-                // set new id
-                objectId.value = getId(newFile)
-
-                // if it is a file, rename properties file too
-                if (newFile.isFile) {
-                    if (propFile.exists()) {
-                        val newPropFile = File(parent, newName + SHADOW_EXT)
-                        if (!propFile.renameTo(newPropFile)) {
-                            LOG.error("Could not rename properties file: {}", propFile.name)
-                        }
-                    }
-                }
-            }
-        }
-
-        return compileObjectData(context, newFile, null, false, false, userReadOnly, objectInfos)
+//        writePropertiesFile(file, props)
+//
+//        // rename file or folder if necessary
+//        var newFile = file
+//        if (isRename) {
+//            val parent = file.parentFile
+//            val propFile = getPropertiesFile(file)
+//            newFile = File(parent, newName!!)
+//            if (!file.renameTo(newFile)) {
+//                // if something went wrong, throw an exception
+//                throw CmisUpdateConflictException("Could not rename object!")
+//            } else {
+//                // set new id
+//                objectId.value = getId(newFile)
+//
+//                // if it is a file, rename properties file too
+//                if (newFile.isFile) {
+//                    if (propFile.exists()) {
+//                        val newPropFile = File(parent, newName + SHADOW_EXT)
+//                        if (!propFile.renameTo(newPropFile)) {
+//                            LOG.error("Could not rename properties file: {}", propFile.name)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return compileObjectData(context, newFile, null, false, false, userReadOnly, objectInfos)
+        TODO()
     }
 
     /**
@@ -921,7 +893,7 @@ class LadonCmisRepository(
         }
 
         // get the file or folder
-        val document =getDocument(context.username,objectId!!.fromBase64Id())
+        val document = getDocument(context.username, objectId!!.fromBase64Id())
 
         // set defaults if values not set
         val iaa = getBooleanParameter(includeAllowableActions, false)
@@ -1910,6 +1882,27 @@ class LadonCmisRepository(
 //    }
 
 
+    private fun documentExists(userId: String, file: String): Boolean {
+        return try {
+            getDocument(userId, file)
+            true
+        } catch (e: DocumentNotFound) {
+            false
+        }
+    }
+
+    private fun putDocumentContent(userId: String, file: String, content: ContentStream, props: PropertiesImpl): String {
+        TODO()
+    }
+
+    private fun putDocument(userId: String, file: String, props: PropertiesImpl): String {
+        TODO()
+    }
+
+    private fun copyDocument(username: String, sourceFile: String, targetFile: String, newProperties: PropertiesImpl): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     private fun getDocument(userId: String, file: String): Document {
         val (bucket, key) = splitFileToBucketKey(file)
         try {
@@ -1918,6 +1911,7 @@ class LadonCmisRepository(
             throw CmisObjectNotFoundException("Object not found!")
         }
     }
+
 
     private fun getDocumentContent(userId: String, file: String): InputStream {
         val (bucket, key) = splitFileToBucketKey(file)
@@ -1992,7 +1986,7 @@ class LadonCmisRepository(
     companion object {
 
         private val LOG = LoggerFactory.getLogger(LadonCmisRepository::class.java)
-        val ROOT_ID = "@root@"
+
         val ROOT_DOCUMENT = Document(ROOT_ID, "", "", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
 //        private val SHADOW_EXT = ".cmis.xml"
 //        private val SHADOW_FOLDER = "cmis.xml"
@@ -2004,13 +1998,13 @@ class LadonCmisRepository(
 }
 
 private fun Document.getId() = getAbsolutPath().toBase64Id()
-private fun Document.getParentId() = if (key.isEmpty()) LadonCmisRepository.ROOT_ID else getParentPath().toBase64Id()
+private fun Document.getParentId() = if (key.isEmpty()) ROOT_ID else getParentPath().toBase64Id()
 private fun Document.getName() = key.split("/").last()
 private fun Document.getAbsolutPath() = "/${bucket}/${key}"
 private fun Document.getParentPath() = getAbsolutPath().substringBeforeLast("/")
 
-
+val ROOT_ID = "#root"
 fun String.toBase64Id() = String(Base64.decode(this.toByteArray(charset("US-ASCII"))), Charsets.UTF_8)
         .replace('/', File.separatorChar)
 
-fun String.fromBase64Id() = Base64.encodeBytes(this.toByteArray(charset("UTF-8")))
+fun String.fromBase64Id() = if (this == ROOT_ID) ROOT_ID else Base64.encodeBytes(this.toByteArray(charset("UTF-8")))

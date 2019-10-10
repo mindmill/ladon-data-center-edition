@@ -18,6 +18,7 @@
  */
 package de.mc.ladon.cmis;
 
+import kotlin.NotImplementedError;
 import org.apache.chemistry.opencmis.commons.data.*;
 import org.apache.chemistry.opencmis.commons.definitions.TypeDefinition;
 import org.apache.chemistry.opencmis.commons.definitions.TypeDefinitionContainer;
@@ -175,10 +176,11 @@ public class LadonCmisService extends AbstractCmisService implements CallContext
     @Override
     public String create(String repositoryId, Properties properties, String folderId, ContentStream contentStream,
                          VersioningState versioningState, List<String> policies, ExtensionsData extension) {
-        ObjectData object = getRepository().create(getCallContext(), properties, folderId, contentStream,
-                versioningState, this);
-
-        return object.getId();
+//        ObjectData object = getRepository().create(getCallContext(), properties, folderId, contentStream,
+//                versioningState, this);
+//
+//        return object.getId();
+        throw new NotImplementedError();
     }
 
     @Override
