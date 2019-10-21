@@ -1212,7 +1212,7 @@ class LadonCmisRepository(
         val iaa = includeAllowableActions ?: false
         val irps = includeRelativePathSegment ?: false
         // don't climb above the root folder
-        if (objectId == ROOT_ID) {
+        if (objectId == ROOT_PATH.toBase64Id()) {
             return emptyList()
         }
         // get the file or folder
@@ -1904,7 +1904,9 @@ class LadonCmisRepository(
     }
 
     private fun getDocument(userId: String, file: String): Document {
+        if (file.isRootId()) return Document(ROOT_ID, ROOT_ID, "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
         val (bucket, key) = splitFileToBucketKey(file)
+        if(bucket == ROOT_ID)return Document(key, "", "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
         try {
             return ladonRepo.value.getDocument(userId, bucket, key).meta
         } catch (e: DocumentNotFound) {
@@ -1919,9 +1921,9 @@ class LadonCmisRepository(
     }
 
     private fun getChildDocuments(userId: String, file: String): List<Document> {
-        return if (file == ROOT_ID || file == "/") {
+        return if (file.isRootId()) {
             ladonRepo.value.listBuckets(userId)
-                    .map { Document(it, "", "", true, 0, "", LocalDateTime.MIN, "", mapOf(), true) }
+                    .map { Document(ROOT_ID, it, "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true) }
         } else {
             val (bucket, key) = splitFileToBucketKey(file)
             ladonRepo.value.listDocuments(userId, bucket, key, null, "/", null)
@@ -1932,8 +1934,11 @@ class LadonCmisRepository(
 
 
     private fun splitFileToBucketKey(file: String) =
-            file.substring(1).let { it.substringBefore("/") to it.substringAfter("/") }
+            if (file.isRootId()) ROOT_ID to ""
+            else
+                file.substring(1).let { it.substringBefore("/") to it.substringAfter("/") }
 
+    private fun String.isRootId() = this == "/" || this == ROOT_ID || this.replace("/", "") == ROOT_ID
 
 //    /**
 //     * Returns the id of a File object or throws an appropriate exception.
@@ -2000,11 +2005,17 @@ class LadonCmisRepository(
 private fun Document.getId() = getAbsolutPath().toBase64Id()
 private fun Document.getParentId() = if (key.isEmpty()) ROOT_ID else getParentPath().toBase64Id()
 private fun Document.getName() = key.split("/").last()
-private fun Document.getAbsolutPath() = "/${bucket}/${key}"
+private fun Document.getAbsolutPath() = if(this.isRoot()) ROOT_PATH else "/${bucket}/${key}"
+
+private fun Document.isRoot(): Boolean {
+    return bucket == ROOT_ID && key == ROOT_ID
+}
+
 private fun Document.getParentPath() = getAbsolutPath().substringBeforeLast("/")
 
 val ROOT_ID = "#root"
-fun String.toBase64Id() = String(Base64.decode(this.toByteArray(charset("US-ASCII"))), Charsets.UTF_8)
-        .replace('/', File.separatorChar)
+val ROOT_PATH = "/"
+fun String.fromBase64Id() = if (this == ROOT_ID) ROOT_ID else String(Base64.decode(this.toByteArray(charset("UTF-8"))), Charsets.UTF_8)
+//.replace('/', File.separatorChar)
 
-fun String.fromBase64Id() = if (this == ROOT_ID) ROOT_ID else Base64.encodeBytes(this.toByteArray(charset("UTF-8")))
+fun String.toBase64Id() = Base64.encodeBytes(this.toByteArray(charset("UTF-8")))
