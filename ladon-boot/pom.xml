@@ -77,11 +77,11 @@
             <artifactId>plugin-runtime</artifactId>
             <version>${ladon.version}</version>
         </dependency>
-        <dependency>
-            <groupId>de.mc.ladon</groupId>
-            <artifactId>ladon-rest</artifactId>
-            <version>${ladon.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>de.mc.ladon</groupId>-->
+<!--            <artifactId>ladon-rest</artifactId>-->
+<!--            <version>${ladon.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>de.mc.ladon</groupId>
             <artifactId>ladon-cmis</artifactId>
