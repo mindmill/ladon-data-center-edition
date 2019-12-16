@@ -14,6 +14,7 @@ open class DatabaseConfigImpl(
         override var replicationfactor: String? = null,
         override var user: String? = null,
         override var password: String? = null,
+        override var encryptionPassword: String? = null,
         override var ownIp: String? = null,
         override var port: Int? = null,
         override var nodes: List<String>? = null) : DatabaseConfig

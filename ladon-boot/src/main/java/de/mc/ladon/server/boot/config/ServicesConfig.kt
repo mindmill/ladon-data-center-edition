@@ -15,7 +15,7 @@ open class ServicesConfig {
 
     @Bean
     open fun encryptor(config : DatabaseConfigImpl): Encryptor {
-        return LadonEncryptor(config.password!!)
+        return LadonEncryptor(config.encryptionPassword!!)
     }
 
 }

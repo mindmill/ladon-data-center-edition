@@ -15,6 +15,8 @@ interface DatabaseConfig {
 
     var password: String?
 
+    var encryptionPassword: String?
+
     var port: Int?
 
     var ownIp : String?

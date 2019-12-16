@@ -1,68 +1,35 @@
 package de.mc.ladon.server.persistence.cassandra.bootstrap
 
 import org.slf4j.LoggerFactory
-import java.io.ByteArrayInputStream
-import java.io.IOException
-import java.net.DatagramPacket
-import java.net.InetAddress
-import java.net.MulticastSocket
-import java.net.URL
 import java.util.*
 
 
 class LadonConfigClient {
 
     private val LOG = LoggerFactory.getLogger(javaClass)
-    private val localSetup = System.getProperty("localsetup") != null
 
     fun getConfig(): LadonConfig {
-        val buf = "LADON-DE-1".toByteArray()
-
-        val socket = MulticastSocket(4446)
-        val group = InetAddress.getByName("230.0.0.0")
-        socket.joinGroup(group)
-        val packet = DatagramPacket(buf, buf.size, group, 4446)
-        LOG.info("Sending Config Server lookup packet...")
-        socket.send(packet)
-        LOG.info("Waiting for Config Server to respond...")
-        var port = 8888
-        while (!localSetup) {
-            socket.receive(packet)
-            val received = String(packet.data, 0, packet.length)
-            try {
-                port = received.toInt()
-                break
-            } catch (e: NumberFormatException) {
-                LOG.info("skip multicast message : $received")
-            }
-        }
-        val configServerAddress = if (localSetup) {
-            return LadonConfig(Properties().apply {
+        return if (System.console() == null) {
+            LadonConfig(Properties().apply {
                 put("self", "127.0.0.1")
                 put("127.0.0.1", "datacenter1:RC1")
             })
         } else {
-            packet.address.hostAddress
+            val hostName = System.console().readLine("Listen address (localhost) ").defaultIfEmpty("localhost")
+            val datacenter = System.console().readLine("Datacenter (datacenter1) ").defaultIfEmpty("datacenter1")
+            val rack = System.console().readLine("Rack (RC1) ").defaultIfEmpty("RC1")
+            val nodes = System.console().readLine("Other Nodes, format: hostname:datacenter:rack,hostname2:datacenter2:rack2 ")
+                    .split(",").filterNot { it.isEmpty() }.map { it.split(":") }
+            LadonConfig(Properties().apply {
+                put("self", hostName)
+                put(hostName, "$datacenter:$rack")
+                nodes.forEach { put(it[0], "${it[1]}:${it[2]}") }
+            })
         }
-        LOG.info("Located Config Server at $configServerAddress:$port")
-        try {
-            val configText = URL("http://$configServerAddress:$port/").readText()
-            LOG.info("Read config success")
-            return LadonConfig(Properties().apply { loadFromXML(ByteArrayInputStream(configText.toByteArray())) })
-        } catch (e: IOException) {
-            if (e.message?.contains("409") == true) {
-                LOG.error("Configuration not valid, the nodes address could not be found at the config server")
-            } else {
-                LOG.error("Configuration could not be found, make sure the config server is running and no firewall active on port $port")
-            }
-            throw e
-        }
-
-
     }
-
 }
 
+fun String.defaultIfEmpty(default: String) = if (isNullOrEmpty()) default else this
 data class LadonConfig(val raw: Properties) {
 
     val nodes = getSeeds().map { it to raw.getProperty(it) }
