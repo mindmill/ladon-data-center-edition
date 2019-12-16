@@ -16,3 +16,4 @@ hs_err_pid*
 
 
 !/dist/ladon_de_2.0.0.jar
+/logs/
