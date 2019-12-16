@@ -73,7 +73,7 @@ public class DatabaseImpl implements Database {
             cb = cb.withPort(port);
         }
         String username = config.getUser();
-        cb = cb.withCredentials(username, "cassandra");
+        cb = cb.withCredentials(username, config.getPassword());
         cluster = cb.build();
         Metadata metadata = cluster.getMetadata();
         LOGGER.info("Connected to cluster:  " + metadata.getClusterName());
