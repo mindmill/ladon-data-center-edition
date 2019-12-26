@@ -1239,7 +1239,7 @@ class LadonCmisRepository(
      * CMIS getObjectByPath.
      */
     fun getObjectByPath(context: CallContext, folderPath: String?, filter: String,
-                        includeAllowableActions: Boolean, includeACL: Boolean, objectInfos: ObjectInfoHandler): ObjectData {
+                        includeAllowableActions: Boolean, includeACL: Boolean, objectInfos: ObjectInfoHandler?): ObjectData {
         debug("getObjectByPath")
         val userReadOnly = checkUser(context, false)
 
@@ -1831,7 +1831,7 @@ class LadonCmisRepository(
         val user = try {
             userManager.value.loadUserByUsername(context.username)
         } catch (e: Exception) {
-            throw CmisPermissionDeniedException("Unknown user!")
+            throw CmisPermissionDeniedException("Unknown user!",e)
         }
         val roles = user.roles
         val readOnly = !roles.contains("write")
