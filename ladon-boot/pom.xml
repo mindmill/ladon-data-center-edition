@@ -99,7 +99,12 @@
             <version>1.10.46</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>1.9.3</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

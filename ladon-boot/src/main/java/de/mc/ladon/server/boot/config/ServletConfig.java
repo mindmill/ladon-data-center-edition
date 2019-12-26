@@ -57,7 +57,8 @@ public class ServletConfig {
     @Bean
     public ServletRegistrationBean s3ServletRegistrationBean(LadonS3Config config) {
         S3Servlet s3Servlet = new S3Servlet(config.getServletthreads());
-        //s3Servlet.setSecurityEnabled(false);
+        s3Servlet.setSecurityEnabled(config.getDisableSecurity() == null
+                || !config.getDisableSecurity());
         s3Servlet.setRequestTimeout(config.getRequesttimeout());
         s3Servlet.setRepository(s3r);
         ServletRegistrationBean registration = new ServletRegistrationBean(
