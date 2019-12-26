@@ -2,27 +2,19 @@ package de.mc.ladon.cmis
 
 import de.mc.ladon.server.core.api.LadonRepository
 import de.mc.ladon.server.core.api.persistence.services.LadonUserDetailsManager
-import de.mc.ladon.server.core.api.request.LadonCallContext
 import de.mc.ladon.server.core.persistence.entities.impl.LadonUser
-import de.mc.ladon.server.core.persistence.services.impl.LadonUserDetailsManagerImpl
-import de.mc.ladon.server.core.request.impl.SystemCallContext
-import de.mc.ladon.server.persistence.cassandra.dao.impl.UserRoleDAOImpl
 import io.mockk.every
 import io.mockk.mockk
 import org.apache.chemistry.opencmis.commons.enums.CmisVersion
 import org.apache.chemistry.opencmis.commons.server.CallContext
-import org.apache.chemistry.opencmis.server.impl.browser.BrowserCallContextImpl
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
-import org.springframework.context.ApplicationContext
-import org.springframework.web.context.support.XmlWebApplicationContext
 
 class LadonCmisRepositoryTest {
 
 
-    val repo = LadonCmisRepository("testrepo","/", LadonCmisTypeManager())
+    val repo = LadonCmisRepository("testrepo", "/", LadonCmisTypeManager())
     val ladonRpository = mockk<LadonRepository>()
     val cc = mockk<CallContext>()
 
@@ -35,7 +27,7 @@ class LadonCmisRepositoryTest {
         every { cc.username } returns "test"
         every { cc.cmisVersion } returns CmisVersion.CMIS_1_1
         every { cc.isObjectInfoRequired } returns false
-        }
+    }
 
 
     @Test
