@@ -1992,7 +1992,7 @@ class LadonCmisRepository(
 
         private val LOG = LoggerFactory.getLogger(LadonCmisRepository::class.java)
 
-        val ROOT_DOCUMENT = Document(ROOT_ID, "", "", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
+        val ROOT_DOCUMENT = Document(ROOT_ID, ROOT_ID, "", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
 //        private val SHADOW_EXT = ".cmis.xml"
 //        private val SHADOW_FOLDER = "cmis.xml"
 
@@ -2004,7 +2004,7 @@ class LadonCmisRepository(
 
 private fun Document.getId() = getAbsolutPath().toBase64Id()
 private fun Document.getParentId() = if (key.isEmpty()) ROOT_ID else getParentPath().toBase64Id()
-private fun Document.getName() = key.split("/").last()
+private fun Document.getName() = if(this.isRoot()) ROOT_ID else  key.split("/").last()
 private fun Document.getAbsolutPath() = if(this.isRoot()) ROOT_PATH else "/${bucket}/${key}"
 
 private fun Document.isRoot(): Boolean {
