@@ -8,7 +8,6 @@ import io.mockk.mockk
 import org.apache.chemistry.opencmis.commons.data.ObjectData
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId
 import org.apache.chemistry.opencmis.commons.enums.CmisVersion
-import org.apache.chemistry.opencmis.commons.impl.jaxb.CmisProperty
 import org.apache.chemistry.opencmis.commons.server.CallContext
 import org.junit.Assert.assertNotNull
 import org.junit.Before
@@ -32,7 +31,9 @@ class LadonCmisRepositoryTest {
         every { cc.isObjectInfoRequired } returns false
     }
 
-fun ObjectData.print() = println("${if (baseTypeId == BaseTypeId.CMIS_FOLDER)"Folder" else "Document"} id: $id name: ${properties.properties["cmis:name"]?.values?.firstOrNull()}")
+fun ObjectData.print() = println("${if (baseTypeId == BaseTypeId.CMIS_FOLDER)"Folder" else "Document"} " +
+        "id: $id name: ${properties.properties["cmis:name"]?.values?.firstOrNull()}")
+    
     @Test
     fun getRootDirectory() {
         val objectByPath = repo.getObjectByPath(cc, "/", "", false, false, null)

@@ -124,7 +124,7 @@ data class Document(
         val userMetadata: Map<String, String>,
         val isFolder: Boolean = false)
 
-data class ContentDocument(val meta: Document,
+data class ContentDocument (val meta: Document,
                            val content: InputStream)
 
 sealed class LadonRepositoryException(override val message: String, val status: Int) : Exception(message)
