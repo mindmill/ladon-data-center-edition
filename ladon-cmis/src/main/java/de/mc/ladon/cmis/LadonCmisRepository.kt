@@ -1831,7 +1831,7 @@ class LadonCmisRepository(
         val user = try {
             userManager.value.loadUserByUsername(context.username)
         } catch (e: Exception) {
-            throw CmisPermissionDeniedException("Unknown user!",e)
+            throw CmisPermissionDeniedException("Unknown user!", e)
         }
         val roles = user.roles
         val readOnly = !roles.contains("write")
@@ -1906,9 +1906,13 @@ class LadonCmisRepository(
     private fun getDocument(userId: String, file: String): Document {
         if (file.isRootId()) return Document(ROOT_ID, ROOT_ID, "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
         val (bucket, key) = splitFileToBucketKey(file)
-        if(bucket == ROOT_ID)return Document(key, "", "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
-        try {
-            return ladonRepo.value.getDocument(userId, bucket, key).meta
+        if (bucket == ROOT_ID) return Document(key, "", "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
+       return  try {
+            when{
+                key == "" -> Document(bucket, "", "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
+                file.isFolderPath() -> Document(bucket, key, "1", true, 0, "", LocalDateTime.MIN, "", mapOf(), true)
+                else -> ladonRepo.value.getDocument(userId, bucket, key).meta
+            }
         } catch (e: DocumentNotFound) {
             throw CmisObjectNotFoundException("Object not found!")
         }
@@ -1936,9 +1940,10 @@ class LadonCmisRepository(
     private fun splitFileToBucketKey(file: String) =
             if (file.isRootId()) ROOT_ID to ""
             else
-                file.substring(1).let { it.substringBefore("/") to it.substringAfter("/") }
+                file.substring(1).let { if ("/" in it) it.substringBefore("/") to it.substringAfter("/") else it to "" }
 
     private fun String.isRootId() = this == "/" || this == ROOT_ID || this.replace("/", "") == ROOT_ID
+    private fun String.isFolderPath() = this.endsWith("/")
 
 //    /**
 //     * Returns the id of a File object or throws an appropriate exception.
@@ -2004,8 +2009,8 @@ class LadonCmisRepository(
 
 private fun Document.getId() = getAbsolutPath().toBase64Id()
 private fun Document.getParentId() = if (key.isEmpty()) ROOT_ID else getParentPath().toBase64Id()
-private fun Document.getName() = if(this.isRoot()) ROOT_ID else  key.split("/").last()
-private fun Document.getAbsolutPath() = if(this.isRoot()) ROOT_PATH else "/${bucket}/${key}"
+private fun Document.getName() = if (this.isRoot()) ROOT_ID else key.split("/").last()
+private fun Document.getAbsolutPath() = if (this.isRoot()) ROOT_PATH else "/${bucket}/${key}"
 
 private fun Document.isRoot(): Boolean {
     return bucket == ROOT_ID && key == ROOT_ID
