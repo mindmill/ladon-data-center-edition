@@ -1,0 +1,426 @@
+openapi: 3.0.1
+info:
+  title: Sakkex Document Storage
+  description: Sakkex Document Storage API
+  version: 0.0.1
+servers:
+  - url: /
+tags:
+  - name: Documents
+    description: storage api for documents
+  - name: Signatures
+    description: storage api for document signatures
+paths:
+  /api/{user}/document:
+    get:
+      tags:
+        - Documents
+      summary: list all documents of the authenticated user
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: count
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+  /api/{user}/document/{key}:
+    get:
+      tags:
+        - Documents
+      summary: get the selected document
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content: {}
+    put:
+      tags:
+        - Documents
+      summary: put a new document
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    delete:
+      tags:
+        - Documents
+      summary: delete the selected document
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response18194'
+  /api/{user}/document/{key}/version:
+    get:
+      tags:
+        - Documents
+      summary: get the version metadata for the selected document
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content: {}
+  /api/{user}/document/{key}/version/{version}:
+    get:
+      tags:
+        - Documents
+      summary: get a specific version of the document
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content: {}
+    delete:
+      tags:
+        - Documents
+      summary: delete the specific version of the document
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response18195'
+  /api/{user}/document/{key}/multipart:
+    put:
+      tags:
+        - Documents
+      summary: put a new document
+      parameters:
+        - name: encoding
+          in: header
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  description: ""
+                  format: binary
+        required: true
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+  /api/{user}/document/{key}/version/{version}/signature:
+    get:
+      tags:
+        - Signatures
+      summary: get all signatures of the selected document
+      parameters:
+        - name: encoding
+          in: header
+          required: true
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: x
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: y
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response18196'
+    post:
+      tags:
+        - Signatures
+      summary: get all signatures of the selected document
+      parameters:
+        - name: encoding
+          in: header
+          required: true
+          schema:
+            type: string
+            enum:
+              - base64
+              - plain
+        - name: x
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: y
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response18197'
+components:
+  schemas:
+    Document:
+      required:
+        - created
+        - key
+        - user
+      type: object
+      properties:
+        key:
+          type: string
+        user:
+          type: string
+        created:
+          type: string
+        version:
+          type: string
+        latest:
+          type: boolean
+        description:
+          type: string
+        size:
+          type: integer
+          format: int64
+        content-type:
+          type: string
+    Response18194:
+      required:
+        - success
+      type: object
+      properties:
+        success:
+          type: boolean
+    Response18195:
+      required:
+        - success
+      type: object
+      properties:
+        success:
+          type: boolean
+    Response18196:
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          type: integer
+          format: int64
+    Response18197:
+      required:
+        - result
+      type: object
+      properties:
+        result:
+          type: integer
+          format: int64
+  securitySchemes:
+    login:
+      type: apiKey
+      name: Authorization
+      in: header
