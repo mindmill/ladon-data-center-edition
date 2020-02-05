@@ -74,6 +74,11 @@
         </dependency>
         <dependency>
             <groupId>de.mc.ladon</groupId>
+            <artifactId>rest</artifactId>
+            <version>${ladon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.mc.ladon</groupId>
             <artifactId>plugin-runtime</artifactId>
             <version>${ladon.version}</version>
         </dependency>
