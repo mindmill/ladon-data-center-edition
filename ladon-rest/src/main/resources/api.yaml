@@ -1,426 +1,261 @@
-openapi: 3.0.1
-info:
-  title: Sakkex Document Storage
-  description: Sakkex Document Storage API
-  version: 0.0.1
-servers:
-  - url: /
 tags:
-  - name: Documents
-    description: storage api for documents
-  - name: Signatures
-    description: storage api for document signatures
+  - name: Data
+    description: binary api for documents
+  - name: Meta
+    description: metadata api for documents
+securityDefinitions:
+  login:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  Document:
+    type: object
+    properties:
+      key:
+        type: string
+      user:
+        type: string
+      created:
+        type: string
+      version:
+        type: string
+      latest:
+        type: boolean
+      description:
+        type: string
+      size:
+        type: integer
+        format: int64
+      content-type:
+        type: string
+    additionalProperties: false
+    required:
+      - key
+      - user
+      - created
+  Response18209:
+    type: object
+    properties:
+      success:
+        type: boolean
+    additionalProperties: false
+    required:
+      - success
+  Response18210:
+    type: object
+    properties:
+      success:
+        type: boolean
+    additionalProperties: false
+    required:
+      - success
+  Response18211:
+    type: object
+    properties:
+      result:
+        type: integer
+        format: int64
+    additionalProperties: false
+    required:
+      - result
+  Response18212:
+    type: object
+    properties:
+      result:
+        type: integer
+        format: int64
+    additionalProperties: false
+    required:
+      - result
+produces:
+  - application/json
 paths:
-  /api/{user}/document:
+  '/services/rest/v1/meta/{bucket}':
     get:
       tags:
-        - Documents
+        - Meta
+      parameters:
+        - in: query
+          name: count
+          description: ''
+          required: false
+          type: integer
+          format: int64
+        - in: query
+          name: page
+          description: ''
+          required: false
+          type: integer
+          format: int64
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Document'
+          description: ''
       summary: list all documents of the authenticated user
-      parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: count
-          in: query
-          schema:
-            type: integer
-            format: int64
-        - name: page
-          in: query
-          schema:
-            type: integer
-            format: int64
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Document'
-  /api/{user}/document/{key}:
+  '/services/rest/v1/data/{bucket}/{key}':
     get:
       tags:
-        - Documents
+        - Data
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+        - in: query
+          name: version
+          description: ''
+          required: false
+          type: string
       summary: get the selected document
-      parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         default:
-          description: ""
-          content: {}
-    put:
-      tags:
-        - Documents
-      summary: put a new document
-      parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Document'
+          description: ''
     delete:
       tags:
-        - Documents
+        - Data
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+        - in: path
+          name: key
+          description: ''
+          required: true
+          type: string
+        - in: query
+          name: version
+          description: ''
+          required: false
+          type: string
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Response18209'
+          description: ''
       summary: delete the selected document
-      parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Response18194'
-  /api/{user}/document/{key}/version:
-    get:
-      tags:
-        - Documents
-      summary: get the version metadata for the selected document
-      parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        default:
-          description: ""
-          content: {}
-  /api/{user}/document/{key}/version/{version}:
-    get:
-      tags:
-        - Documents
-      summary: get a specific version of the document
-      parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: version
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        default:
-          description: ""
-          content: {}
-    delete:
-      tags:
-        - Documents
-      summary: delete the specific version of the document
-      parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: version
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Response18195'
-  /api/{user}/document/{key}/multipart:
     put:
       tags:
-        - Documents
-      summary: put a new document
+        - Data
       parameters:
-        - name: encoding
-          in: header
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: user
-          in: path
+        - in: path
+          name: bucket
+          description: ''
           required: true
-          schema:
-            type: string
-        - name: key
-          in: path
+          type: string
+        - in: path
+          name: key
+          description: ''
           required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              required:
-                - file
-              properties:
-                file:
-                  type: string
-                  description: ""
-                  format: binary
-        required: true
+          type: string
+        - in: query
+          name: version
+          description: ''
+          required: false
+          type: string
       responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Document'
-  /api/{user}/document/{key}/version/{version}/signature:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
+          description: ''
+      summary: put a new document
+  '/services/rest/v1/meta/{bucket}/{key}':
     get:
       tags:
-        - Signatures
-      summary: get all signatures of the selected document
+        - Meta
       parameters:
-        - name: encoding
-          in: header
+        - in: path
+          name: bucket
+          description: ''
           required: true
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: x
-          in: query
+          type: string
+        - in: path
+          name: key
+          description: ''
           required: true
-          schema:
-            type: integer
-            format: int64
-        - name: y
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: version
-          in: path
-          required: true
-          schema:
-            type: string
+          type: string
+        - in: query
+          name: versions
+          description: ''
+          required: false
+          type: boolean
+          default: false
+      summary: get the selected document
       responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Response18196'
-    post:
+        default:
+          description: ''
+    delete:
       tags:
-        - Signatures
-      summary: get all signatures of the selected document
+        - Meta
       parameters:
-        - name: encoding
-          in: header
+        - in: path
+          name: bucket
+          description: ''
           required: true
-          schema:
-            type: string
-            enum:
-              - base64
-              - plain
-        - name: x
-          in: query
+          type: string
+        - in: path
+          name: key
+          description: ''
           required: true
-          schema:
-            type: integer
-            format: int64
-        - name: y
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: user
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: key
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: version
-          in: path
-          required: true
-          schema:
-            type: string
+          type: string
+        - in: query
+          name: version
+          description: ''
+          required: false
+          type: string
       responses:
-        200:
-          description: ""
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Response18197'
-components:
-  schemas:
-    Document:
-      required:
-        - created
-        - key
-        - user
-      type: object
-      properties:
-        key:
+        '200':
+          schema:
+            $ref: '#/definitions/Response18209'
+          description: ''
+      summary: delete the selected document
+    put:
+      tags:
+        - Meta
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
           type: string
-        user:
+        - in: path
+          name: key
+          description: ''
+          required: true
           type: string
-        created:
+        - in: query
+          name: version
+          description: ''
+          required: false
           type: string
-        version:
-          type: string
-        latest:
-          type: boolean
-        description:
-          type: string
-        size:
-          type: integer
-          format: int64
-        content-type:
-          type: string
-    Response18194:
-      required:
-        - success
-      type: object
-      properties:
-        success:
-          type: boolean
-    Response18195:
-      required:
-        - success
-      type: object
-      properties:
-        success:
-          type: boolean
-    Response18196:
-      required:
-        - result
-      type: object
-      properties:
-        result:
-          type: integer
-          format: int64
-    Response18197:
-      required:
-        - result
-      type: object
-      properties:
-        result:
-          type: integer
-          format: int64
-  securitySchemes:
-    login:
-      type: apiKey
-      name: Authorization
-      in: header
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
+          description: ''
+      summary: put a new document
+
+consumes:
+  - application/json
+info:
+  title: Ladon Datacenter Edition
+  version: 0.0.1
+  description: Ladon Datacenter Edition REST API
+swagger: '2.0'
+basePath: /
