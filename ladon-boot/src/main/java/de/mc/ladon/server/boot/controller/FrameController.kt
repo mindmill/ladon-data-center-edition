@@ -42,6 +42,7 @@ open class FrameController {
                 MenuItem("users", path, repoid, "fa fa-user", "Users", "green"),
                 //MenuItem("plugins", path, repoid, "fa fa-plug", "Plugins", "green"),
                 MenuItem("system", path, repoid, "fa fa-area-chart", "System", "green"),
+                MenuItem("swagger-ui.html", path, repoid, "fa fa-plug", "REST API", "green"),
                 MenuItem("cassandra", path, repoid, "fa fa-database", "Cassandra", "green")
         )
     }
