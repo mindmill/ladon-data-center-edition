@@ -25,7 +25,7 @@
         <slf4j.version>1.7.12</slf4j.version>
         <kotlin.version>1.2.71</kotlin.version>
         <tika.version>1.11</tika.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>1.3.61</log4j.version>
         <guava.version>19.0</guava.version>
         <maven-bundle-plugin.version>3.5.0</maven-bundle-plugin.version>
     </properties>

@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
   ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
   -->
@@ -68,8 +68,8 @@
                 </ul>
                 <!-- /.dropdown-tasks -->
             </li>
-            <li><a href="/admin/feed/$repoid/atom"><i class="fa fa-rss"></i> Feed</a>
-            <li><a href="/admin/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            <li><a href="/ladon/feed/$repoid/atom"><i class="fa fa-rss"></i> Feed</a>
+            <li><a href="/ladon/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
             </li>
             <!-- /.dropdown -->
         </ul>

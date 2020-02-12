@@ -44,7 +44,7 @@ public class ServletConfig {
         ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                resp.sendRedirect("/admin/overview");
+                resp.sendRedirect("/ladon/overview");
             }
         });
         registration.setName("redirectServlet");
@@ -118,7 +118,7 @@ public class ServletConfig {
     @Bean
     public ServletRegistrationBean dispatcherServletRegistration(MultipartConfigElement multipartConfigElement) {
         ServletRegistrationBean registration = new ServletRegistrationBean(
-                dispatcherServlet(), "/admin/*", "/login");
+                dispatcherServlet(), "/ladon/*", "/login");
         registration.setMultipartConfig(multipartConfigElement);
         registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
         return registration;

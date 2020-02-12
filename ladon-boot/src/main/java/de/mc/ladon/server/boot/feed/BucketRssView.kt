@@ -32,7 +32,7 @@ class BucketRssView @Autowired constructor(
 
         val token = changeTokenDAO.getLatestChangeToken(AnonymousCallContext(), repoid, 100L)
 
-        val baseUrl = String.format("%s://%s:%d/admin/", request.scheme, request.serverName, request.serverPort)
+        val baseUrl = String.format("%s://%s:%d/ladon/", request.scheme, request.serverName, request.serverPort)
 
 
         val lastUpdates = token

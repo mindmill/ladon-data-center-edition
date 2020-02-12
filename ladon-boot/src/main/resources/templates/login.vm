@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
   ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
   -->
@@ -56,7 +56,7 @@
                                 <h3 class="panel-title">Please sign in</h3>
                             </div>
                             <div class="panel-body">
-                                <form name="l" action="/admin/login" method="post" accept-charset="UTF-8" role="form">
+                                <form name="l" action="/ladon/login" method="post" accept-charset="UTF-8" role="form">
                                     <fieldset>
                                         <div class="form-group">
                                             <input class="form-control" placeholder="Username" name="username"
