@@ -60,13 +60,13 @@ class CassandraPageController : FrameController() {
         database.initSchema()
         if (!userDetailsManager.userExists("admin"))
             CreateAdminUserTask(userDetailsManager).run()
-        return "redirect:/admin/overview"
+        return "redirect:/ladon/overview"
     }
 
     @RequestMapping("cassandra/replication")
     fun initCassandra(@RequestParam("factor") factor: Int): String {
         (database as DatabaseImpl).updateReplication(factor)
-        return "redirect:/admin/overview"
+        return "redirect:/ladon/overview"
     }
 }
 

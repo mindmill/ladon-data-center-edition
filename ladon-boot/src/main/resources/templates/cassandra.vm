@@ -34,7 +34,7 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th><a href="http://$host.getSocketAddress().getAddress():8080/admin/" >$host.getSocketAddress()</a></th>
+                                    <th><a href="http://$host.getSocketAddress().getAddress():8080/ladon/" >$host.getSocketAddress()</a></th>
                                     #if($host.isUp())
                                         <th>UP</th>
                                     #else

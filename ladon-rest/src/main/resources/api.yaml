@@ -1,8 +1,8 @@
 tags:
-  - name: Data
-    description: binary api for documents
-  - name: Meta
-    description: metadata api for documents
+  - name: Buckets
+    description: api for managing buckets
+  - name: Documents
+    description: api for managing documents
 securityDefinitions:
   login:
     type: apiKey
@@ -14,7 +14,7 @@ definitions:
     properties:
       key:
         type: string
-      user:
+      owner:
         type: string
       created:
         type: string
@@ -29,12 +29,28 @@ definitions:
         format: int64
       content-type:
         type: string
-    additionalProperties: false
+      metadata:
+        $ref: '#/definitions/Metadata'
     required:
       - key
-      - user
+      - owner
       - created
-  Response18209:
+  Bucket:
+    type: object
+    properties:
+      name:
+        type: string
+      created:
+        type: string
+      owner:
+        type: string
+      versioned:
+        type: boolean
+  Metadata:
+    type: object
+    additionalProperties:
+      type: string
+  ResponseSuccess:
     type: object
     properties:
       success:
@@ -42,42 +58,41 @@ definitions:
     additionalProperties: false
     required:
       - success
-  Response18210:
-    type: object
-    properties:
-      success:
-        type: boolean
-    additionalProperties: false
-    required:
-      - success
-  Response18211:
-    type: object
-    properties:
-      result:
-        type: integer
-        format: int64
-    additionalProperties: false
-    required:
-      - result
-  Response18212:
-    type: object
-    properties:
-      result:
-        type: integer
-        format: int64
-    additionalProperties: false
-    required:
-      - result
 produces:
   - application/json
 paths:
+  '/services/rest/v1/meta/':
+    get:
+      tags:
+        - Buckets
+      parameters:
+        - in: query
+          name: limit
+          description: ''
+          required: false
+          type: integer
+          format: int64
+        - in: query
+          name: page
+          description: ''
+          required: false
+          type: integer
+          format: int64
+      responses:
+        '200':
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Bucket'
+          description: ''
+      summary: list all buckets
   '/services/rest/v1/meta/{bucket}':
     get:
       tags:
-        - Meta
+        - Documents
       parameters:
         - in: query
-          name: count
+          name: limit
           description: ''
           required: false
           type: integer
@@ -100,11 +115,41 @@ paths:
             items:
               $ref: '#/definitions/Document'
           description: ''
-      summary: list all documents of the authenticated user
-  '/services/rest/v1/data/{bucket}/{key}':
+      summary: list all documents of the bucket
+    delete:
+      tags:
+        - Buckets
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ResponseSuccess'
+          description: ''
+      summary: delete the selected bucket
+    put:
+      tags:
+        - Buckets
+      parameters:
+        - in: path
+          name: bucket
+          description: ''
+          required: true
+          type: string
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ResponseSuccess'
+          description: ''
+      summary: create a new bucket
+  '/services/rest/v1/content/{bucket}/{key}':
     get:
       tags:
-        - Data
+        - Documents
       parameters:
         - in: path
           name: bucket
@@ -127,7 +172,7 @@ paths:
           description: ''
     delete:
       tags:
-        - Data
+        - Documents
       parameters:
         - in: path
           name: bucket
@@ -147,12 +192,12 @@ paths:
       responses:
         '200':
           schema:
-            $ref: '#/definitions/Response18209'
+            $ref: '#/definitions/ResponseSuccess'
           description: ''
       summary: delete the selected document
     put:
       tags:
-        - Data
+        - Documents
       parameters:
         - in: path
           name: bucket
@@ -178,7 +223,7 @@ paths:
   '/services/rest/v1/meta/{bucket}/{key}':
     get:
       tags:
-        - Meta
+        - Documents
       parameters:
         - in: path
           name: bucket
@@ -198,11 +243,13 @@ paths:
           default: false
       summary: get the selected document
       responses:
-        default:
+        '200':
+          schema:
+            $ref: '#/definitions/Document'
           description: ''
     delete:
       tags:
-        - Meta
+        - Documents
       parameters:
         - in: path
           name: bucket
@@ -222,12 +269,12 @@ paths:
       responses:
         '200':
           schema:
-            $ref: '#/definitions/Response18209'
+            $ref: '#/definitions/ResponseSuccess'
           description: ''
       summary: delete the selected document
     put:
       tags:
-        - Meta
+        - Documents
       parameters:
         - in: path
           name: bucket
