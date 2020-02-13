@@ -1,308 +1,325 @@
-tags:
-  - name: Buckets
-    description: api for managing buckets
-  - name: Documents
-    description: api for managing documents
-securityDefinitions:
-  login:
-    type: apiKey
-    name: Authorization
-    in: header
+swagger: '2.0'
+info:
+  contact:
+    email: team@mind-consulting.de
+  description: >-
+    Some example requests using plain HTTP. For more information have a look at
+    [https://ladon.org](https://ladon.org)
+  title: Ladon HTTP API
+  version: 2.2.1
+host: 'localhost:8080'
+basePath: '/ladon/api/rest/v1'
+schemes:
+  - https
+paths:
+  '/content/{bucket}/documents/{key}':
+    delete:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - in: path
+          name: key
+          required: true
+          type: string
+        - in: query
+          name: version
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseSuccess'
+      tags:
+        - Documents
+      summary: delete the selected document
+    get:
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - in: path
+          name: key
+          required: true
+          type: string
+        - in: query
+          name: version
+          type: string
+      responses:
+        default:
+          description: ''
+      tags:
+        - Documents
+      summary: get the selected document
+    put:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - in: path
+          name: key
+          required: true
+          type: string
+        - in: query
+          name: version
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Document'
+      tags:
+        - Documents
+      summary: put a new document
+  /meta/buckets/:
+    get:
+      produces:
+        - application/json
+      parameters:
+        - format: int64
+          in: query
+          name: limit
+          type: integer
+        - format: int64
+          in: query
+          name: page
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            items:
+              $ref: '#/definitions/Bucket'
+            type: array
+      tags:
+        - Buckets
+      summary: list all buckets
+  '/meta/buckets/{bucket}':
+    delete:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseSuccess'
+      tags:
+        - Buckets
+      summary: delete the selected bucket
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Bucket'
+      tags:
+        - Buckets
+      summary: get information about a bucket
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - description: Optional description in *Markdown*
+          in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Bucket'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Bucket'
+      tags:
+        - Buckets
+      summary: create a new bucket
+  '/meta/buckets/{bucket}/documents/':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - format: int64
+          in: query
+          name: limit
+          type: integer
+        - format: int64
+          in: query
+          name: page
+          type: integer
+        - in: path
+          name: bucket
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            items:
+              $ref: '#/definitions/Document'
+            type: array
+      tags:
+        - Documents
+      summary: list all documents of the bucket
+  '/meta/{bucket}/documents/{key}':
+    delete:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - in: path
+          name: key
+          required: true
+          type: string
+        - in: query
+          name: version
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ResponseSuccess'
+      tags:
+        - Documents
+      summary: delete the selected document
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - in: path
+          name: key
+          required: true
+          type: string
+        - default: false
+          in: query
+          name: versions
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Document'
+      tags:
+        - Documents
+      summary: get the selected document
+    put:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - in: path
+          name: key
+          required: true
+          type: string
+        - in: query
+          name: version
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Document'
+      tags:
+        - Documents
+      summary: put a new document
 definitions:
-  Document:
-    type: object
-    properties:
-      key:
-        type: string
-      owner:
-        type: string
-      created:
-        type: string
-      version:
-        type: string
-      latest:
-        type: boolean
-      description:
-        type: string
-      size:
-        type: integer
-        format: int64
-      content-type:
-        type: string
-      metadata:
-        $ref: '#/definitions/Metadata'
-    required:
-      - key
-      - owner
-      - created
   Bucket:
-    type: object
     properties:
-      name:
-        type: string
       created:
+        type: string
+      name:
         type: string
       owner:
         type: string
       versioned:
         type: boolean
-  Metadata:
+    required:
+      - name
+      - versioned
     type: object
+  Document:
+    properties:
+      content-type:
+        type: string
+      created:
+        type: string
+      description:
+        type: string
+      key:
+        type: string
+      latest:
+        type: boolean
+      metadata:
+        $ref: '#/definitions/Metadata'
+      owner:
+        type: string
+      size:
+        format: int64
+        type: integer
+      version:
+        type: string
+    required:
+      - created
+      - key
+      - owner
+    type: object
+  Metadata:
     additionalProperties:
       type: string
-  ResponseSuccess:
     type: object
+  ResponseSuccess:
     properties:
       success:
         type: boolean
-    additionalProperties: false
     required:
       - success
-produces:
-  - application/json
-paths:
-  '/services/rest/v1/meta/':
-    get:
-      tags:
-        - Buckets
-      parameters:
-        - in: query
-          name: limit
-          description: ''
-          required: false
-          type: integer
-          format: int64
-        - in: query
-          name: page
-          description: ''
-          required: false
-          type: integer
-          format: int64
-      responses:
-        '200':
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Bucket'
-          description: ''
-      summary: list all buckets
-  '/services/rest/v1/meta/{bucket}':
-    get:
-      tags:
-        - Documents
-      parameters:
-        - in: query
-          name: limit
-          description: ''
-          required: false
-          type: integer
-          format: int64
-        - in: query
-          name: page
-          description: ''
-          required: false
-          type: integer
-          format: int64
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Document'
-          description: ''
-      summary: list all documents of the bucket
-    delete:
-      tags:
-        - Buckets
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/ResponseSuccess'
-          description: ''
-      summary: delete the selected bucket
-    put:
-      tags:
-        - Buckets
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/ResponseSuccess'
-          description: ''
-      summary: create a new bucket
-  '/services/rest/v1/content/{bucket}/{key}':
-    get:
-      tags:
-        - Documents
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: query
-          name: version
-          description: ''
-          required: false
-          type: string
-      summary: get the selected document
-      responses:
-        default:
-          description: ''
-    delete:
-      tags:
-        - Documents
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: query
-          name: version
-          description: ''
-          required: false
-          type: string
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/ResponseSuccess'
-          description: ''
-      summary: delete the selected document
-    put:
-      tags:
-        - Documents
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: query
-          name: version
-          description: ''
-          required: false
-          type: string
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/Document'
-          description: ''
-      summary: put a new document
-  '/services/rest/v1/meta/{bucket}/{key}':
-    get:
-      tags:
-        - Documents
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: query
-          name: versions
-          description: ''
-          required: false
-          type: boolean
-          default: false
-      summary: get the selected document
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/Document'
-          description: ''
-    delete:
-      tags:
-        - Documents
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: query
-          name: version
-          description: ''
-          required: false
-          type: string
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/ResponseSuccess'
-          description: ''
-      summary: delete the selected document
-    put:
-      tags:
-        - Documents
-      parameters:
-        - in: path
-          name: bucket
-          description: ''
-          required: true
-          type: string
-        - in: path
-          name: key
-          description: ''
-          required: true
-          type: string
-        - in: query
-          name: version
-          description: ''
-          required: false
-          type: string
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/Document'
-          description: ''
-      summary: put a new document
+    type: object
+securityDefinitions:
+  login:
+    in: header
+    name: Authorization
+    type: apiKey
+tags:
+  - description: api for managing buckets
+    name: Buckets
+  - description: api for managing documents
+    name: Documents
+externalDocs:
+  description: Find out more about Ladon
+  url: 'http://ladon.org'
+x-components: {}
 
-consumes:
-  - application/json
-info:
-  title: Ladon Datacenter Edition
-  version: 0.0.1
-  description: Ladon Datacenter Edition REST API
-swagger: '2.0'
-basePath: /
