@@ -73,6 +73,7 @@
                     <language>spring</language>
                     <generateSupportingFiles>false</generateSupportingFiles>
                     <configOptions>
+                        <useTags>true</useTags>
                         <sourceFolder>src/gen/java/main</sourceFolder>
                         <dateLibrary>java8</dateLibrary>
                         <basePackage>de.mc.ladon_gen.rest</basePackage>
