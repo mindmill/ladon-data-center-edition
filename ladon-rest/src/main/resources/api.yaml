@@ -157,7 +157,7 @@ paths:
             $ref: '#/definitions/Bucket'
       tags:
         - Buckets
-      summary: create a new bucket
+      summary: create or change a bucket
   '/meta/buckets/{bucket}/documents/':
     get:
       produces:
@@ -221,10 +221,6 @@ paths:
           name: key
           required: true
           type: string
-        - default: false
-          in: query
-          name: versions
-          type: boolean
       responses:
         '200':
           description: ''
@@ -256,6 +252,30 @@ paths:
       tags:
         - Documents
       summary: put a new document
+  '/meta/{bucket}/documents/{key}/versions':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bucket
+          required: true
+          type: string
+        - in: path
+          name: key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            items:
+              $ref: '#/definitions/Document'
+            type: array
+      tags:
+        - Documents
+      summary: list all versions of this document
+
 definitions:
   Bucket:
     properties:
