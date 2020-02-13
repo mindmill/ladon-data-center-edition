@@ -71,12 +71,13 @@
                 <configuration>
                     <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
                     <language>spring</language>
+                    <generateSupportingFiles>false</generateSupportingFiles>
                     <configOptions>
                         <sourceFolder>src/gen/java/main</sourceFolder>
                         <dateLibrary>java8</dateLibrary>
-                        <basePackage>de.mc.ladon.rest</basePackage>
-                        <apiPackage>de.mc.ladon.rest.api</apiPackage>
-                        <modelPackage>de.mc.ladon.rest.model</modelPackage>
+                        <basePackage>de.mc.ladon_gen.rest</basePackage>
+                        <apiPackage>de.mc.ladon_gen.rest.api</apiPackage>
+                        <modelPackage>de.mc.ladon_gen.rest.model</modelPackage>
                         <configPackage>de.mc.ladon3.rest.config</configPackage>
                     </configOptions>
                 </configuration>
