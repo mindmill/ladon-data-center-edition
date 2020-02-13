@@ -12,7 +12,7 @@ basePath: '/ladon/api/rest/v1'
 schemes:
   - https
 paths:
-  '/content/{bucket}/documents/{key}':
+  '/content/buckets/{bucket}/documents/{key}':
     delete:
       produces:
         - application/json
@@ -167,6 +167,7 @@ paths:
           in: query
           name: limit
           type: integer
+          default: 1000
         - format: int64
           in: query
           name: page
@@ -175,6 +176,13 @@ paths:
           name: bucket
           required: true
           type: string
+        - in: query
+          name: prefix
+          type: string
+        - in: query
+          name: orderby
+          type: string
+          enum: [name, created]
       responses:
         '200':
           description: ''
@@ -185,7 +193,7 @@ paths:
       tags:
         - Documents
       summary: list all documents of the bucket
-  '/meta/{bucket}/documents/{key}':
+  '/meta/buckets/{bucket}/documents/{key}':
     delete:
       produces:
         - application/json
@@ -252,7 +260,7 @@ paths:
       tags:
         - Documents
       summary: put a new document
-  '/meta/{bucket}/documents/{key}/versions':
+  '/meta/buckets/{bucket}/documents/{key}/versions':
     get:
       produces:
         - application/json
