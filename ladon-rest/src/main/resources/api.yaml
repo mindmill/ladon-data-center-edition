@@ -172,6 +172,7 @@ paths:
           in: query
           name: page
           type: integer
+          default: 1
         - in: path
           name: bucket
           required: true
