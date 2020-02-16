@@ -16,6 +16,7 @@ paths:
     delete:
       produces:
         - application/json
+      operationId: deleteDocument
       parameters:
         - in: path
           name: bucket
@@ -37,6 +38,7 @@ paths:
         - Documents
       summary: delete the selected document
     get:
+      operationId: getDocument
       parameters:
         - in: path
           name: bucket
@@ -56,6 +58,7 @@ paths:
         - Documents
       summary: get the selected document
     put:
+      operationId: putDocument
       produces:
         - application/json
       parameters:
@@ -77,9 +80,10 @@ paths:
             $ref: '#/definitions/Document'
       tags:
         - Documents
-      summary: put a new document
+      summary: add a new document
   /meta/buckets/:
     get:
+      operationId: listBuckets
       produces:
         - application/json
       parameters:
@@ -103,6 +107,7 @@ paths:
       summary: list all buckets
   '/meta/buckets/{bucket}':
     delete:
+      operationId: deleteBucket
       produces:
         - application/json
       parameters:
@@ -119,6 +124,7 @@ paths:
         - Buckets
       summary: delete the selected bucket
     get:
+      operationId: getBucket
       produces:
         - application/json
       parameters:
@@ -135,6 +141,7 @@ paths:
         - Buckets
       summary: get information about a bucket
     put:
+      operationId: createBucket
       consumes:
         - application/json
       produces:
@@ -160,6 +167,7 @@ paths:
       summary: create or change a bucket
   '/meta/buckets/{bucket}/documents/':
     get:
+      operationId: listDocuments
       produces:
         - application/json
       parameters:
@@ -195,30 +203,8 @@ paths:
         - Documents
       summary: list all documents of the bucket
   '/meta/buckets/{bucket}/documents/{key}':
-    delete:
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: bucket
-          required: true
-          type: string
-        - in: path
-          name: key
-          required: true
-          type: string
-        - in: query
-          name: version
-          type: string
-      responses:
-        '200':
-          description: ''
-          schema:
-            $ref: '#/definitions/ResponseSuccess'
-      tags:
-        - Documents
-      summary: delete the selected document
     get:
+      operationId: getDocumentMeta
       produces:
         - application/json
       parameters:
@@ -239,6 +225,7 @@ paths:
         - Documents
       summary: get the selected document
     put:
+      operationId: createDocumentMeta
       produces:
         - application/json
       parameters:
@@ -263,6 +250,7 @@ paths:
       summary: put a new document
   '/meta/buckets/{bucket}/documents/{key}/versions':
     get:
+      operationId: listDocumentMetaVersions
       produces:
         - application/json
       parameters:
@@ -351,4 +339,3 @@ externalDocs:
   description: Find out more about Ladon
   url: 'http://ladon.org'
 x-components: {}
-
