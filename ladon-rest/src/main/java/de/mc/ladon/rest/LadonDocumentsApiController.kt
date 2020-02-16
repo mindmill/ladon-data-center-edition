@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam
 open class LadonDocumentsApiController : DocumentsApi {
 
 
-    override fun contentBucketsBucketDocumentsKeyDelete(
+    override fun deleteDocument(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
             bucket: String,
@@ -29,11 +29,11 @@ open class LadonDocumentsApiController : DocumentsApi {
             key: String,
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
-            version: String?): ResponseEntity<ResponseSuccess?>? {
+            version: String?): ResponseEntity<ResponseSuccess>? {
         return ResponseEntity(HttpStatus.OK)
     }
 
-    override fun contentBucketsBucketDocumentsKeyGet(
+    override fun getDocument(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
             bucket: String,
@@ -42,12 +42,12 @@ open class LadonDocumentsApiController : DocumentsApi {
             key: String,
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
-            version: String?): ResponseEntity<Void?>? { // do some magic!
+            version: String?): ResponseEntity<Void>? { // do some magic!
         return ResponseEntity(HttpStatus.OK)
     }
 
 
-    override fun contentBucketsBucketDocumentsKeyPut(
+    override fun putDocument(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
             bucket: String,
@@ -56,11 +56,11 @@ open class LadonDocumentsApiController : DocumentsApi {
             key: String,
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
-            version: String?): ResponseEntity<Document?>? {
+            version: String?): ResponseEntity<Document>? {
         return ResponseEntity(HttpStatus.OK)
     }
 
-    override fun metaBucketsBucketDocumentsGet(
+    override fun listDocuments(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
             bucket: String?,
@@ -77,23 +77,35 @@ open class LadonDocumentsApiController : DocumentsApi {
                 .metadata(Metadata().also { it["gelesen"] = "true" })))
     }
 
-
-    override fun metaBucketsBucketDocumentsKeyDelete(@ApiParam(value = "", required = true) @PathVariable("bucket") bucket: String?, @ApiParam(value = "", required = true) @PathVariable("key") key: String?, @ApiParam(value = "") @RequestParam(value = "version", required = false) version: String?): ResponseEntity<ResponseSuccess?>? {
+    override fun getDocumentMeta(
+            @ApiParam(value = "", required = true)
+            @PathVariable("bucket")
+            bucket: String,
+            @ApiParam(value = "", required = true)
+            @PathVariable("key") key: String): ResponseEntity<Document>? {
         return ResponseEntity(HttpStatus.OK)
     }
 
 
-    override fun metaBucketsBucketDocumentsKeyGet(@ApiParam(value = "", required = true) @PathVariable("bucket") bucket: String?, @ApiParam(value = "", required = true) @PathVariable("key") key: String?): ResponseEntity<Document?>? {
+    override fun createDocumentMeta(
+            @ApiParam(value = "", required = true)
+            @PathVariable("bucket")
+            bucket: String,
+            @ApiParam(value = "", required = true)
+            @PathVariable("key") key: String,
+            @ApiParam(value = "")
+            @RequestParam(value = "version", required = false)
+            version: String?): ResponseEntity<Document>? {
         return ResponseEntity(HttpStatus.OK)
     }
 
 
-    override fun metaBucketsBucketDocumentsKeyPut(@ApiParam(value = "", required = true) @PathVariable("bucket") bucket: String?, @ApiParam(value = "", required = true) @PathVariable("key") key: String?, @ApiParam(value = "") @RequestParam(value = "version", required = false) version: String?): ResponseEntity<Document?>? {
-        return ResponseEntity(HttpStatus.OK)
-    }
-
-
-    override fun metaBucketsBucketDocumentsKeyVersionsGet(@ApiParam(value = "", required = true) @PathVariable("bucket") bucket: String?, @ApiParam(value = "", required = true) @PathVariable("key") key: String?): ResponseEntity<List<Document?>?>? {
+    override fun listDocumentMetaVersions(
+            @ApiParam(value = "", required = true)
+            @PathVariable("bucket")
+            bucket: String,
+            @ApiParam(value = "", required = true)
+            @PathVariable("key") key: String): ResponseEntity<List<Document>>? {
         return ResponseEntity(HttpStatus.OK)
     }
 
