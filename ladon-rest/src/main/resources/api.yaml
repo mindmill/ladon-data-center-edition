@@ -322,6 +322,8 @@ definitions:
     properties:
       success:
         type: boolean
+      reason:
+        type: string
     required:
       - success
     type: object
