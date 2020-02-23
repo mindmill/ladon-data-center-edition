@@ -101,7 +101,7 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                Filesystem (GB)
+                Ladon.home Filesystem (GB)
             </div>
             <div class="panel-body">
                 <div id="morris-fs-chart"></div>
