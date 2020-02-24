@@ -6,12 +6,16 @@ import de.mc.ladon_gen.rest.model.Metadata
 import de.mc.ladon_gen.rest.model.ResponseSuccess
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiParam
+import io.swagger.annotations.Example
+import io.swagger.annotations.ExampleProperty
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import javax.validation.Valid
 
 
 @Controller
@@ -82,17 +86,28 @@ open class LadonDocumentsApiController : DocumentsApi {
             @PathVariable("bucket")
             bucket: String,
             @ApiParam(value = "", required = true)
-            @PathVariable("key") key: String): ResponseEntity<Document>? {
+            @PathVariable("key")
+            key: String): ResponseEntity<Document>? {
         return ResponseEntity(HttpStatus.OK)
     }
 
 
-    override fun createDocumentMeta(
+    override fun putDocumentMeta(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
             bucket: String,
             @ApiParam(value = "", required = true)
-            @PathVariable("key") key: String,
+            @PathVariable("key")
+            key: String,
+            @ApiParam(value = "", required = true, examples = Example(value =
+            [ExampleProperty(
+                    mediaType = "application/json",
+                    value = "{\"userId\":\"1234\",\"userName\":\"JoshJ\"}"
+            )]
+            ))
+            @Valid
+            @RequestBody
+            body: Metadata,
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
             version: String?): ResponseEntity<Document>? {
