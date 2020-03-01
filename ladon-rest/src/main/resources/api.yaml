@@ -61,6 +61,8 @@ paths:
       operationId: putDocument
       produces:
         - application/json
+      consumes:
+        - 'application/octet-stream'
       parameters:
         - in: path
           name: bucket
@@ -73,6 +75,10 @@ paths:
         - in: query
           name: version
           type: string
+        - in: body
+          name: content
+          schema:
+            type: file
       responses:
         '200':
           description: ''
@@ -81,7 +87,7 @@ paths:
       tags:
         - Documents
       summary: add a new document
-  /meta/buckets/:
+  /meta/buckets:
     get:
       operationId: listBuckets
       produces:
@@ -165,7 +171,7 @@ paths:
       tags:
         - Buckets
       summary: create or change a bucket
-  '/meta/buckets/{bucket}/documents/':
+  '/meta/buckets/{bucket}/documents':
     get:
       operationId: listDocuments
       produces:

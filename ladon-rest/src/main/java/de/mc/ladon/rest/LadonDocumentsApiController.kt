@@ -1,27 +1,32 @@
 package de.mc.ladon.rest
 
+import de.mc.ladon.server.core.api.LadonRepository
 import de.mc.ladon_gen.rest.api.DocumentsApi
 import de.mc.ladon_gen.rest.model.Document
 import de.mc.ladon_gen.rest.model.Metadata
 import de.mc.ladon_gen.rest.model.ResponseSuccess
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiParam
-import io.swagger.annotations.Example
-import io.swagger.annotations.ExampleProperty
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.Resource
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import java.io.ByteArrayInputStream
 import javax.validation.Valid
 
 
 @Controller
 @RequestMapping("/api/rest/v1")
 @Api(value = "meta", description = "Ladon Documents API", tags = ["Documents"])
-open class LadonDocumentsApiController : DocumentsApi {
+open class LadonDocumentsApiController @Autowired constructor(
+        val ladonRepositoy: LadonRepository
+) : DocumentsApi {
 
 
     override fun deleteDocument(
@@ -60,14 +65,21 @@ open class LadonDocumentsApiController : DocumentsApi {
             key: String,
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
-            version: String?): ResponseEntity<Document>? {
+            version: String?,
+            @ApiParam(value = ""  )
+            @Valid
+            @RequestBody
+            content: Resource): ResponseEntity<Document>? {
+       val document = ladonRepositoy.putDocument(getUserId(),bucket,key,ByteArrayInputStream("Test".toByteArray()))
+
+
         return ResponseEntity(HttpStatus.OK)
     }
 
     override fun listDocuments(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
-            bucket: String?,
+            bucket: String,
             @ApiParam(value = "", defaultValue = "1000")
             @RequestParam(value = "limit", required = false, defaultValue = "1000")
             limit: Long?,
@@ -77,9 +89,19 @@ open class LadonDocumentsApiController : DocumentsApi {
             @ApiParam(value = "")
             @RequestParam(value = "prefix", required = false)
             prefix: String?, @ApiParam(value = "", allowableValues = "name, created") @RequestParam(value = "orderby", required = false) orderby: String?): ResponseEntity<List<Document?>?>? {
-        return ResponseEntity.ok(arrayListOf(Document().key("test.txt")
-                .metadata(Metadata().also { it["gelesen"] = "true" })))
+
+        return ResponseEntity.ok(ladonRepositoy.listDocuments(getUserId(), bucket, prefix, null, null, limit)
+                .map {
+                    Document()
+                            .key(it.key)
+                            .contentType(it.contentType)
+                            .created(it.created.toString())
+                            .owner(getUserId()) // TODO
+                            .metadata(it.userMetadata.
+                                    let { uM -> Metadata().also { it.putAll(uM) } })
+                })
     }
+
 
     override fun getDocumentMeta(
             @ApiParam(value = "", required = true)
@@ -99,12 +121,7 @@ open class LadonDocumentsApiController : DocumentsApi {
             @ApiParam(value = "", required = true)
             @PathVariable("key")
             key: String,
-            @ApiParam(value = "", required = true, examples = Example(value =
-            [ExampleProperty(
-                    mediaType = "application/json",
-                    value = "{\"userId\":\"1234\",\"userName\":\"JoshJ\"}"
-            )]
-            ))
+            @ApiParam(value = "", required = true)
             @Valid
             @RequestBody
             body: Metadata,
@@ -124,5 +141,5 @@ open class LadonDocumentsApiController : DocumentsApi {
         return ResponseEntity(HttpStatus.OK)
     }
 
-
+    private fun getUserId() = SecurityContextHolder.getContext().authentication.name
 }
