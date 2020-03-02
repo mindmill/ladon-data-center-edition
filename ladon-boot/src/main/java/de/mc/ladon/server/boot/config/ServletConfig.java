@@ -12,20 +12,11 @@ import org.apache.chemistry.opencmis.server.impl.CmisRepositoryContextListener;
 import org.apache.chemistry.opencmis.server.impl.browser.CmisBrowserBindingServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletRegistrationBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.HttpServletBean;
 
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,19 +31,19 @@ public class ServletConfig {
     @Autowired
     private S3Repository s3r;
 
-    @Bean
-    public ServletRegistrationBean<HttpServletBean> redirectServlet() {
-        ServletRegistrationBean<HttpServletBean> registration = new ServletRegistrationBean<>(new HttpServletBean() {
-            @Override
-            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                resp.sendRedirect("/ladon/overview");
-            }
-        });
-        registration.setName("redirectServlet");
-        registration.addUrlMappings("/");
-        registration.setLoadOnStartup(1);
-        return registration;
-    }
+//    @Bean
+//    public ServletRegistrationBean<HttpServletBean> redirectServlet() {
+//        ServletRegistrationBean<HttpServletBean> registration = new ServletRegistrationBean<>(new HttpServletBean() {
+//            @Override
+//            protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//                resp.sendRedirect("//overview");
+//            }
+//        });
+//        registration.setName("redirectServlet");
+//        registration.addUrlMappings("/");
+//        registration.setLoadOnStartup(1);
+//        return registration;
+//    }
 
 
     @Bean
@@ -111,18 +102,18 @@ public class ServletConfig {
         return filterBean;
     }
 
-    @Bean
-    public DispatcherServlet dispatcherServlet() {
-        return new DispatcherServlet();
-    }
+//    @Bean
+//    public DispatcherServlet dispatcherServlet() {
+//        return new DispatcherServlet();
+//    }
 
-    @Bean
-    public DispatcherServletRegistrationBean dispatcherServletRegistration(MultipartConfigElement multipartConfigElement) {
-        DispatcherServletRegistrationBean registration = new DispatcherServletRegistrationBean(
-                dispatcherServlet(), "/ladon/*");
-        registration.setMultipartConfig(multipartConfigElement);
-        registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
-        return registration;
-    }
+//    @Bean
+//    public DispatcherServletRegistrationBean dispatcherServletRegistration(MultipartConfigElement multipartConfigElement) {
+//        DispatcherServletRegistrationBean registration = new DispatcherServletRegistrationBean(
+//                dispatcherServlet(), "/ladon/*");
+//        registration.setMultipartConfig(multipartConfigElement);
+//        registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
+//        return registration;
+//    }
 
 }

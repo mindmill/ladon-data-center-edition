@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2015 Mind Consulting UG(haftungsbeschränkt)
+  -->
+
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ladon</title>
+    <!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- FontAwesome Styles-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link href="assets/dataTables/dataTables.bootstrap.css" rel="stylesheet"/>
+    <link href="assets/morris/morris-0.4.3.min.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <link href="assets/css/custom-styles.css" rel="stylesheet"/>
+    <!-- Custom Styles-->
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+
+            <a class="navbar-brand" href="overview">LADON
+                <small></small>
+            </a>
+        </div>
+    </nav>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+            </ul>
+
+        </div>
+        <div class="navbar-fixed-bottom text-primary"><img src="assets/LADON_FINAL_WEB.png" height="70" alt="Ladon Logo"
+                                                           title="Ladon by Mind Consulting"/></div>
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper">
+
+        <div id="page-inner">
+            #if ($flash)
+                <div class="alert alert-$flash.getFirst()">
+                    <i class="fa fa-info"></i> $flash.getSecond()
+                </div>
+            #end
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Please sign in</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form name="l" action="/ladon/login" method="post" accept-charset="UTF-8" role="form">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="Username" name="username"
+                                                   type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" placeholder="Password" name="password" value=""
+                                                   type="password">
+                                            <input type="hidden"
+                                                   name="${_csrf.parameterName}"
+                                                   value="${_csrf.token}"/>
+                                        </div>
+
+                                        <input class="btn btn-lg btn-primary btn-block" value="Login" type="submit">
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /. ROW  -->
+            </div>
+            <!-- /. container  -->
+            <footer><p class="text-center">All right reserved. <a href="http://mind-consulting.de">Mind Consulting</a>
+            </p></footer>
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+
+<!-- Bootstrap Js -->
+<script src="assets/js/bootstrap.min.js"></script>
+
+</body>
+</html>
