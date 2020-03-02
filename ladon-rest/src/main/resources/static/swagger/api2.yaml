@@ -1,0 +1,347 @@
+openapi: 3.0.1
+info:
+  title: Ladon HTTP API
+  description: 'Some example requests using plain HTTP. For more information have a look at [https://ladon.org](https://ladon.org)'
+  contact:
+    email: team@mind-consulting.de
+  version: 2.2.1
+externalDocs:
+  description: Find out more about Ladon
+  url: http://ladon.org
+servers:
+  - url: https://localhost:8080/ladon/services/rest
+tags:
+  - name: Buckets
+    description: api for managing buckets
+  - name: Documents
+    description: api for managing documents
+paths:
+  /services/rest/v1/meta/buckets/:
+    get:
+      tags:
+        - Buckets
+      summary: list all buckets
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bucket'
+  /services/rest/v1/meta/buckets/{bucket}/documents/:
+    get:
+      tags:
+        - Documents
+      summary: list all documents of the bucket
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+  /services/rest/v1/meta/buckets/{bucket}:
+    get:
+      tags:
+        - Buckets
+      summary: get information about a bucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+
+    put:
+      tags:
+        - Buckets
+      summary: create a new bucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+    delete:
+      tags:
+        - Buckets
+      summary: delete the selected bucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+  /services/rest/v1/content/{bucket}/documents/{key}:
+    get:
+      tags:
+        - Documents
+      summary: get the selected document
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content: {}
+    put:
+      tags:
+        - Documents
+      summary: put a new document
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    delete:
+      tags:
+        - Documents
+      summary: delete the selected document
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+  /services/rest/v1/meta/{bucket}/documents/{key}:
+    get:
+      tags:
+        - Documents
+      summary: get the selected document
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versions
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    put:
+      tags:
+        - Documents
+      summary: put a new document
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    delete:
+      tags:
+        - Documents
+      summary: delete the selected document
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+components:
+  schemas:
+    Document:
+      required:
+        - created
+        - key
+        - owner
+      type: object
+      properties:
+        key:
+          type: string
+        owner:
+          type: string
+        created:
+          type: string
+        version:
+          type: string
+        latest:
+          type: boolean
+        description:
+          type: string
+        size:
+          type: integer
+          format: int64
+        content-type:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    Bucket:
+      required:
+        - name
+        - versioned
+      type: object
+      properties:
+        name:
+          type: string
+        created:
+          type: string
+        owner:
+          type: string
+        versioned:
+          type: boolean
+    Metadata:
+      type: object
+      additionalProperties:
+        type: string
+    ResponseSuccess:
+      required:
+        - success
+      type: object
+      properties:
+        success:
+          type: boolean
+  securitySchemes:
+    login:
+      type: apiKey
+      name: Authorization
+      in: header

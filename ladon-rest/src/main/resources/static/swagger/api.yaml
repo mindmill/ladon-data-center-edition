@@ -1,0 +1,384 @@
+openapi: 3.0.1
+info:
+  title: Ladon HTTP API
+  description: Some example requests using plain HTTP. For more information have a
+    look at [https://ladon.org](https://ladon.org)
+  contact:
+    email: team@mind-consulting.de
+  version: 2.2.1
+externalDocs:
+  description: Find out more about Ladon
+  url: http://ladon.org
+servers:
+  - url: https://localhost:8080/ladon/api/rest/v1
+security:
+  - basicAuth: []
+tags:
+  - name: Buckets
+    description: api for managing buckets
+  - name: Documents
+    description: api for managing documents
+paths:
+  /content/buckets/{bucket}/documents/{key}:
+    get:
+      tags:
+        - Documents
+      summary: get the selected document
+      operationId: getDocument
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          description: ""
+          content: {}
+    put:
+      tags:
+        - Documents
+      summary: add a new document
+      operationId: putDocument
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+        required: false
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+      x-codegen-request-body-name: content
+    delete:
+      tags:
+        - Documents
+      summary: delete the selected document
+      operationId: deleteDocument
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+  /meta/buckets:
+    get:
+      tags:
+        - Buckets
+      summary: list all buckets
+      operationId: listBuckets
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bucket'
+  /meta/buckets/{bucket}:
+    get:
+      tags:
+        - Buckets
+      summary: get information about a bucket
+      operationId: getBucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+    put:
+      tags:
+        - Buckets
+      summary: create or change a bucket
+      operationId: createBucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Create or update a bucket
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bucket'
+        required: true
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bucket'
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+        - Buckets
+      summary: delete the selected bucket
+      operationId: deleteBucket
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+  /meta/buckets/{bucket}/documents:
+    get:
+      tags:
+        - Documents
+      summary: list all documents of the bucket
+      operationId: listDocuments
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 1000
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: prefix
+          in: query
+          schema:
+            type: string
+        - name: orderby
+          in: query
+          schema:
+            type: string
+            enum:
+              - name
+              - created
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+  /meta/buckets/{bucket}/documents/{key}:
+    get:
+      tags:
+        - Documents
+      summary: get the selected document
+      operationId: getDocumentMeta
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+    put:
+      tags:
+        - Documents
+      summary: put a new document
+      operationId: putDocumentMeta
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Metadata'
+        required: true
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+      x-codegen-request-body-name: body
+  /meta/buckets/{bucket}/documents/{key}/versions:
+    get:
+      tags:
+        - Documents
+      summary: list all versions of this document
+      operationId: listDocumentMetaVersions
+      parameters:
+        - name: bucket
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+components:
+  schemas:
+    Bucket:
+      required:
+        - name
+        - versioned
+      type: object
+      properties:
+        created:
+          type: string
+        name:
+          type: string
+        owner:
+          type: string
+        versioned:
+          type: boolean
+    Document:
+      required:
+        - created
+        - key
+        - owner
+      type: object
+      properties:
+        content-type:
+          type: string
+        created:
+          type: string
+        description:
+          type: string
+        key:
+          type: string
+        latest:
+          type: boolean
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        owner:
+          type: string
+        size:
+          type: integer
+          format: int64
+        version:
+          type: string
+    Metadata:
+      type: object
+      additionalProperties:
+        type: string
+    ResponseSuccess:
+      required:
+        - success
+      type: object
+      properties:
+        success:
+          type: boolean
+        reason:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-components: {}

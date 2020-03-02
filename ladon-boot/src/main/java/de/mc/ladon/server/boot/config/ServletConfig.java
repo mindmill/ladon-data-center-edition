@@ -12,7 +12,8 @@ import org.apache.chemistry.opencmis.server.impl.CmisRepositoryContextListener;
 import org.apache.chemistry.opencmis.server.impl.browser.CmisBrowserBindingServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletRegistrationBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +41,8 @@ public class ServletConfig {
     private S3Repository s3r;
 
     @Bean
-    public ServletRegistrationBean redirectServlet() {
-        ServletRegistrationBean registration = new ServletRegistrationBean(new HttpServletBean() {
+    public ServletRegistrationBean<HttpServletBean> redirectServlet() {
+        ServletRegistrationBean<HttpServletBean> registration = new ServletRegistrationBean<>(new HttpServletBean() {
             @Override
             protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                 resp.sendRedirect("/ladon/overview");
@@ -55,13 +56,13 @@ public class ServletConfig {
 
 
     @Bean
-    public ServletRegistrationBean s3ServletRegistrationBean(LadonS3Config config) {
+    public ServletRegistrationBean<S3Servlet> s3ServletRegistrationBean(LadonS3Config config) {
         S3Servlet s3Servlet = new S3Servlet(config.getServletthreads());
         s3Servlet.setSecurityEnabled(config.getDisableSecurity() == null
                 || !config.getDisableSecurity());
         s3Servlet.setRequestTimeout(config.getRequesttimeout());
         s3Servlet.setRepository(s3r);
-        ServletRegistrationBean registration = new ServletRegistrationBean(
+        ServletRegistrationBean<S3Servlet> registration = new ServletRegistrationBean(
                 s3Servlet);
         registration.setName("s3servlet");
         registration.addUrlMappings("/services/s3/*");
@@ -76,9 +77,9 @@ public class ServletConfig {
     }
 
     @Bean
-    public ServletRegistrationBean cmisServletRegistrationBean() {
+    public ServletRegistrationBean<CmisBrowserBindingServlet> cmisServletRegistrationBean() {
         CmisBrowserBindingServlet cmisServlet = new CmisBrowserBindingServlet();
-        ServletRegistrationBean registration = new ServletRegistrationBean(cmisServlet);
+        ServletRegistrationBean<CmisBrowserBindingServlet> registration = new ServletRegistrationBean<>(cmisServlet);
         Map<String, String> initParams = new HashMap<>();
 //        initParams.put("template", "/WEB-INF/cmis-endpoints.json");
         initParams.put("callContextHandler", "org.apache.chemistry.opencmis.server.impl.browser.token.TokenCallContextHandler");
@@ -92,8 +93,8 @@ public class ServletConfig {
 
     @Bean
     @ConditionalOnProperty(value = "ladon.s3.loggingenabled", havingValue = "true")
-    FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterBean = new FilterRegistrationBean();
+    FilterRegistrationBean<PerformanceLoggingFilter> filterRegistrationBean() {
+        FilterRegistrationBean<PerformanceLoggingFilter> filterBean = new FilterRegistrationBean<>();
         filterBean.setFilter(new PerformanceLoggingFilter());
         filterBean.addServletNames("s3servlet");
         filterBean.setAsyncSupported(true);
@@ -101,9 +102,9 @@ public class ServletConfig {
     }
 
     @Bean
-    FilterRegistrationBean corsFilterRegistrationBean() {
+    FilterRegistrationBean<CorsFilter> corsFilterRegistrationBean() {
 
-        FilterRegistrationBean filterBean = new FilterRegistrationBean();
+        FilterRegistrationBean<CorsFilter> filterBean = new FilterRegistrationBean<>();
         filterBean.setFilter(new CorsFilter());
         filterBean.addServletNames("s3servlet");
         filterBean.setAsyncSupported(true);
@@ -116,9 +117,9 @@ public class ServletConfig {
     }
 
     @Bean
-    public ServletRegistrationBean dispatcherServletRegistration(MultipartConfigElement multipartConfigElement) {
-        ServletRegistrationBean registration = new ServletRegistrationBean(
-                dispatcherServlet(), "/ladon/*", "/login");
+    public DispatcherServletRegistrationBean dispatcherServletRegistration(MultipartConfigElement multipartConfigElement) {
+        DispatcherServletRegistrationBean registration = new DispatcherServletRegistrationBean(
+                dispatcherServlet(), "/ladon/*");
         registration.setMultipartConfig(multipartConfigElement);
         registration.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
         return registration;

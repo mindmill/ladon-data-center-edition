@@ -10,7 +10,7 @@
     <artifactId>cassandra</artifactId>
 
     <properties>
-        <cassandra-driver.version>3.6.0</cassandra-driver.version>
+        <cassandra-driver.version>3.8.0</cassandra-driver.version>
     </properties>
     <modelVersion>4.0.0</modelVersion>
 
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.apache.cassandra</groupId>
             <artifactId>cassandra-all</artifactId>
-            <version>3.11.3</version>
+            <version>3.11.6</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>

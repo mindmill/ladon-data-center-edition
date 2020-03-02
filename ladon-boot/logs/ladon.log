@@ -1,0 +1,26 @@
+INFO  2020-03-02 01:31:54 org.springframework.core.KotlinDetector Kotlin reflection implementation not found at runtime, related features won't be available.
+INFO  2020-03-02 01:31:55 de.mc.ladon.server.boot.LadonApplicationKt Starting LadonApplicationKt on clonebook with PID 32015 (/home/ralf/IdeaProjects/ladon-data-center-edition/ladon-boot/target/classes started by ralf in /home/ralf/IdeaProjects/ladon-data-center-edition/ladon-boot)
+INFO  2020-03-02 01:31:55 de.mc.ladon.server.boot.LadonApplicationKt No active profile set, falling back to default profiles: default
+WARN  2020-03-02 01:31:55 org.springframework.http.converter.json.Jackson2ObjectMapperBuilder For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+WARN  2020-03-02 01:31:56 org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'tomcatServletWebServerFactory' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/ServletWebServerFactoryConfiguration$EmbeddedTomcat.class]: Initialization of bean failed; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'errorPageCustomizer' defined in class path resource [org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration.class]: Unsatisfied dependency expressed through method 'errorPageCustomizer' parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+INFO  2020-03-02 01:31:56 org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+ERROR 2020-03-02 01:31:56 org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of method errorPageCustomizer in org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration required a bean of type 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath' that could not be found.
+
+The following candidates were found but could not be injected:
+	- Bean method 'dispatcherServletRegistration' in 'DispatcherServletAutoConfiguration.DispatcherServletRegistrationConfiguration' not loaded because DispatcherServlet Registration found servlet registration bean dispatcherServletRegistration
+
+
+Action:
+
+Consider revisiting the entries above or defining a bean of type 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath' in your configuration.
+

@@ -23,7 +23,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.12</slf4j.version>
-        <kotlin.version>1.2.71</kotlin.version>
+        <kotlin.version>1.3.61</kotlin.version>
         <tika.version>1.11</tika.version>
         <log4j.version>1.3.61</log4j.version>
         <guava.version>19.0</guava.version>
@@ -163,7 +163,11 @@
             <artifactId>kotlin-jdk-annotations</artifactId>
             <version>1.0.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>

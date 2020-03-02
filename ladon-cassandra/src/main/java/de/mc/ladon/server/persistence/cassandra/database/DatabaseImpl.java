@@ -63,7 +63,8 @@ public class DatabaseImpl implements Database {
             LOGGER.info("Session is already initialized, skipping");
             return;
         }
-        Cluster.Builder cb = Cluster.builder().addContactPoints(config.getNodes().toArray(new String[0]))
+        Cluster.Builder cb = Cluster.builder().withoutJMXReporting()
+                .addContactPoints(config.getNodes().toArray(new String[0]))
                 .withRetryPolicy(DowngradingConsistencyRetryPolicy.INSTANCE)
                 .withCompression(ProtocolOptions.Compression.SNAPPY)
                 //.withReconnectionPolicy(new ConstantReconnectionPolicy(5000))
