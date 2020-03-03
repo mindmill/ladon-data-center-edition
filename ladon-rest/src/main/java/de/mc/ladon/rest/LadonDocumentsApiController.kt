@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
+import java.io.ByteArrayInputStream
 import javax.validation.Valid
 
 
@@ -24,7 +25,9 @@ open class LadonDocumentsApiController @Autowired constructor(
         val ladonRepositoy: LadonRepository
 ) : DocumentsApi {
 
-
+    @RequestMapping(value = ["/content/buckets/{bucket}/documents/{key:.+}"],
+            produces = ["application/json"],
+            method = [RequestMethod.DELETE])
     override fun deleteDocument(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
@@ -35,9 +38,21 @@ open class LadonDocumentsApiController @Autowired constructor(
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
             version: String?): ResponseEntity<ResponseSuccess>? {
-        return ResponseEntity(HttpStatus.OK)
+
+        try {
+            val document = if (version == null) {
+                ladonRepositoy.deleteDocument(getUserId(), bucket, key)
+            } else {
+                ladonRepositoy.deleteDocumentVersion(getUserId(), bucket, key, version)
+            }
+        } catch (e: Exception) {
+            return ResponseEntity.ok(ResponseSuccess().success(false).reason(e.message))
+        }
+        return ResponseEntity.ok(ResponseSuccess().success(true))
     }
 
+    @RequestMapping(value = ["/content/buckets/{bucket}/documents/{key:.+}"],
+            method = [RequestMethod.GET])
     override fun getDocument(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
@@ -47,11 +62,12 @@ open class LadonDocumentsApiController @Autowired constructor(
             key: String,
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
-            version: String?): ResponseEntity<Void>? { // do some magic!
+            version: String?): ResponseEntity<Void>? {
+        TODO()
         return ResponseEntity(HttpStatus.OK)
     }
 
-    @RequestMapping(value = ["/content/buckets/{bucket}/documents/{*key:.+}"],
+    @RequestMapping(value = ["/content/buckets/{bucket}/documents/{key:.+}"],
             produces = ["application/json"],
             consumes = ["application/octet-stream"],
             method = [RequestMethod.PUT])
@@ -65,15 +81,14 @@ open class LadonDocumentsApiController @Autowired constructor(
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
             version: String?,
-            @ApiParam(value = ""  )
+            @ApiParam(value = "")
             @Valid
             @RequestBody
             content: Resource): ResponseEntity<Document>? {
-       val document = ladonRepositoy.putDocument(getUserId(),bucket,key,content.inputStream)
-
-
-        return ResponseEntity.ok(Document())
+        val document = ladonRepositoy.putDocument(getUserId(), bucket, key, content.inputStream)
+        return ResponseEntity.ok(document.mapToApiModel())
     }
+
 
     override fun listDocuments(
             @ApiParam(value = "", required = true)
@@ -90,18 +105,12 @@ open class LadonDocumentsApiController @Autowired constructor(
             prefix: String?, @ApiParam(value = "", allowableValues = "name, created") @RequestParam(value = "orderby", required = false) orderby: String?): ResponseEntity<List<Document?>?>? {
 
         return ResponseEntity.ok(ladonRepositoy.listDocuments(getUserId(), bucket, prefix, null, null, limit)
-                .map {
-                    Document()
-                            .key(it.key)
-                            .contentType(it.contentType)
-                            .created(it.created.toString())
-                            .owner(getUserId()) // TODO
-                            .metadata(it.userMetadata.
-                                    let { uM -> Metadata().also { it.putAll(uM) } })
-                })
+                .map { it.mapToApiModel() })
     }
 
-
+    @RequestMapping(value = ["/meta/buckets/{bucket}/documents/{key:.+}"],
+            produces = ["application/json"],
+            method = [RequestMethod.GET])
     override fun getDocumentMeta(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
@@ -109,10 +118,13 @@ open class LadonDocumentsApiController @Autowired constructor(
             @ApiParam(value = "", required = true)
             @PathVariable("key")
             key: String): ResponseEntity<Document>? {
-        return ResponseEntity(HttpStatus.OK)
+        val metadata = ladonRepositoy.getMetadata(getUserId(), bucket, key)
+        return ResponseEntity.ok(metadata.mapToApiModel())
     }
 
-
+    @RequestMapping(value = ["/meta/buckets/{bucket}/documents/{key:.+}"],
+            produces = ["application/json"],
+            method = [RequestMethod.PUT])
     override fun putDocumentMeta(
             @ApiParam(value = "", required = true)
             @PathVariable("bucket")
@@ -127,7 +139,12 @@ open class LadonDocumentsApiController @Autowired constructor(
             @ApiParam(value = "")
             @RequestParam(value = "version", required = false)
             version: String?): ResponseEntity<Document>? {
-        return ResponseEntity(HttpStatus.OK)
+        val document = if (version != null) {
+            ladonRepositoy.updateDocumentMetadata(getUserId(), bucket, key, version, body)
+        } else {
+            ladonRepositoy.putDocument(getUserId(), bucket, key, emptyStream(), body)
+        }
+        return ResponseEntity.ok(document.mapToApiModel())
     }
 
 
@@ -137,8 +154,22 @@ open class LadonDocumentsApiController @Autowired constructor(
             bucket: String,
             @ApiParam(value = "", required = true)
             @PathVariable("key") key: String): ResponseEntity<List<Document>>? {
-        return ResponseEntity(HttpStatus.OK)
+        val versions = ladonRepositoy.listDocumentVersions(getUserId(), bucket, key).map { it.mapToApiModel() }
+        return ResponseEntity.ok(versions)
     }
 
+    private fun de.mc.ladon.server.core.api.Document.mapToApiModel(): Document {
+        return Document()
+                .key(key)
+                .contentType(contentType)
+                .size(size)
+                .etag(etag)
+                .version(version)
+                .created(created.toString())
+                .owner(getUserId()) // TODO
+                .metadata(userMetadata.let { uM -> Metadata().also { it.putAll(uM) } })
+    }
+
+    private fun emptyStream() = ByteArrayInputStream(ByteArray(0))
     private fun getUserId() = SecurityContextHolder.getContext().authentication.name
 }

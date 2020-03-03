@@ -83,7 +83,7 @@ open class MetadataDAOImpl
                         newKey.versionSeriesId,
                         newKey.changeToken,
                         ChangeType.PUT.toString(),
-                        props.content,
+                        props.content.filterValues { it != null } as? MutableMap<String,String>,
                         content.id,
                         content.length,
                         content.hash,

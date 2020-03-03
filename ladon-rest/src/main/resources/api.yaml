@@ -305,12 +305,10 @@ definitions:
         type: string
       created:
         type: string
-      description:
-        type: string
       key:
         type: string
-      latest:
-        type: boolean
+      etag:
+        type: string
       metadata:
         $ref: '#/definitions/Metadata'
       owner:
