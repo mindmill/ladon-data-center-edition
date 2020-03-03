@@ -240,7 +240,7 @@ open class LadonCassandraRepository @Inject constructor(
                         it.key().changeToken.toString(),
                         true,
                         content.length,
-                        it.content().hash,
+                        it.content().hash.hexHash(),
                         it.content().created.toLocalDate(),
                         it.getContentType(),
                         it.properties().content)
@@ -257,10 +257,12 @@ open class LadonCassandraRepository @Inject constructor(
 
             content.use {
                 val info = binaryDataDAO.saveContentStream(cc, bucket, it)
-                val hexMd5 = info.md5.drop(2).toUpperCase()
+                val hexMd5 = info.md5.hexHash()
                 val lrk = LadonResourceKey(bucket, key, cc.getCallId().id())
                 val meta = LadonMetadata()
-                val props = LadonPropertyMeta(metadata.toMutableMap().apply { put("etag", hexMd5) })
+                val props = LadonPropertyMeta(metadata.toMutableMap()
+                       // .apply { put("etag", hexMd5) }
+                )
                 meta.set(props)
                 // val name = objectKey.split("/").filterNotNull().last()
                 val created = Date()
@@ -272,7 +274,7 @@ open class LadonCassandraRepository @Inject constructor(
                         cc.changeToken.toString(),
                         true,
                         info.length.longValueExact(),
-                        info.md5,
+                        hexMd5,
                         created.toLocalDate(),
                         meta.getContentType(),
                         props.content)
@@ -293,12 +295,13 @@ open class LadonCassandraRepository @Inject constructor(
             metadataCurrent.properties().content.putAll(metadata)
             val newKey = metaDAO.saveMetadata(cc, lrk, metadataCurrent)
             val contentMeta = metadataCurrent.content()
+
             Document(bucket,
                     key,
                     newKey.changeToken.toString(),
                     true,
                     contentMeta.length,
-                    contentMeta.hash,
+                    contentMeta.hash.hexHash(),
                     contentMeta.created.toLocalDate(),
                     metadataCurrent.getContentType(),
                     metadataCurrent.properties().content)
@@ -325,7 +328,7 @@ open class LadonCassandraRepository @Inject constructor(
                     newKey.changeToken.toString(),
                     true,
                     newContent.length,
-                    newContent.hash,
+                    newContent.hash.hexHash(),
                     newContent.created.toLocalDate(),
                     meta.getContentType(),
                     meta.properties().content)
@@ -346,6 +349,7 @@ open class LadonCassandraRepository @Inject constructor(
         return body(UserAndBucketCtx(userId, bucket, cc, repo))
     }
 
+    private fun String.hexHash() = if(startsWith("0x")) drop(2).toUpperCase() else this
 }
 
 inline fun NOTUSED(reason: String): Nothing = throw NotImplementedError("Don't use this : $reason")
