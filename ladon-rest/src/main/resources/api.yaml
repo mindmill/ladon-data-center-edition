@@ -22,7 +22,7 @@ paths:
           name: bucket
           required: true
           type: string
-        - in: path
+        - in: query
           name: key
           required: true
           type: string
@@ -44,7 +44,7 @@ paths:
           name: bucket
           required: true
           type: string
-        - in: path
+        - in: query
           name: key
           required: true
           type: string
@@ -68,7 +68,7 @@ paths:
           name: bucket
           required: true
           type: string
-        - in: path
+        - in: query
           name: key
           required: true
           type: string
@@ -218,7 +218,7 @@ paths:
           name: bucket
           required: true
           type: string
-        - in: path
+        - in: query
           name: key
           required: true
           type: string
@@ -239,7 +239,7 @@ paths:
           name: bucket
           required: true
           type: string
-        - in: path
+        - in: query
           name: key
           required: true
           type: string
@@ -269,7 +269,7 @@ paths:
           name: bucket
           required: true
           type: string
-        - in: path
+        - in: query
           name: key
           required: true
           type: string
