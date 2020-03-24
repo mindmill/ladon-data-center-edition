@@ -40,7 +40,7 @@ appender reference in the root level section below.
             <maxIndex>20</maxIndex>
         </rollingPolicy>
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>1000MB</maxFileSize>
+            <maxFileSize>100MB</maxFileSize>
         </triggeringPolicy>
         <encoder>
             <pattern>%-5p %-17d{yyyy-MM-dd HH:mm:ss} %c %m%n</pattern>
